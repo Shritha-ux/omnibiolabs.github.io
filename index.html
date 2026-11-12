@@ -34,8 +34,8 @@
   </script>
   <style>
     body { background-color: #040911; color: #e2e8f0; }
-    .glow-cyan { box-shadow: 0 0 28px rgba(0, 245, 212, 0.16); }
-    .glass { background: rgba(10, 20, 36, 0.84); backdrop-filter: blur(12px); border: 1px solid rgba(56, 189, 248, 0.18); }
+    .glow-cyan { box-shadow: 0 0 32px rgba(0, 245, 212, 0.18); }
+    .glass { background: rgba(10, 20, 36, 0.86); backdrop-filter: blur(12px); border: 1px solid rgba(56, 189, 248, 0.2); }
     .gradient-text {
       background: linear-gradient(135deg, #00f5d4 0%, #38bdf8 50%, #a855f7 100%);
       -webkit-background-clip: text;
@@ -43,6 +43,8 @@
     }
     .tab-panel { animation: fadeIn 0.25s ease-out; }
     @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes pulseRing { 0%, 100% { box-shadow: 0 0 0 0 rgba(0, 245, 212, 0.45); } 50% { box-shadow: 0 0 0 6px rgba(0, 245, 212, 0); } }
+    .tool-next { animation: pulseRing 1.8s infinite; }
     ::-webkit-scrollbar { width: 8px; height: 8px; }
     ::-webkit-scrollbar-track { background: #040911; }
     ::-webkit-scrollbar-thumb { background: #172a46; border-radius: 4px; }
@@ -82,13 +84,13 @@
           2. All 20 Wet-Labs
         </button>
         <button data-tab="kids-lab" onclick="switchPage('kids-lab')" class="nav-tab px-3.5 py-2 rounded-lg text-xs font-mono bg-bio-dark/70 text-bio-cyan hover:text-white border border-bio-cyan/40 whitespace-nowrap transition">
-          3. Kids Virtual Bench (All 20 Demos) 🎮
+          3. Interactive Lab Console (20 Mini-Games) 🎮
         </button>
         <button data-tab="framework" onclick="switchPage('framework')" class="nav-tab px-3.5 py-2 rounded-lg text-xs font-mono bg-bio-dark/70 text-slate-300 hover:text-white border border-bio-border whitespace-nowrap transition">
           4. 6-Session Pipeline
         </button>
         <button data-tab="safety-grants" onclick="switchPage('safety-grants')" class="nav-tab px-3.5 py-2 rounded-lg text-xs font-mono bg-bio-dark/70 text-slate-300 hover:text-white border border-bio-border whitespace-nowrap transition">
-          5. Safety Rules, Grants & Chapters
+          5. Safety Rules, Kits & Chapters
         </button>
         <button data-tab="apply" onclick="switchPage('apply')" class="nav-tab px-3.5 py-2 rounded-lg text-xs font-mono bg-bio-dark/70 text-slate-300 hover:text-white border border-bio-border whitespace-nowrap transition">
           6. Apply / Book Labs
@@ -108,7 +110,7 @@
         <div class="text-center max-w-4xl mx-auto">
           <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full glass text-xs font-mono text-bio-cyan mb-5">
             <span class="w-2 h-2 rounded-full bg-bio-cyan animate-ping"></span>
-            STUDENT-LED STEM INITIATIVE • ZERO COST TO K–8 SCHOOLS
+            STUDENT-LED BIOTECH INITIATIVE • ZERO COST TO K–8 SCHOOLS
           </div>
           <h1 class="font-display text-4xl sm:text-6xl font-bold tracking-tight text-white leading-tight">
             Collegiate Wet-Lab Science, Engineered for <span class="gradient-text">K–8 Classrooms</span>.
@@ -118,7 +120,7 @@
           </p>
           <div class="mt-8 flex flex-wrap items-center justify-center gap-4">
             <button onclick="switchPage('kids-lab')" class="px-6 py-3.5 rounded-xl bg-bio-cyan text-bio-dark font-semibold text-sm sm:text-base glow-cyan hover:scale-[1.02] transition">
-              Test All 20 Pre-Lab Demos 🎮
+              Launch Interactive Lab Console 🎮
             </button>
             <button onclick="switchPage('workshops')" class="px-6 py-3.5 rounded-xl glass text-white font-semibold text-sm sm:text-base hover:border-bio-cyan/50 transition">
               Browse All 20 Labs & Protocols →
@@ -200,7 +202,7 @@
           <span class="font-mono text-xs uppercase tracking-widest text-bio-cyan">Master Curriculum & Safety Matrix</span>
           <h2 class="font-display text-3xl sm:text-4xl font-bold text-white mt-1">All 20 Hands-On Wet-Lab Workshops</h2>
           <p class="text-slate-400 text-sm mt-1.5 max-w-2xl">
-            Click <strong class="text-white">Protocol & Safety</strong> for step-by-step instructions, <strong class="text-purple-300">Try Virtual Demo</strong> to test the pre-lab hook, or <strong class="text-bio-cyan">+ Add to Cart</strong> to build your school's workshop request.
+            Click <strong class="text-white">Protocol & Safety</strong> for step-by-step instructions, <strong class="text-purple-300">Play Virtual Lab</strong> to run the interactive pre-lab game, or <strong class="text-bio-cyan">+ Add to Cart</strong> to request workshops for your school.
           </p>
         </div>
 
@@ -224,69 +226,95 @@
     </section>
 
     <!-- ========================================================= -->
-    <!-- TAB 3: KIDS VIRTUAL BENCH (ALL 20 LAB DEMOS + CLIFFHANGER)-->
+    <!-- TAB 3: FULL-CONSOLE INTERACTIVE LAB SANDBOX (ALL 20 LABS) -->
     <!-- ========================================================= -->
-    <section id="page-kids-lab" class="tab-panel hidden max-w-7xl mx-auto px-4 sm:px-6 py-10">
-      <div class="text-center max-w-3xl mx-auto mb-8">
-        <span class="font-mono text-xs uppercase tracking-widest text-bio-cyan">20 Interactive Pre-Lab Simulators</span>
-        <h2 class="font-display text-3xl sm:text-4xl font-bold text-white mt-1">Virtual Wet-Lab Bench: Hypothesis Explorer</h2>
-        <p class="text-slate-300 text-sm sm:text-base mt-2">
-          Select any of our <strong class="text-white">20 wet-lab experiments</strong> below! Adjust the experiment variable to see how the lab is set up—then discover the exact <strong class="text-bio-cyan">"If X happens, what happens to Y?"</strong> mystery you have to test in-person with OmniBio mentors to find the real conclusion!
-        </p>
+    <section id="page-kids-lab" class="tab-panel hidden max-w-7xl mx-auto px-4 sm:px-6 py-8">
+      <!-- Top Instruction Banner -->
+      <div class="glass rounded-2xl p-4 sm:p-5 mb-6 border-bio-cyan/40 flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+          <div class="font-mono text-xs text-bio-cyan font-bold">🎮 INTERACTIVE STUDENT WET-LAB CONSOLE • ALL 20 EXPERIMENTS</div>
+          <p class="text-xs sm:text-sm text-slate-300 mt-1">
+            <strong>How to Play:</strong> Pick any of the 20 labs on the left, then <strong>click the glowing lab tools on your bench</strong> in order to run the experiment! Each virtual demo stops right before the final conclusion—book the in-person lab to discover what happens to <strong>Y</strong> when you change <strong>X</strong>!
+          </p>
+        </div>
+        <div class="flex items-center gap-2 shrink-0">
+          <span id="benchProgressPill" class="px-3 py-1.5 rounded-lg bg-bio-dark border border-bio-cyan/40 text-bio-cyan font-mono text-xs font-bold">
+            Step 0 / 3 Complete
+          </span>
+          <button onclick="resetCurrentBenchGame()" class="px-3 py-1.5 rounded-lg bg-slate-800 text-slate-300 hover:text-white font-mono text-xs transition">
+            ↺ Reset Bench
+          </button>
+        </div>
       </div>
 
       <div class="grid lg:grid-cols-12 gap-6 items-start">
         <!-- Left Sidebar: All 20 Lab Selector List -->
         <div class="lg:col-span-4 glass rounded-2xl p-4">
           <div class="flex items-center justify-between mb-3 px-1">
-            <span class="font-mono text-xs text-bio-cyan font-bold">CHOOSE ANY OF THE 20 LABS:</span>
-            <span class="font-mono text-[11px] text-slate-400">20 Demos</span>
+            <span class="font-mono text-xs text-bio-cyan font-bold">SELECT EXPERIMENT (1–20):</span>
+            <span class="font-mono text-[11px] text-slate-400">Click to Load</span>
           </div>
-          <div id="benchLabMenu" class="space-y-1.5 max-h-[600px] overflow-y-auto pr-1"></div>
+          <div id="benchLabMenu" class="space-y-1.5 max-h-[680px] overflow-y-auto pr-1"></div>
         </div>
 
-        <!-- Right Interactive Stage: Setup Simulator + Cliffhanger Mystery -->
-        <div class="lg:col-span-8 glass rounded-2xl p-6 sm:p-8 glow-cyan space-y-6">
+        <!-- Right Full Interactive Lab Bench Console -->
+        <div class="lg:col-span-8 glass rounded-2xl p-5 sm:p-7 glow-cyan space-y-5">
+          <!-- Lab Title & Hypothesis Header -->
           <div id="benchStageHeader"></div>
 
-          <!-- Interactive Variable Controls & Live Canvas/Beaker Visual -->
-          <div class="bg-bio-dark/95 rounded-2xl p-5 sm:p-6 border border-bio-border space-y-5">
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-bio-border/80">
-              <div>
-                <div class="font-mono text-[11px] text-bio-blue">STEP 1: CHANGE THE EXPERIMENTAL VARIABLE (X)</div>
-                <label id="benchSliderLabel" class="font-display text-base sm:text-lg font-bold text-white mt-0.5 block"></label>
+          <!-- Interactive Toolbelt (Clickable Lab Instruments!) -->
+          <div class="bg-bio-dark/90 rounded-2xl p-4 border border-bio-border">
+            <div class="flex items-center justify-between mb-2.5">
+              <span class="font-mono text-xs text-amber-300 font-bold">🧰 YOUR LAB BENCH TOOLBELT (CLICK TOOLS IN SEQUENCE):</span>
+              <span id="toolHintText" class="font-mono text-[11px] text-slate-400">Click Tool #1 to begin</span>
+            </div>
+            <div id="benchToolButtons" class="grid sm:grid-cols-3 gap-2.5"></div>
+          </div>
+
+          <!-- Big Live Animated Canvas Stage + Live Telemetry Readout -->
+          <div class="grid md:grid-cols-12 gap-4 items-stretch">
+            <div class="md:col-span-7 bg-slate-950 rounded-2xl p-3 border-2 border-slate-800 flex flex-col items-center justify-center relative overflow-hidden">
+              <div class="w-full flex items-center justify-between px-2 pb-1 text-[10px] font-mono text-slate-400">
+                <span id="canvasApparatusLabel">LIVE WET-LAB VIEWPORT</span>
+                <span class="text-bio-cyan">● REAL-TIME SIM</span>
               </div>
-              <span id="benchVarReadout" class="px-3 py-1.5 rounded-lg bg-bio-cyan/15 border border-bio-cyan/40 text-bio-cyan font-mono text-xs font-bold shrink-0"></span>
+              <canvas id="benchVisualCanvas" width="380" height="270" class="w-full h-[270px] rounded-xl bg-[#03070e]"></canvas>
             </div>
 
-            <input type="range" id="benchVarSlider" min="1" max="5" step="1" value="3" oninput="updateBenchSim()" class="w-full h-2.5 bg-slate-800 rounded-lg cursor-pointer accent-bio-cyan" />
-            <div id="benchTicks" class="flex justify-between text-[11px] font-mono text-slate-400"></div>
-
-            <!-- Live Animated Visual Apparatus -->
-            <div class="grid md:grid-cols-2 gap-5 items-center pt-2">
-              <div class="bg-slate-950 rounded-xl p-4 border border-slate-800 flex flex-col items-center justify-center min-h-[220px]">
-                <canvas id="benchVisualCanvas" width="280" height="190" class="w-full max-w-[280px] h-[190px]"></canvas>
+            <!-- Live Bench Log & Bonus 3D DNA Base Mutator when on Genetics Labs -->
+            <div class="md:col-span-5 bg-bio-dark/95 rounded-2xl p-4 border border-bio-border flex flex-col justify-between space-y-4">
+              <div>
+                <div class="font-mono text-xs text-emerald-300 font-bold mb-1.5">📋 LIVE BENCH LOG & EXPLANATION:</div>
+                <p id="benchObservationText" class="text-xs sm:text-sm text-slate-200 leading-relaxed"></p>
               </div>
-              <div class="space-y-3">
-                <div class="text-xs font-mono text-emerald-300">STEP 2: WHAT YOU OBSERVE IN THE SETUP</div>
-                <p id="benchObservationText" class="text-sm text-slate-200 leading-relaxed"></p>
-                <div class="p-3 rounded-xl bg-bio-card border border-bio-border text-xs text-slate-400">
-                  <strong class="text-white">Equipment Used:</strong> <span id="benchEquipText"></span>
+
+              <!-- Interactive 3D DNA Base Mutator & Disease Dex Widget (Shown on DNA/Genetics Labs, or toggleable!) -->
+              <div id="dnaMutatorPanel" class="hidden pt-3 border-t border-bio-border space-y-2.5">
+                <div class="flex items-center justify-between">
+                  <span class="font-mono text-[11px] text-bio-cyan font-bold">🧬 CLICK BASES TO MUTATE 3D HELIX:</span>
+                  <span id="dexMiniCount" class="font-mono text-[10px] text-purple-300">1/5 Diseases</span>
                 </div>
+                <div id="miniDnaBases" class="grid grid-cols-6 gap-1"></div>
+                <div id="miniDiseaseTag" class="p-2 rounded-lg bg-bio-card border border-bio-purple/40 text-[11px] text-purple-200 font-mono">
+                  Wild-Type: Normal Protein Folding
+                </div>
+              </div>
+
+              <div class="pt-3 border-t border-bio-border/70 text-[11px] text-slate-400">
+                <strong class="text-white">Kit Hardware:</strong> <span id="benchEquipText"></span>
               </div>
             </div>
           </div>
 
-          <!-- Cliffhanger Mystery Box (Locks the Final Conclusion until In-Person Lab!) -->
-          <div class="bg-gradient-to-r from-bio-purple/20 via-bio-dark to-bio-blue/15 rounded-2xl p-5 sm:p-6 border border-bio-purple/50">
+          <!-- Cliffhanger Mystery Lockbox (Unlocks only after running all 3 bench tools!) -->
+          <div id="cliffhangerBox" class="rounded-2xl p-5 border transition-all duration-300 bg-bio-dark/60 border-bio-border opacity-75">
             <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
-              <span class="px-2.5 py-1 rounded bg-bio-purple/30 text-purple-200 font-mono text-xs font-bold">
-                🔒 IN-PERSON WET-LAB MYSTERY (UNSOLVED CONCLUSION)
+              <span id="cliffhangerStatusBadge" class="px-2.5 py-1 rounded bg-slate-800 text-slate-400 font-mono text-xs font-bold">
+                🔒 COMPLETE ALL 3 BENCH TOOLS TO UNLOCK YOUR HYPOTHESIS CHALLENGE
               </span>
-              <span class="font-mono text-xs text-slate-400">Requires Real Benchwork</span>
             </div>
             <h4 class="font-display text-lg sm:text-xl font-bold text-white mb-1.5">
-              Hypothesis Challenge: <span id="benchCliffhangerQ" class="text-bio-cyan"></span>
+              In-Person Lab Question: <span id="benchCliffhangerQ" class="text-bio-cyan"></span>
             </h4>
             <p id="benchCliffhangerWhy" class="text-xs sm:text-sm text-slate-300 leading-relaxed mb-4"></p>
             <div class="flex flex-wrap gap-3">
@@ -319,7 +347,7 @@
     </section>
 
     <!-- ========================================================= -->
-    <!-- TAB 5: SAFETY RULES, GRANT CALCULATOR, KITS & CHAPTERS    -->
+    <!-- TAB 5: SAFETY RULES, KITS & CHAPTERS                      -->
     <!-- ========================================================= -->
     <section id="page-safety-grants" class="tab-panel hidden max-w-6xl mx-auto px-4 sm:px-6 py-12 space-y-16">
       
@@ -360,7 +388,7 @@
           <div class="glass rounded-2xl p-5 border-l-4 border-l-emerald-400">
             <div class="font-mono text-xs text-emerald-400 mb-1">RULE 05 • ZERO-COST ACCESS</div>
             <h3 class="font-display font-bold text-white text-base mb-2">100% Free to K–8 Participants</h3>
-            <p class="text-xs text-slate-300 leading-relaxed">Chapters never charge students or public schools. Supplies are funded via community STEM grants, school PTSA partnerships, and local sponsors.</p>
+            <p class="text-xs text-slate-300 leading-relaxed">Chapters never charge students or public schools. Supplies are funded through local STEM micro-grants, school PTSA partnerships, and community sponsors.</p>
           </div>
           <div class="glass rounded-2xl p-5 border-l-4 border-l-rose-400">
             <div class="font-mono text-xs text-rose-400 mb-1">RULE 06 • ALLERGY & SAFETY CHECK</div>
@@ -370,17 +398,17 @@
         </div>
       </div>
 
-      <!-- Grant Impact Calculator -->
+      <!-- Chapter Budget & Impact Calculator -->
       <div class="glass rounded-2xl p-6 sm:p-8 glow-cyan">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
           <div>
-            <span class="font-mono text-xs text-bio-cyan">GRANT & SPONSOR IMPACT CALCULATOR</span>
+            <span class="font-mono text-xs text-bio-cyan">CHAPTER BUDGET & IMPACT ESTIMATOR</span>
             <h3 class="font-display text-2xl font-bold text-white mt-1">
               K–8 Students Reached: <span id="studentCountLabel" class="text-bio-cyan font-mono ml-1">50 Students</span>
             </h3>
           </div>
           <span id="tierUnlockBadge" class="px-3.5 py-1.5 rounded-full bg-bio-purple/20 border border-bio-purple/50 text-purple-300 font-mono text-xs font-bold">
-            Unlocks Tier 1 Core DIY Chapter Kit
+            Recommended: Tier 1 Core DIY Chapter Kit
           </span>
         </div>
 
@@ -405,7 +433,7 @@
         </div>
       </div>
 
-      <!-- Grant Hardware Tiers & Active Chapters -->
+      <!-- Chapter Hardware Tiers -->
       <div class="grid md:grid-cols-2 gap-6">
         <div class="glass rounded-2xl p-6 flex flex-col justify-between">
           <div>
@@ -417,7 +445,7 @@
             <p class="text-xs text-slate-300 leading-relaxed mb-4">Includes DNA Extraction, Cabbage pH Biosensors, Yeast Agar Art, Alginate Hydrogels, Foldscopes, Enzyme Kinetics, Naked Egg Osmosis, and Splash Goggles/Gloves.</p>
           </div>
           <button onclick="prefillChapter('Tier 1: Core DIY Chapter Kit (~$175–$250)')" class="w-full py-2.5 rounded-xl bg-bio-dark border border-bio-cyan/50 text-bio-cyan font-mono text-xs font-bold hover:bg-bio-cyan hover:text-bio-dark transition">
-            Apply for Tier 1 Kit →
+            Select Tier 1 Kit for New Chapter →
           </button>
         </div>
 
@@ -431,7 +459,7 @@
             <p class="text-xs text-slate-300 leading-relaxed mb-4">Everything in Tier 1 PLUS 20–200 µL Micropipettes, 96-Well Plates, 18V–36V Gel Electrophoresis Rig, Syringe Column Chromatography, Microplastic UV Filters & Fuel Cells.</p>
           </div>
           <button onclick="prefillChapter('Tier 2: Advanced Collegiate Biotech Kit (~$420–$630)')" class="w-full py-2.5 rounded-xl bg-bio-purple text-white font-mono text-xs font-bold hover:brightness-110 transition">
-            Apply for Tier 2 Kit →
+            Select Tier 2 Kit for New Chapter →
           </button>
         </div>
       </div>
@@ -518,7 +546,7 @@
                 <label class="block text-xs font-mono text-bio-cyan font-bold">YOUR WORKSHOP BOOKING CART:</label>
                 <span id="cartCountText" class="font-mono text-xs text-slate-400">0 labs selected yet</span>
               </div>
-              <p class="text-[11px] text-slate-400">Pick a workshop or full 6-session series below, or click <strong class="text-white">+ Add from Catalog</strong> on any lab card.</p>
+              <p class="text-[11px] text-slate-400">Pick a workshop or full 6-session series below, or click <strong class="text-white">+ Add to Booking Cart</strong> on any lab card.</p>
 
               <div id="dropdownRowsContainer" class="space-y-2.5 pt-1"></div>
 
@@ -556,11 +584,11 @@
                 <input type="text" id="chapSchool" required placeholder="Mountain House High School, CA" class="w-full px-3.5 py-2.5 rounded-lg bg-bio-dark border border-bio-border text-white text-sm focus:outline-none focus:border-bio-cyan" />
               </div>
               <div>
-                <label class="block text-xs font-mono text-slate-400 mb-1.5">REQUESTED GRANT KIT TIER</label>
+                <label class="block text-xs font-mono text-slate-400 mb-1.5">TARGET CHAPTER KIT TIER</label>
                 <select id="chapTier" class="w-full px-3.5 py-2.5 rounded-lg bg-bio-dark border border-bio-border text-white text-sm focus:outline-none focus:border-bio-cyan">
                   <option>Tier 1: Core DIY Chapter Kit (~$175–$250)</option>
                   <option>Tier 2: Advanced Collegiate Biotech Kit (~$420–$630)</option>
-                  <option>Self-Funded / Local Sponsor Pending</option>
+                  <option>Custom / Local School Sponsor</option>
                 </select>
               </div>
             </div>
@@ -620,7 +648,7 @@
     }
 
     // ==========================================
-    // 2. MASTER 20-WORKSHOP DATABASE (WITH PRE-LAB CLIFFHANGER DATA)
+    // 2. MASTER 20-WORKSHOP DATABASE (WITH CLICKABLE TOOLBELT GAMES)
     // ==========================================
     const labSuite = [
       {
@@ -636,20 +664,15 @@
           "Use non-toxic food dyes and water/alcohol mobile phase only.",
           "Keep isopropyl alcohol in ventilated areas away from open flames."
         ],
-        sim: {
-          varName: "Mobile Phase Solvent Polarity (Water → 70% Alcohol)",
-          ticks: ["100% Water", "75% Water", "50/50 Mix", "25% Water", "70% Alcohol"],
-          readouts: ["Step 1: Pure Water", "Step 2: Low Alcohol", "Step 3: 50/50 Gradient", "Step 4: High Alcohol", "Step 5: 70% Isopropanol"],
-          observations: [
-            "You loaded the purple dye mixture onto the silica/charcoal syringe column and added pure water. The purple band starts spreading slightly at the top.",
-            "With 25% alcohol added, the mixture begins splitting into two distinct color zones inside the syringe.",
-            "At a 50/50 solvent mix, the leading band reaches the bottom cotton plug while the second band stays trapped higher up.",
-            "Switching to higher alcohol loosens the tightly bound second pigment from the stationary phase.",
-            "You collect two separate 1 mL micro-tubes at the bottom of the syringe!"
+        game: {
+          visual: "column",
+          tools: [
+            { icon: "🧪", label: "1. Load Purple Dye", log: "You pipetted mixed purple food dye onto the top of the silica/charcoal syringe column." },
+            { icon: "💧", label: "2. Elute w/ Water", log: "Pure water washes the polar pigment down through the column into Fraction Tube #1 while the second pigment stays bound!" },
+            { icon: "🧴", label: "3. Elute w/ Alcohol", log: "70% isopropyl alcohol releases the remaining bound pigment into Fraction Tube #2—ready for spectral comparison!" }
           ],
-          mysteryQ: "If we change the solvent from water to 70% alcohol, which dye washes out first—and how pure is each fraction?",
-          mysteryWhy: "Virtual setup shows the column layers, but only by running the real syringe column and measuring your collected tubes in class can you prove which molecule is more polar!",
-          visualType: "column"
+          mysteryQ: "If we switch the mobile phase from water to 70% alcohol, which dye elutes first—and how pure is each collected tube?",
+          mysteryWhy: "Your virtual bench separated the two bands visually, but only running the real syringe column and testing your collected tubes in person proves which molecule is more polar!"
         }
       },
       {
@@ -665,20 +688,15 @@
           "Keep micropipettes vertical whenever liquid is loaded to protect internal pistons.",
           "Non-toxic aqueous food dyes only."
         ],
-        sim: {
-          varName: "Micropipette Transfer Volume (µL)",
-          ticks: ["20 µL", "50 µL", "100 µL", "150 µL", "200 µL"],
-          readouts: ["20 µL Set", "50 µL Set", "100 µL Set", "150 µL Set", "200 µL Set"],
-          observations: [
-            "You dialed the micropipette to 20 µL and pressed to the first stop before dipping into the stock tube.",
-            "At 50 µL, you transfer dye into Well A1 and mix gently up and down without creating air bubbles.",
-            "At 100 µL (standard 1:2 serial dilution), you transfer half the volume from Well A1 into A2, A3, A4, and A5.",
-            "At 150 µL, the wells fill higher, changing the optical path length on the LED light pad.",
-            "At 200 µL (max capacity), you eject the tip into the waste bin and place the 96-well plate on the light pad."
+        game: {
+          visual: "plate",
+          tools: [
+            { icon: "💧", label: "1. Load 100 µL Stock", log: "You dialed the micropipette to 100 µL, pressed to the First Stop, and loaded Well A1 with concentrated stock dye." },
+            { icon: "🔄", label: "2. Serial Dilute A1→A5", log: "You transferred 100 µL across Wells A1 → A2 → A3 → A4 → A5 (1:2 to 1:32) and ejected each used tip into the scrap bin!" },
+            { icon: "💡", label: "3. Turn On LED Pad", log: "The LED light pad illuminates the 96-well plate from below so a smartphone camera can capture the optical gradient." }
           ],
           mysteryQ: "If you accidentally push to the SECOND stop while drawing liquid, what happens to your ImageJ R² calibration curve?",
-          mysteryWhy: "You can practice dialing microliter volumes here, but only pipetting real liquid into a 96-well plate and analyzing your photo in ImageJ reveals your true R² accuracy!",
-          visualType: "plate"
+          mysteryWhy: "You've prepped the 5-well serial dilution gradient here, but only pipetting real microliter volumes and measuring pixel density in ImageJ reveals your true R² accuracy!"
         }
       },
       {
@@ -694,20 +712,15 @@
           "Plates must be taped shut after inoculation and never re-opened.",
           "Submerge all used plates/loops in 10% bleach for 20 minutes prior to disposal."
         ],
-        sim: {
-          varName: "Heat-Shock Water Bath Temperature (°C)",
-          ticks: ["0°C Ice", "25°C Room", "42°C Shock", "65°C Hot", "95°C Boil"],
-          readouts: ["0°C (No Shock)", "25°C (Warm)", "42°C (50 Sec Shock)", "65°C (Overheated)", "95°C (Lethal)"],
-          observations: [
-            "Cells sit in ice-cold CaCl₂ buffer; the negatively charged cell membrane repels the GFP plasmid DNA.",
-            "At 25°C, the temperature jump is too gentle to open temporary pores in the bacterial cell wall.",
-            "At exactly 42°C for 50 seconds, rapid thermal expansion creates temporary membrane pores before returning to ice!",
-            "At 65°C, membrane proteins begin breaking down rapidly.",
-            "At 95°C, the host cells are destroyed before recovery broth is added."
+        game: {
+          visual: "dna3d",
+          tools: [
+            { icon: "🧬", label: "1. Add GFP Plasmid", log: "You pipetted circular GFP plasmid DNA into ice-cold CaCl₂ competent host cells." },
+            { icon: "🔥", label: "2. 42°C Heat Shock", log: "50 seconds at 42°C followed by rapid ice cooling creates temporary pores in the cell membrane so plasmids enter!" },
+            { icon: "🧫", label: "3. Streak Selection Plate", log: "You streaked the cells onto an ampicillin + arabinose nutrient plate and sealed the lid with tape." }
           ],
-          mysteryQ: "If you heat-shock at 42°C WITH vs. WITHOUT arabinose sugar on the agar plate, how many colonies actually glow green?",
-          mysteryWhy: "This pre-lab shows the thermal pore setup, but only plating real BSL-1 K-12 cells (or running the classroom bead assay) lets you count colonies and calculate transformation efficiency!",
-          visualType: "cells"
+          mysteryQ: "If you plate transformed cells WITH vs. WITHOUT arabinose sugar, how many colonies actually glow green under UV?",
+          mysteryWhy: "You can inspect and mutate the 3D GFP gene on the right, but only running the in-person transformation kit lets you count real colonies and compute transformation efficiency!"
         }
       },
       {
@@ -723,20 +736,15 @@
           "Ensure a well-ventilated classroom setup.",
           "Splash eyewear protection is mandatory for all students."
         ],
-        sim: {
-          varName: "Isopropyl Alcohol Temperature",
-          ticks: ["35°C Warm", "22°C Room", "10°C Cool", "0°C Ice-Cold", "-18°C Freezer"],
-          readouts: ["35°C Warm Alcohol", "22°C Room Temp", "10°C Cool Alcohol", "0°C Ice-Chilled", "-18°C Deep Chilled"],
-          observations: [
-            "You mashed the strawberry in soap + salt lysis buffer, filtered the red juice, and layered warm alcohol on top.",
-            "At room temperature, a faint cloudy layer forms right where the red strawberry extract meets the clear alcohol.",
-            "With cool alcohol, tiny white threads start clumping together at the liquid boundary.",
-            "With ice-cold alcohol, DNA solubility drops sharply at the interface.",
-            "With deep-chilled alcohol layered slowly down the tube wall, a thick interphase forms ready for spooling."
+        game: {
+          visual: "tube",
+          tools: [
+            { icon: "🧴", label: "1. Add Soap + Salt Lysis", log: "Dish soap dissolves phospholipid cell membranes while Na⁺ salt ions shield negative DNA phosphate backbones!" },
+            { icon: "☕", label: "2. Filter Cell Debris", log: "Pouring the mash through a coffee filter traps cell walls and seeds while liquid DNA passes into the test tube." },
+            { icon: "❄️", label: "3. Layer Chilled Alcohol", log: "Ice-cold isopropyl alcohol floats gently on top of the red extract, forming a cloudy precipitation boundary!" }
           ],
           mysteryQ: "If you compare a strawberry (octoploid: 8 copies of DNA) vs. a banana (triploid: 3 copies), how much more DNA can you spool?",
-          mysteryWhy: "You see the two liquid layers here, but only mashing real fruit and spooling the white strands on a wooden stick lets you compare octoploid vs. triploid DNA yields!",
-          visualType: "tube"
+          mysteryWhy: "You created the chilled alcohol interface on your virtual bench—now join the real wet-lab to spool the white DNA strands on a wooden rod and compare fruit ploidy!"
         }
       },
       {
@@ -752,20 +760,15 @@
           "Tape petri dishes shut immediately after streaking; never re-open.",
           "Submerge dishes in 10% bleach solution before bin disposal."
         ],
-        sim: {
-          varName: "Incubation Time on Nutrient Agar (Hours)",
-          ticks: ["0 Hours", "12 Hours", "24 Hours", "36 Hours", "48 Hours"],
-          readouts: ["0 hrs (Fresh Streak)", "12 hrs Incubation", "24 hrs Incubation", "36 hrs Incubation", "48 hrs Incubation"],
-          observations: [
-            "You dipped a sterile swab in baker's yeast + food dye and painted an invisible pattern onto the nutrient agar gel, then taped the lid shut.",
-            "At 12 hours, single yeast cells begin dividing by budding, though your artwork is still barely visible.",
-            "At 24 hours, millions of yeast cells cluster along your exact swab strokes.",
-            "At 36 hours, raised creamy colonies outline your drawing across the sealed petri dish.",
-            "At 48 hours, dense colony ridges follow every curve of your original brush stroke."
+        game: {
+          visual: "petri",
+          tools: [
+            { icon: "🧫", label: "1. Prep Yeast Suspension", log: "You mixed safe baker's yeast (S. cerevisiae) with warm nutrient broth and non-toxic food coloring." },
+            { icon: "🖌️", label: "2. Streak Agar Canvas", log: "Using a sterile cotton swab, you painted a spiral bio-design gently across the agar surface without tearing the gel." },
+            { icon: "🔒", label: "3. Tape Lid & Incubate", log: "You taped the petri dish completely shut (BSL-1 rule) and placed it in a warm incubator." }
           ],
-          mysteryQ: "If you streak dense yeast paste vs. diluted yeast water, how does colony texture and color absorption change on agar?",
-          mysteryWhy: "This preview shows the sealed petri dish setup, but only painting live baker's yeast onto real nutrient agar lets you watch living art grow over 48 hours!",
-          visualType: "petri"
+          mysteryQ: "If you streak dense yeast paste vs. diluted yeast water, how do colony thickness and pigment uptake change after 48 hours?",
+          mysteryWhy: "Your virtual plate is streaked and sealed—only in-person culturing lets you watch real living yeast colonies bloom along your brush strokes!"
         }
       },
       {
@@ -781,20 +784,15 @@
           "Sanitize smartphone mounts with alcohol wipes after pond water contact.",
           "No direct UV or high-intensity LED eye exposure."
         ],
-        sim: {
-          varName: "Origami Focus Ramp Position",
-          ticks: ["Far Out", "Near", "140x Focus", "Too Close", "LED Off"],
-          readouts: ["Out of Focus (Far)", "Approaching Plane", "140x Sharp Focus", "Past Focal Plane", "No Backlight"],
-          observations: [
-            "You slid the plastic pond-water slide into your origami Foldscope, but the image is blurry because the lens is too far.",
-            "Sliding the paper focus ramp shifts the spherical glass micro-lens closer to the specimen.",
-            "At 140x optical alignment, tiny circular outlines enter the field of view!",
-            "Pushing the focus ramp too far blurs the cell walls again.",
-            "Without the LED magnifier light behind the slide, the 2.38 mm lens cannot illuminate the sample."
+        game: {
+          visual: "scope",
+          tools: [
+            { icon: "💧", label: "1. Mount Plastic Slide", log: "You placed a drop of pond water onto a shatterproof plastic slide with a plastic coverslip." },
+            { icon: "💡", label: "2. Snap LED Illuminator", log: "The magnetic LED backlight aligns directly behind the 2.38 mm spherical glass micro-lens." },
+            { icon: "🔍", label: "3. Slide Focus Ramp", log: "You slid the origami focus ramp until 140x magnification brought microscopic silhouettes into view!" }
           ],
-          mysteryQ: "If you compare pond water from sunlight vs. shade under 140x magnification, which organisms are moving inside your drop?",
-          mysteryWhy: "You can practice focusing the Foldscope lens here, but only mounting a real drop of local pond water reveals live swimming protozoa and algae cells!",
-          visualType: "scope"
+          mysteryQ: "If you compare sunlit surface pond water vs. shaded bottom water at 140x, which organisms are swimming inside your drop?",
+          mysteryWhy: "You've aligned the 140x Foldscope optics here—now mount real local pond water in class to capture smartphone micro-videos and count cells in ImageJ!"
         }
       },
       {
@@ -810,20 +808,15 @@
           "Mandatory splash goggles and nitrile gloves.",
           "Dilute all liquid waste down the sink with plenty of running water."
         ],
-        sim: {
-          varName: "Water Bath Temperature (°C)",
-          ticks: ["5°C Ice", "20°C Room", "37°C Body", "60°C Hot", "85°C Boil"],
-          readouts: ["5°C Ice Bath", "20°C Room Temp", "37°C Optimal", "60°C Denaturing", "85°C Boiled"],
-          observations: [
-            "You mixed yeast catalase with 3% H₂O₂ in an ice bath; bubbles start rising very slowly in the 100 mL cylinder.",
-            "At 20°C room temperature, oxygen foam climbs steadily up the graduated markings.",
-            "At 37°C, catalase enzymes collide rapidly with hydrogen peroxide molecules!",
-            "At 60°C, heat begins unfolding the enzyme's 3D active site.",
-            "At 85°C, the enzyme protein is denatured before touching the peroxide."
+        game: {
+          visual: "cylinder",
+          tools: [
+            { icon: "🧪", label: "1. Pour 3% H₂O₂ Substrate", log: "You measured 15 mL of safe 3% hydrogen peroxide + 2 drops of dish soap into a 100 mL graduated cylinder." },
+            { icon: "🌡️", label: "2. Set 37°C Catalase", log: "You warmed the yeast catalase suspension to 37°C—the optimal temperature for enzyme active sites." },
+            { icon: "⏱️", label: "3. Inject & Start Timer", log: "Catalase splits 2 H₂O₂ → 2 H₂O + O₂ gas, sending oxygen foam climbing up the cylinder!" }
           ],
-          mysteryQ: "If you add lemon juice (acid) or baking soda (base) to 37°C catalase, does the foam reach 90 mL or stop completely?",
-          mysteryWhy: "You see the temperature setup here, but only timing the real foam rise in a 100 mL graduated cylinder lets you graph true enzyme reaction rates!",
-          visualType: "cylinder"
+          mysteryQ: "If you test catalase at 5°C (ice) vs. 37°C (warm) vs. 85°C (boiled), how many mL of O₂ foam form in 30 seconds?",
+          mysteryWhy: "You triggered the catalytic reaction here—now run all three temperatures side-by-side in class to plot a true enzyme denaturation curve!"
         }
       },
       {
@@ -839,20 +832,15 @@
           "Zero open flames or sparks nearby.",
           "Completely air-dry chromatography paper before bin disposal."
         ],
-        sim: {
-          varName: "Solvent Wicking Time (Minutes)",
-          ticks: ["0 Min", "5 Mins", "10 Mins", "15 Mins", "20 Mins"],
-          readouts: ["0 min (Origin Dot)", "5 min Wicking", "10 min Separation", "15 min Banding", "20 min Solvent Front"],
-          observations: [
-            "You crushed a spinach leaf onto the pencil origin line and hung the paper strip just above the isopropyl alcohol pool.",
-            "Capillary action pulls the alcohol upward through the green pigment spot.",
-            "Different leaf pigments dissolve at different speeds as the solvent rises.",
-            "Distinct green and yellow bands begin separating along the cellulose fibers.",
-            "The solvent front nears the top edge—ready to mark with a pencil and measure with a ruler."
+        game: {
+          visual: "tlc",
+          tools: [
+            { icon: "🌿", label: "1. Spot Leaf Extract", log: "You concentrated green spinach pigment onto the pencil origin line 1.5 cm from the bottom of the strip." },
+            { icon: "🧴", label: "2. Lower Into Solvent", log: "You suspended the strip so the bottom edge touches isopropyl alcohol—keeping the pigment dot above the liquid!" },
+            { icon: "📏", label: "3. Run Capillary Wicking", log: "Alcohol wicks upward through cellulose fibers, carrying hidden pigments at different speeds!" }
           ],
-          mysteryQ: "If you test dark green spinach vs. a red/yellow autumn leaf, what are the exact Rf (Retention Factor) ratios of each hidden pigment?",
-          mysteryWhy: "You see capillary action moving up the strip, but only extracting real leaves and measuring millimeter distances lets you calculate Rf values!",
-          visualType: "tlc"
+          mysteryQ: "What are the exact Retention Factor (Rf = pigment distance ÷ solvent distance) values for Chlorophyll a, Chlorophyll b, and Carotene?",
+          mysteryWhy: "You watched capillary action begin on the virtual strip—now measure real millimeter bands on your own leaf strip in person!"
         }
       },
       {
@@ -867,20 +855,15 @@
           "NEVER hard-cap fermentation tubes—balloons act as mandatory pressure relief valves.",
           "Screen all students for natural rubber latex allergies before handing out balloons."
         ],
-        sim: {
-          varName: "Sugar Feedstock Type",
-          ticks: ["0g Water Only", "Sucrose", "Glucose", "Honey", "Fruit Juice"],
-          readouts: ["Control (0g Sugar)", "Table Sugar (Sucrose)", "Pure Glucose", "Raw Honey", "Apple Juice"],
-          observations: [
-            "With warm water and yeast alone (control), no carbohydrate fuel is available for glycolysis.",
-            "Adding table sugar (sucrose) gives yeast a disaccharide it must first cleave with invertase.",
-            "Pure glucose enters glycolysis directly inside the yeast cells.",
-            "Honey provides mixed fructose and glucose monomers in viscous solution.",
-            "Fruit juice supplies dissolved sugars plus natural acidic pH."
+        game: {
+          visual: "balloon",
+          tools: [
+            { icon: "🧫", label: "1. Add Yeast + Warm Water", log: "Warm 38°C water wakes dormant Saccharomyces cerevisiae yeast cells inside the test tube." },
+            { icon: "🍬", label: "2. Feed Sugar Substrate", log: "You added carbohydrate fuel so yeast can run anaerobic glycolysis (Sugar → Ethanol + CO₂ gas)." },
+            { icon: "🎈", label: "3. Cap w/ Relief Balloon", log: "A flexible balloon seals the tube mouth, safely capturing CO₂ gas bubbles as they rise!" }
           ],
-          mysteryQ: "After 25 minutes in a warm water bath, which feedstock inflates the balloon to the largest circumference (cm)?",
-          mysteryWhy: "You can compare the 5 tube setups here, but only wrapping a real cloth measuring tape around the inflated balloons gives you the stoichiometric CO₂ winner!",
-          visualType: "balloon"
+          mysteryQ: "After 25 minutes, which fuel inflates the balloon largest: sucrose, honey, fruit juice, or 0g sugar control?",
+          mysteryWhy: "You set up the CO₂ capture tube here—now wrap a real cloth measuring tape around all 4 balloons in class to find the metabolic winner!"
         }
       },
       {
@@ -896,20 +879,15 @@
           "Disinfect all tables and scales with sanitizing wipes immediately after handling.",
           "Double-bag solid egg waste for an outdoor trash bin."
         ],
-        sim: {
-          varName: "Soaking Solution Concentration",
-          ticks: ["100% Water", "75% Water", "50/50 Mix", "75% Syrup", "100% Corn Syrup"],
-          readouts: ["Hypotonic (Pure Water)", "Mildly Hypotonic", "Isotonic Balance", "Hypertonic Mix", "Hypertonic (100% Syrup)"],
-          observations: [
-            "After vinegar dissolved the calcium carbonate shell, the naked egg sits in 100% distilled water (higher water concentration outside than inside).",
-            "In 75% water, osmotic pressure pushes water molecules across the semi-permeable membrane.",
-            "At isotonic balance, water enters and exits the egg membrane at equal rates.",
-            "In 75% corn syrup, sugar molecules outside are too large to cross the membrane.",
-            "In 100% light corn syrup, water is drawn out of the egg's interior."
+        game: {
+          visual: "egg",
+          tools: [
+            { icon: "🫗", label: "1. Dissolve Shell in Vinegar", log: "Acetic acid reacts with the calcium carbonate shell (releasing CO₂ bubbles), leaving a squishy semi-permeable membrane!" },
+            { icon: "⚖️", label: "2. Record Baseline Mass", log: "Wearing nitrile gloves, you weighed the shell-less egg on a 0.01g digital scale before soaking." },
+            { icon: "🍯", label: "3. Submerge in Corn Syrup", log: "You placed the egg into hypertonic corn syrup where water concentration is much lower outside the membrane!" }
           ],
-          mysteryQ: "If a shell-less egg starts at 62.40 g, how many exact grams does it gain in water vs. lose in corn syrup?",
-          mysteryWhy: "This preview shows the membrane setup, but only weighing real shell-less eggs on a 0.01g scale lets you prove osmotic mass transfer!",
-          visualType: "egg"
+          mysteryQ: "If the egg starts at 62.40 g, how many exact grams does it lose in corn syrup vs. gain in pure distilled water?",
+          mysteryWhy: "You've submerged the semi-permeable membrane here—weigh real eggs on our 0.01g lab balances in person to calculate exact % mass change!"
         }
       },
       {
@@ -924,20 +902,15 @@
           "Strict no-direct-eye-exposure rule for 395 nm UV keychains.",
           "Operate UV lights exclusively inside enclosed dark contrast boxes."
         ],
-        sim: {
-          varName: "Excitation Light Wavelength",
-          ticks: ["Dark Box", "Red LED", "White LED", "Blue LED", "395 nm UV"],
-          readouts: ["Dark Box (0 nm)", "650 nm Red Light", "White Room Light", "470 nm Blue Light", "395 nm UV Excitation"],
-          observations: [
-            "Inside the closed dark contrast box with the light off, tonic water and chlorophyll look completely dark.",
-            "Red light lacks enough photon energy to excite electrons in quinine molecules.",
-            "Under normal white light, tonic water looks clear and spinach extract looks green.",
-            "Blue light begins exciting chlorophyll's porphyrin ring.",
-            "At 395 nm UV inside the dark box, high-energy UV photons hit the cuvettes and trigger Stokes-shift emission!"
+        game: {
+          visual: "uv",
+          tools: [
+            { icon: "🧪", label: "1. Load Quinine & Chlorophyll", log: "You filled Cuvette A with clear tonic water (quinine) and Cuvette B with green spinach chlorophyll extract." },
+            { icon: "📦", label: "2. Close Dark Viewing Box", log: "Closing the contrast box blocks room light so weak emitted photons become visible." },
+            { icon: "🔦", label: "3. Fire 395 nm UV Beam", log: "High-energy 395 nm UV photons excite electrons in both liquids, triggering instant Stokes-shift glow!" }
           ],
-          mysteryQ: "Under 395 nm UV light, why does clear tonic water glow electric cyan while green chlorophyll glows deep blood-red?",
-          mysteryWhy: "You can test the light wavelengths here, but only placing real cuvettes inside our dark UV viewing box lets you see both Stokes shifts side-by-side!",
-          visualType: "uv"
+          mysteryQ: "Under 395 nm UV, why does clear tonic water glow electric cyan while green chlorophyll glows deep blood-red?",
+          mysteryWhy: "You fired the UV excitation beam here—see the real fluorescent emission spectrum inside our dark viewing box during the workshop!"
         }
       },
       {
@@ -952,20 +925,15 @@
           "Screen students for plant or pollen allergies beforehand.",
           "Keep leaves raw and unburned."
         ],
-        sim: {
-          varName: "Surface Microstructure Roughness",
-          ticks: ["Glass Slide", "Paper Towel", "Oak Leaf", "Cabbage Leaf", "Lotus Wax"],
-          readouts: ["Hydrophilic Glass", "Absorbent Cellulose", "Semi-Waxy Leaf", "Epicuticular Wax", "Superhydrophobic Nano-Bumps"],
-          observations: [
-            "On a flat hydrophilic plastic slide, the dyed water droplet spreads out flat with a low contact angle.",
-            "On porous paper, capillary fibers immediately wick the water droplet inward.",
-            "On a standard leaf cuticle, the droplet forms a rounded dome.",
-            "On a waxy cabbage leaf, microscopic wax crystals trap tiny air pockets beneath the droplet.",
-            "On superhydrophobic lotus-type micro-bumps, water beads into a near-perfect sphere!"
+        game: {
+          visual: "drop",
+          tools: [
+            { icon: "🥬", label: "1. Mount Waxy Leaf Surface", log: "You placed a fresh cabbage/lotus leaf coated with microscopic epicuticular wax crystals onto the bench." },
+            { icon: "💧", label: "2. Pipette Dyed Droplet", log: "Instead of spreading flat, water molecules pull inward into a high-angle sphere perched on microscopic air pockets!" },
+            { icon: "📐", label: "3. Tilt Leaf 15 Degrees", log: "Tilting the leaf causes the spherical droplet to roll smoothly across the surface." }
           ],
-          mysteryQ: "If you tilt the leaf at a 15° angle with dust on it, how does a superhydrophobic droplet self-clean the surface?",
-          mysteryWhy: "You see the droplet angle change here, but only rolling real dyed droplets across cabbage/lotus leaves and inspecting the wax under a Foldscope proves self-cleaning biomimicry!",
-          visualType: "drop"
+          mysteryQ: "When you sprinkle cinnamon or chalk dust onto the leaf first, how does the rolling water droplet clean the leaf?",
+          mysteryWhy: "You formed the superhydrophobic bead here—test real self-cleaning droplets and inspect the wax nano-bumps under a Foldscope in person!"
         }
       },
       {
@@ -980,20 +948,15 @@
           "Strict low-voltage limit: 18V–36V DC battery power only (no wall-outlet high-voltage supplies).",
           "ZERO ethidium bromide or mutagenic stains—non-toxic food dyes visible under white light only."
         ],
-        sim: {
-          varName: "DC Battery Pack Voltage (Volts)",
-          ticks: ["0V Off", "9V (1 Bat)", "18V (2 Bats)", "27V (3 Bats)", "36V (4 Bats)"],
-          readouts: ["0V (No Field)", "9V Low Field", "18V Standard", "27V Fast Run", "36V Max Safe DC"],
-          observations: [
-            "Mystery dye mixtures are pipetted into the 4 wells at the negative (black) end of the 1% agarose gel.",
-            "At 9V DC, tiny hydrogen/oxygen bubbles appear on the stainless-steel electrodes as ions begin moving.",
-            "At 18V DC, negatively charged dye molecules migrate through the microscopic agarose mesh toward the positive (+) red electrode.",
-            "At 27V DC, smaller molecules squeeze through the gel pores faster than bulky molecules.",
-            "At 36V DC, clear band separation develops across the gel matrix."
+        game: {
+          visual: "gel",
+          tools: [
+            { icon: "🧱", label: "1. Cast 1% Agarose Gel", log: "You poured warm agarose + baking soda buffer around a 4-well comb to create a microscopic molecular sieve." },
+            { icon: "💧", label: "2. Load 4 Mystery Dyes", log: "You pipetted Red, Blue, Mystery Purple, and Mystery Green dye samples into the 4 wells at the negative (black) end." },
+            { icon: "⚡", label: "3. Connect 27V DC Pack", log: "Connecting three 9V batteries in series creates an electric field—pulling negatively charged dyes toward the (+) red electrode!" }
           ],
-          mysteryQ: "Which mystery store-bought food coloring contains TWO hidden dyes—and which molecule has the smallest molecular weight?",
-          mysteryWhy: "You see the electric field setup here, but only casting a real agarose gel and measuring millimeter band migration solves the mystery dye fingerprint!",
-          visualType: "gel"
+          mysteryQ: "Which mystery store-bought food coloring splits into TWO hidden bands—and which molecule has the smallest molecular weight?",
+          mysteryWhy: "You energized the 27V gel box here—cast a real agarose gel in class and measure millimeter band migration to solve the molecular fingerprint!"
         }
       },
       {
@@ -1008,20 +971,15 @@
           "Handle plastic cuvettes by frosted/clear side edges only to avoid fingerprints on optical faces.",
           "Use diffused white LEDs only—avoid high-powered lasers."
         ],
-        sim: {
-          varName: "Cuvette Dye Concentration (mg/L)",
-          ticks: ["0 Blank", "10 mg/L", "25 mg/L", "50 mg/L", "100 mg/L"],
-          readouts: ["0 mg/L (Water Blank)", "10 mg/L Light", "25 mg/L Medium", "50 mg/L Dark", "100 mg/L Concentrated"],
-          observations: [
-            "With a pure water blank cuvette between the white LED and smartphone sensor, 100% of light intensity (I₀) reaches the detector.",
-            "At 10 mg/L, dissolved dye molecules absorb a small fraction of incoming photons.",
-            "At 25 mg/L, transmitted lux drops noticeably on the Phyphox light meter.",
-            "At 50 mg/L, more photons are absorbed along the 1 cm cuvette path length.",
-            "At 100 mg/L, very little transmitted light reaches the smartphone sensor."
+        game: {
+          visual: "spec",
+          tools: [
+            { icon: "💧", label: "1. Calibrate Water Blank (I₀)", log: "You placed a pure water cuvette between the white LED and smartphone sensor to record 100% baseline light transmittance (I₀)." },
+            { icon: "🧪", label: "2. Insert Dye Cuvette", log: "Swapping in a colored dye cuvette causes dissolved molecules to absorb specific wavelengths of light." },
+            { icon: "📱", label: "3. Read Phyphox Lux Sensor", log: "The smartphone ambient light sensor records the transmitted lux value (I) through the 1 cm optical path." }
           ],
           mysteryQ: "Using Absorbance = -log₁₀(I / I₀), can you determine the exact concentration of an UNKNOWN mystery sports drink?",
-          mysteryWhy: "You see how light dims through the cuvette, but only recording real lux values in Phyphox and solving the Beer-Lambert equation cracks the unknown concentration!",
-          visualType: "spec"
+          mysteryWhy: "You've aligned the LED-to-smartphone optical path here—collect real lux readings in class and solve Beer-Lambert's Law to crack the unknown!"
         }
       },
       {
@@ -1036,20 +994,15 @@
           "Use food-grade sodium alginate and calcium lactate only.",
           "Strict 'no tasting or eating' rule inside the lab workspace; splash goggles required."
         ],
-        sim: {
-          varName: "Calcium Lactate Cross-Linking Bath (%)",
-          ticks: ["0% Water", "0.5% Low", "1.0% Medium", "2.0% Strong", "4.0% Dense"],
-          readouts: ["0% (No Calcium)", "0.5% Thin Shell", "1.0% Standard Bead", "2.0% Thick Capsule", "4.0% Rigid Matrix"],
-          observations: [
-            "Dropping liquid sodium alginate into plain water (0% calcium) causes the drop to disperse without forming a capsule.",
-            "At 0.5% calcium lactate, Ca²⁺ ions begin linking alginate polymer chains into a soft outer skin.",
-            "At 1.0% calcium, spherical hydrogel 'medicine' beads snap into shape immediately on contact!",
-            "At 2.0% calcium, a thicker cross-linked polymer shell forms around the red dye core.",
-            "At 4.0% calcium, tightly cross-linked pores surround the encapsulated payload."
+        game: {
+          visual: "hydrogel",
+          tools: [
+            { icon: "🧪", label: "1. Mix Alginate + 'Medicine'", log: "You stirred red 'medicine' dye into thick sodium alginate polymer extracted from brown seaweed." },
+            { icon: "💧", label: "2. Drip Into Calcium Bath", log: "As droplets hit the 2% calcium lactate bath, Ca²⁺ ions cross-link polymer chains into instant squishy hydrogel spheres!" },
+            { icon: "⏱️", label: "3. Transfer to Release Beaker", log: "You scooped the hydrogel capsules into clear water to begin measuring controlled drug diffusion." }
           ],
-          mysteryQ: "When you transfer 1.0% vs. 4.0% hydrogel capsules into pure water, how many minutes does it take for the 'medicine' to diffuse out?",
-          mysteryWhy: "You can form virtual hydrogel spheres here, but only timing real cross-linked beads in water lets engineers design slow-release vs. fast-release medicine capsules!",
-          visualType: "hydrogel"
+          mysteryQ: "How many minutes does it take for a 1% vs. 4% calcium-crosslinked capsule to release its medicine payload into water?",
+          mysteryWhy: "You synthesized virtual hydrogel beads here—now engineer real alginate capsules in class and time their drug-release curves!"
         }
       },
       {
@@ -1064,20 +1017,15 @@
           "Operate 395 nm UV lights exclusively inside enclosed dark viewing boxes.",
           "Collect filtered tracer solids on filter paper for trash disposal (do not rinse microplastics down drains)."
         ],
-        sim: {
-          varName: "Filter Column Layer Configuration",
-          ticks: ["No Filter", "Gravel Only", "Gravel+Sand", "+Biochar", "Full 4-Layer"],
-          readouts: ["Unfiltered Spiked Water", "Layer 1: Coarse Gravel", "Layers 1–2: Gravel + Sand", "Layers 1–3: + Biochar", "All 4 Media Layers"],
-          observations: [
-            "Under 395 nm UV light, the unfiltered water sample glows with suspended fluorescent tracer microparticles.",
-            "Coarse gravel traps large debris while letting tiny microparticles pass between stones.",
-            "Adding fine silica sand creates smaller interstitial pore channels.",
-            "Adding activated biochar introduces high-surface-area carbon pores.",
-            "Water drips through the complete multi-stage column into the collection beaker below."
+        game: {
+          visual: "filter",
+          tools: [
+            { icon: "🪨", label: "1. Pack 4-Layer Filter", log: "You layered cotton, activated biochar, fine silica sand, and coarse gravel inside a 20 mL filtration column." },
+            { icon: "🌊", label: "2. Pour Microplastic Water", log: "Spiked water containing glowing tracer microparticles percolates through the multi-stage pore network." },
+            { icon: "🔦", label: "3. Scan Filtrate Under 395nm UV", log: "You placed the filtered beaker inside the dark UV box to inspect any surviving glowing specks." }
           ],
-          mysteryQ: "Under 395 nm UV + ImageJ particle counting, what exact percentage (0–100%) of microplastics did your filter remove?",
-          mysteryWhy: "You see the filter column layers here, but only photographing your real before/after water under 395 nm UV and counting dots in ImageJ proves filtration efficiency!",
-          visualType: "filter"
+          mysteryQ: "Using ImageJ particle analysis before vs. after filtration, what exact % of microplastics did your biochar column remove?",
+          mysteryWhy: "You built and ran the 4-layer filter here—now photograph your real filtrate under 395 nm UV and run ImageJ particle counts in person!"
         }
       },
       {
@@ -1092,20 +1040,15 @@
           "Use mild household acids/bases only (no strong laboratory HCl or NaOH).",
           "Mandatory splash goggles and nitrile gloves."
         ],
-        sim: {
-          varName: "Hydrogen Ion Concentration (pH Scale)",
-          ticks: ["pH 2 Acid", "pH 4 Mild", "pH 7 Neutral", "pH 9 Base", "pH 11 Strong"],
-          readouts: ["pH 2.0 (Strong Acid)", "pH 4.5 (Weak Acid)", "pH 7.0 (Neutral)", "pH 9.0 (Mild Base)", "pH 11.0 (Household Base)"],
-          observations: [
-            "At pH 2.0, excess H⁺ protons attach to anthocyanin pigment molecules, shifting their light absorption.",
-            "At pH 4.5, the anthocyanin molecule partially changes its ring structure.",
-            "At pH 7.0, pure red cabbage extract sits in its neutral violet state.",
-            "At pH 9.0, hydroxide (OH⁻) ions pull protons off the pigment.",
-            "At pH 11.0, the pigment structure shifts again in alkaline solution."
+        game: {
+          visual: "ph",
+          tools: [
+            { icon: "🥬", label: "1. Pipette Cabbage Indicator", log: "You filled 3 wells with neutral purple anthocyanin pigment extracted from red cabbage leaves (pH 7.0)." },
+            { icon: "🍋", label: "2. Add Citric Acid (Lemon)", log: "H⁺ protons protonate the anthocyanin ring, shifting Well #1 to bright magenta-pink (pH ~2.2)!" },
+            { icon: "🧂", label: "3. Add Baking Soda Base", log: "OH⁻ ions deprotonate the pigment in Well #3, shifting it to ocean-teal (pH ~8.5)!" }
           ],
-          mysteryQ: "If you titrate drops of baking soda into lemon juice + cabbage extract, how many exact drops neutralize it back to pH 7.0?",
-          mysteryWhy: "You can preview the pH shift here, but only counting real pipette drops in a 24-well plate lets you perform a true acid-base neutralization titration!",
-          visualType: "ph"
+          mysteryQ: "If you titrate drops of baking soda into acidified cabbage extract, how many exact drops neutralize it back to pH 7.0?",
+          mysteryWhy: "You saw the acid/base color shifts here—now run a drop-by-drop neutralization titration in a real 24-well plate during the workshop!"
         }
       },
       {
@@ -1120,20 +1063,15 @@
           "Screen all students for dairy/milk allergies prior to the session.",
           "Food-grade reagents only; dispose of dairy waste immediately after testing and sanitize benches."
         ],
-        sim: {
-          varName: "Milk Flow Residence Time in Bioreactor",
-          ticks: ["0 Sec (Raw)", "15 Sec Flow", "30 Sec Flow", "60 Sec Flow", "120 Sec Hold"],
-          readouts: ["0s (Before Column)", "15s Fast Drip", "30s Medium Flow", "60s Slow Drip", "120s Full Contact"],
-          observations: [
-            "Before entering the syringe bioreactor, regular milk contains lactose disaccharides and 0 mg/dL free glucose.",
-            "At a fast 15-second drip, milk flows past the lactase-alginate beads with brief contact.",
-            "At 30 seconds, immobilized lactase enzymes inside the beads cleave lactose into glucose + galactose.",
-            "At 60 seconds, more lactose molecules diffuse into the porous alginate beads.",
-            "After 120 seconds in the packed column, treated milk drips onto the glucose test strip."
+        game: {
+          visual: "bioreactor",
+          tools: [
+            { icon: "💊", label: "1. Trap Lactase in Beads", log: "You encapsulated commercial lactase enzyme inside porous calcium-alginate beads and packed them into a 10 mL syringe." },
+            { icon: "🥛", label: "2. Drip Milk Through Column", log: "As milk flows past the immobilized beads, lactase cleaves lactose sugar into glucose + galactose!" },
+            { icon: "📊", label: "3. Dip Glucose Test Strip", log: "You touched a colorimetric glucose strip to the treated milk dripping out the syringe nozzle." }
           ],
-          mysteryQ: "On a real glucose test strip, how many mg/dL of glucose are produced—and can the SAME bioreactor column digest a 2nd batch of milk?",
-          mysteryWhy: "You see the packed bioreactor column here, but only dipping real glucose strips into the outflow proves that immobilized enzymes are reusable!",
-          visualType: "bioreactor"
+          mysteryQ: "How many mg/dL of glucose appear on the test strip—and can the SAME bioreactor column digest a 2nd and 3rd batch of milk?",
+          mysteryWhy: "You built the immobilized enzyme bioreactor here—test real milk batches in person to prove why factories reuse immobilized enzymes!"
         }
       },
       {
@@ -1148,20 +1086,15 @@
           "Keep microbial fuel cell chambers sealed during operation; wash hands thoroughly after soil/yeast setup.",
           "Low-voltage (<1V DC) passive biological output only."
         ],
-        sim: {
-          varName: "Microbial Nutrient Feedstock (Sugar Grams)",
-          ticks: ["0g Starved", "1g Low", "3g Medium", "5g High", "8g Saturated"],
-          readouts: ["0g Sugar (Baseline)", "1g Nutrient", "3g Nutrient", "5g Nutrient", "8g Nutrient"],
-          observations: [
-            "With 0g sugar in the sealed anode chamber, microbes have minimal metabolic electron flow to the carbon cloth.",
-            "Adding 1g nutrient stimulates cellular respiration, releasing electrons onto the anode.",
-            "At 3g nutrient, electrons travel through the external multimeter wire toward the cathode.",
-            "At 5g nutrient, microbial metabolism accelerates inside the sealed chamber.",
-            "At 8g nutrient, high substrate concentration surrounds the carbon cloth electrode."
+        game: {
+          visual: "mfc",
+          tools: [
+            { icon: "🔋", label: "1. Seal Anode Chamber", log: "You packed electrogenic microbes + nutrient broth against a conductive carbon cloth anode and sealed the chamber." },
+            { icon: "🔌", label: "2. Wire Carbon Cathode", log: "Connecting the anode and air-cathode electrodes completes an external electron pathway." },
+            { icon: "📟", label: "3. Clip Digital Multimeter", log: "As microbes digest sugar, electrons flow through the carbon cloth and register live millivolts!" }
           ],
-          mysteryQ: "How many exact millivolts (mV) does your microbial fuel cell generate on a digital multimeter—and how many cells in series light an LED?",
-          mysteryWhy: "You see the anode/cathode circuit here, but only wiring real carbon cloth electrodes to a digital multimeter measures live biological electricity!",
-          visualType: "mfc"
+          mysteryQ: "How many exact millivolts (mV) does your fuel cell generate—and how many cells wired in series light an LED?",
+          mysteryWhy: "You wired the bio-battery circuit here—use real carbon cloth electrodes and digital multimeters in class to harvest live microbial voltage!"
         }
       },
       {
@@ -1176,20 +1109,15 @@
           "100% dry-lab computational session—zero chemical or biological hazards.",
           "Ideal follow-up session to DNA Extraction or rainy-day classroom lab."
         ],
-        sim: {
-          varName: "COI Barcode Query Sequence Length (bp)",
-          ticks: ["15 bp Short", "40 bp", "100 bp", "300 bp", "650 bp Full"],
-          readouts: ["15 bp Fragment", "40 bp Partial", "100 bp Segment", "300 bp Half-Gene", "650 bp Full COI"],
-          observations: [
-            "With only 15 base pairs (5'-CCTATATCTA...-3'), hundreds of unrelated fish species share the exact same short sequence.",
-            "At 40 bp, sequence alignment narrows down to the same taxonomic family.",
-            "At 100 bp, species-specific single nucleotide polymorphisms (SNPs) appear.",
-            "At 300 bp, the query covers half of the mitochondrial cytochrome c oxidase I (COI) barcode region.",
-            "At 650 bp, the full COI barcode sequence is ready for NCBI BLAST database alignment."
+        game: {
+          visual: "dna3d",
+          tools: [
+            { icon: "🧬", label: "1. Extract COI Barcode", log: "You isolated a 650-bp mitochondrial COI barcode sequence from Mystery Fish Sample #04." },
+            { icon: "🔬", label: "2. Inspect 3D Helix SNPs", log: "Try clicking the DNA bases on the right panel to see how single nucleotide changes warp the 3D double helix and cause genetic conditions!" },
+            { icon: "💻", label: "3. Query NCBI BLAST", log: "Your FASTA sequence is queued against millions of reference genomes in the global NCBI database." }
           ],
-          mysteryQ: "When you run Mystery Sample #04 ('Wild Red Snapper') in NCBI BLAST, is it real snapper or a cheaper mislabeled fish?",
-          mysteryWhy: "You see how sequence length affects specificity here, but only decoding the mystery FASTA barcode card in our workshop reveals the food-fraud culprit!",
-          visualType: "blast"
+          mysteryQ: "When NCBI BLAST aligns Mystery Sample #04 ('Wild Red Snapper'), is it authentic snapper or a mislabeled substitute?",
+          mysteryWhy: "Play with the 3D DNA helix & Disease Dex on the right—then join our workshop to run real NCBI BLAST alignments and bust seafood mislabeling!"
         }
       }
     ];
@@ -1242,7 +1170,6 @@
       const selects = Array.from(container.querySelectorAll('select'));
       const alreadyExists = selects.some(s => s.value === title);
       if (!alreadyExists) {
-        // Fill the first empty row if available, otherwise add a new row
         const emptySelect = selects.find(s => s.value === '');
         if (emptySelect) {
           emptySelect.value = title;
@@ -1275,7 +1202,6 @@
       }
     }
 
-    // Start with 1 empty placeholder dropdown so "0 Labs" matches the badge accurately!
     addWorkshopDropdownRow('');
 
     // ==========================================
@@ -1348,7 +1274,7 @@
                   Protocol & Safety
                 </button>
                 <button onclick="launchBenchDemo(${realIdx})" class="py-2 px-2.5 rounded-xl bg-bio-purple/20 border border-bio-purple/50 text-purple-200 text-xs font-mono hover:bg-bio-purple/30 transition">
-                  🎮 Pre-Lab Demo
+                  🎮 Play Lab Game
                 </button>
               </div>
               <button onclick="addLabFromCatalog('${lab.title.replace(/'/g, "\\'")}')" class="w-full py-2.5 px-3 rounded-xl font-mono text-xs font-bold transition ${
@@ -1405,7 +1331,7 @@
             ${added ? '✓ Added to Booking Cart' : '+ Add Lab to Booking Cart'}
           </button>
           <button onclick="closeModal(); launchBenchDemo(${idx});" class="px-4 py-3 rounded-xl bg-bio-purple/25 border border-bio-purple/50 text-purple-200 font-mono text-xs hover:bg-bio-purple/35 transition">
-            🎮 Open Pre-Lab Demo
+            🎮 Play Virtual Lab
           </button>
         </div>
       `;
@@ -1419,9 +1345,62 @@
     renderLabs();
 
     // ==========================================
-    // 5. ALL 20 LABS VIRTUAL PRE-LAB BENCH ENGINE
+    // 5. INTERACTIVE 20-LAB TOOLBENCH & 3D HELIX ENGINE
     // ==========================================
     let currentBenchIdx = 0;
+    let currentBenchStep = 0; // 0 = initial, 1 = tool 1 clicked, 2 = tool 2 clicked, 3 = tool 3 clicked
+    let animPhase = 0;
+
+    // 3D DNA Base Mutator State (for Genetics/DNA labs)
+    const dnaBases = ['A', 'T', 'C', 'G'];
+    const baseColors = { A: '#10b981', T: '#f43f5e', C: '#38bdf8', G: '#fbbf24' };
+    const complementMap = { A: 'T', T: 'A', C: 'G', G: 'C' };
+    const defaultMiniSeq = ['T', 'A', 'C', 'G', 'A', 'G'];
+    let miniSeq = [...defaultMiniSeq];
+    let helixMorph = 'normal';
+    const collectedDiseases = new Set(['Wild-Type']);
+
+    function cycleMiniBase(idx) {
+      miniSeq[idx] = dnaBases[(dnaBases.indexOf(miniSeq[idx]) + 1) % dnaBases.length];
+      updateMiniDNA();
+    }
+
+    function updateMiniDNA() {
+      const container = document.getElementById('miniDnaBases');
+      const tag = document.getElementById('miniDiseaseTag');
+      const countEl = document.getElementById('dexMiniCount');
+
+      container.innerHTML = miniSeq.map((b, i) => {
+        const mutated = b !== defaultMiniSeq[i];
+        return `<button onclick="cycleMiniBase(${i})" class="py-1.5 rounded font-mono text-xs font-bold border transition ${
+          mutated ? 'bg-bio-purple/30 border-bio-purple text-purple-200' : 'bg-slate-900 border-slate-700 text-bio-cyan hover:border-bio-cyan'
+        }">${b}</button>`;
+      }).join('');
+
+      const seqStr = miniSeq.join('');
+      if (seqStr === 'TACGAG') {
+        helixMorph = 'normal';
+        collectedDiseases.add('Wild-Type');
+        tag.textContent = '✨ Wild-Type: Normal 3D Helix & Hemoglobin';
+      } else if (miniSeq[0] !== 'T' || miniSeq[1] !== 'A' || miniSeq[2] !== 'C') {
+        helixMorph = 'startloss';
+        collectedDiseases.add('Beta-Thalassemia');
+        tag.textContent = '⚠️ Start-Loss Mutation → Beta-Thalassemia (Unwound 5\' End)';
+      } else if (seqStr === 'TACATT' || seqStr === 'TACATC' || seqStr === 'TACACT') {
+        helixMorph = 'nonsense';
+        collectedDiseases.add('Cystic Fibrosis');
+        tag.textContent = '🛑 Nonsense Early STOP → Cystic Fibrosis (Truncated Helix)';
+      } else if (seqStr === 'TACGAA') {
+        helixMorph = 'silent';
+        collectedDiseases.add('Silent Variant');
+        tag.textContent = '🤫 Silent Mutation → Same Amino Acid (Intact Geometry)';
+      } else {
+        helixMorph = 'missense';
+        collectedDiseases.add('Sickle Cell Trait');
+        tag.textContent = '🩸 Missense Swap → Sickle Cell Trait (3D Helix Bulge)';
+      }
+      countEl.textContent = `${collectedDiseases.size}/5 Unlocked`;
+    }
 
     function launchBenchDemo(idx) {
       switchPage('kids-lab');
@@ -1447,24 +1426,31 @@
 
     function selectBenchLab(idx) {
       currentBenchIdx = idx;
+      currentBenchStep = 0;
       const lab = labSuite[idx];
       renderBenchMenu();
 
       document.getElementById('benchStageHeader').innerHTML = `
         <div class="flex flex-wrap items-center gap-2 mb-2">
-          <span class="px-2.5 py-0.5 rounded bg-bio-cyan/15 text-bio-cyan font-mono text-xs font-bold">LAB #${String(idx + 1).padStart(2, '0')} OF 20</span>
+          <span class="px-2.5 py-0.5 rounded bg-bio-cyan/15 text-bio-cyan font-mono text-xs font-bold">EXPERIMENT #${String(idx + 1).padStart(2, '0')} OF 20</span>
           ${gradeLabels(lab.grades)}
           ${lab.collegiate ? '<span class="px-2 py-0.5 rounded bg-bio-purple/20 text-purple-300 font-mono text-xs">⚡ Collegiate-Tier</span>' : ''}
         </div>
         <h3 class="font-display text-2xl sm:text-3xl font-bold text-white">${lab.title}</h3>
-        <p class="text-xs sm:text-sm text-slate-300 mt-1"><strong>Core Concept:</strong> ${lab.concept}</p>
+        <p class="text-xs sm:text-sm text-slate-300 mt-1"><strong>Concept:</strong> ${lab.concept}</p>
       `;
 
-      document.getElementById('benchSliderLabel').textContent = lab.sim.varName;
-      document.getElementById('benchTicks').innerHTML = lab.sim.ticks.map(t => `<span>${t}</span>`).join('');
       document.getElementById('benchEquipText').textContent = lab.materials;
-      document.getElementById('benchCliffhangerQ').textContent = `"${lab.sim.mysteryQ}"`;
-      document.getElementById('benchCliffhangerWhy').textContent = lab.sim.mysteryWhy;
+      document.getElementById('benchCliffhangerQ').textContent = `"${lab.game.mysteryQ}"`;
+      document.getElementById('benchCliffhangerWhy').textContent = lab.game.mysteryWhy;
+
+      const dnaPanel = document.getElementById('dnaMutatorPanel');
+      if (lab.game.visual === 'dna3d') {
+        dnaPanel.classList.remove('hidden');
+        updateMiniDNA();
+      } else {
+        dnaPanel.classList.add('hidden');
+      }
 
       const bookBtn = document.getElementById('benchBookThisBtn');
       bookBtn.onclick = () => {
@@ -1474,164 +1460,267 @@
       };
       document.getElementById('benchProtocolBtn').onclick = () => openLabModal(idx);
 
-      document.getElementById('benchVarSlider').value = 3;
-      updateBenchSim();
+      renderToolButtons();
     }
 
-    function updateBenchSim() {
-      const lab = labSuite[currentBenchIdx];
-      const step = parseInt(document.getElementById('benchVarSlider').value, 10) - 1; // 0..4
-      document.getElementById('benchVarReadout').textContent = lab.sim.readouts[step];
-      document.getElementById('benchObservationText').textContent = lab.sim.observations[step];
-      drawBenchVisual(lab.sim.visualType, step);
+    function resetCurrentBenchGame() {
+      currentBenchStep = 0;
+      renderToolButtons();
     }
 
-    function drawBenchVisual(type, step) {
-      const c = document.getElementById('benchVisualCanvas');
-      const g = c.getContext('2d');
-      g.clearRect(0, 0, c.width, c.height);
-
-      // Background subtle grid
-      g.strokeStyle = 'rgba(56, 189, 248, 0.08)';
-      g.lineWidth = 1;
-      for (let x = 0; x < c.width; x += 20) { g.beginPath(); g.moveTo(x, 0); g.lineTo(x, c.height); g.stroke(); }
-      for (let y = 0; y < c.height; y += 20) { g.beginPath(); g.moveTo(0, y); g.lineTo(c.width, y); g.stroke(); }
-
-      if (type === 'column' || type === 'filter' || type === 'bioreactor') {
-        // Syringe Column + Collection Beaker
-        g.strokeStyle = '#94a3b8';
-        g.lineWidth = 2;
-        g.strokeRect(105, 18, 70, 105);
-        // Packing media
-        g.fillStyle = type === 'filter' ? '#475569' : '#1e293b';
-        g.fillRect(107, 45, 66, 76);
-        // Band movement based on step
-        const bandY = 24 + step * 20;
-        g.fillStyle = step < 2 ? '#a855f7' : (step < 4 ? '#f43f5e' : '#38bdf8');
-        g.fillRect(108, Math.min(110, bandY), 64, 10);
-        // Nozzle & drops
-        g.fillStyle = '#94a3b8';
-        g.fillRect(135, 123, 10, 15);
-        // Collection beaker
-        g.strokeRect(110, 145, 60, 35);
-        g.fillStyle = step === 0 ? 'rgba(56,189,248,0.1)' : (step < 3 ? 'rgba(244,63,94,0.65)' : 'rgba(0,245,212,0.65)');
-        g.fillRect(112, 180 - (step + 1) * 6, 56, (step + 1) * 6);
-      } else if (type === 'plate') {
-        // 5-well serial dilution strip
-        const alphas = [1, 0.65, 0.4, 0.22, 0.12];
-        for (let i = 0; i < 5; i++) {
-          const cx = 36 + i * 52;
-          g.beginPath();
-          g.arc(cx, 95, 20, 0, Math.PI * 2);
-          g.fillStyle = `rgba(0, 245, 212, ${alphas[i] * ((step + 2) / 6)})`;
-          g.fill();
-          g.strokeStyle = '#38bdf8';
-          g.lineWidth = 2;
-          g.stroke();
-          g.fillStyle = '#e2e8f0';
-          g.font = '10px JetBrains Mono';
-          g.textAlign = 'center';
-          g.fillText(`1:${Math.pow(2, i + 1)}`, cx, 132);
-        }
-      } else if (type === 'gel') {
-        // 4-lane electrophoresis box
-        g.strokeStyle = '#64748b';
-        g.strokeRect(40, 20, 200, 150);
-        const dist = step * 26;
-        for (let lane = 0; lane < 4; lane++) {
-          const x = 58 + lane * 46;
-          g.fillStyle = '#334155';
-          g.fillRect(x, 30, 26, 7);
-          if (step > 0) {
-            g.fillStyle = lane % 2 === 0 ? '#f43f5e' : '#38bdf8';
-            g.fillRect(x, 42 + dist * 0.85, 26, 5);
-            if (lane >= 2) {
-              g.fillStyle = '#fbbf24';
-              g.fillRect(x, 42 + dist * 0.45, 26, 5);
-            }
-          }
-        }
-      } else if (type === 'cylinder' || type === 'tube') {
-        // Graduated cylinder / test tube with rising foam or alcohol interphase
-        g.strokeStyle = '#94a3b8';
-        g.lineWidth = 2;
-        g.strokeRect(110, 20, 60, 150);
-        const heights = [30, 55, 125, 70, 25];
-        const h = type === 'cylinder' ? heights[step] : (35 + step * 22);
-        g.fillStyle = type === 'cylinder' ? 'rgba(0, 245, 212, 0.7)' : 'rgba(244, 63, 94, 0.6)';
-        g.fillRect(112, 168 - h, 56, h);
-        if (type === 'tube') {
-          g.fillStyle = 'rgba(255, 255, 255, 0.85)';
-          g.fillRect(112, 168 - h - (step * 3 + 2), 56, step * 3 + 2);
-        }
-      } else if (type === 'petri' || type === 'scope') {
-        // Circular Petri Dish or 140x Foldscope View
-        g.beginPath();
-        g.arc(140, 95, 72, 0, Math.PI * 2);
-        g.fillStyle = type === 'petri' ? '#1e1b4b' : '#022c22';
-        g.fill();
-        g.strokeStyle = '#00f5d4';
-        g.lineWidth = 3;
-        g.stroke();
-        const dots = (step + 1) * 5;
-        for (let i = 0; i < dots; i++) {
-          const ang = i * 0.8;
-          const rad = 12 + (i * 3) % 50;
-          g.beginPath();
-          g.arc(140 + Math.cos(ang) * rad, 95 + Math.sin(ang) * rad, step === 2 ? 4 : 2.5, 0, Math.PI * 2);
-          g.fillStyle = type === 'petri' ? '#fbbf24' : '#34d399';
-          g.fill();
-        }
-      } else if (type === 'ph' || type === 'uv' || type === 'spec' || type === 'hydrogel') {
-        // Beaker / Cuvette with dynamic color
-        const phColors = ['#f43f5e', '#fb7185', '#8b5cf6', '#06b6d4', '#10b981'];
-        g.strokeStyle = '#94a3b8';
-        g.lineWidth = 2;
-        g.strokeRect(95, 30, 90, 130);
-        g.fillStyle = phColors[step];
-        g.fillRect(97, 70, 86, 88);
-        if (type === 'hydrogel') {
-          for (let b = 0; b < step + 2; b++) {
-            g.beginPath();
-            g.arc(115 + (b * 14) % 55, 105 + (b * 11) % 40, 7, 0, Math.PI * 2);
-            g.fillStyle = '#f43f5e';
-            g.fill();
-          }
-        }
-      } else if (type === 'balloon') {
-        // Test tube + inflating balloon
-        g.strokeStyle = '#94a3b8';
-        g.strokeRect(125, 105, 30, 68);
-        const r = 14 + step * 9;
-        g.beginPath();
-        g.arc(140, 102 - r, r, 0, Math.PI * 2);
-        g.fillStyle = 'rgba(168, 85, 247, 0.75)';
-        g.fill();
-        g.strokeStyle = '#e9d5ff';
-        g.stroke();
-      } else if (type === 'egg' || type === 'drop') {
-        // Osmosis egg or hydrophobic droplet
-        const scale = type === 'egg' ? (1.25 - step * 0.12) : (0.7 + step * 0.14);
-        g.beginPath();
-        g.ellipse(140, 105, 42 * scale, 32 * scale, 0, 0, Math.PI * 2);
-        g.fillStyle = type === 'egg' ? '#fde68a' : '#38bdf8';
-        g.fill();
-        g.strokeStyle = '#ffffff';
-        g.stroke();
-      } else if (type === 'mfc' || type === 'blast' || type === 'tlc' || type === 'cells') {
-        // Signal / sequence / Rf bar chart visualization
-        for (let i = 0; i < 5; i++) {
-          const barH = 25 + ((i + step) % 5) * 24;
-          g.fillStyle = i <= step ? '#00f5d4' : '#1e293b';
-          g.fillRect(45 + i * 42, 165 - barH, 28, barH);
-        }
+    function clickBenchTool(stepNum) {
+      if (stepNum <= currentBenchStep + 1) {
+        currentBenchStep = stepNum;
+        renderToolButtons();
       }
     }
 
+    function renderToolButtons() {
+      const lab = labSuite[currentBenchIdx];
+      const container = document.getElementById('benchToolButtons');
+      const progressPill = document.getElementById('benchProgressPill');
+      const hintText = document.getElementById('toolHintText');
+      const obsText = document.getElementById('benchObservationText');
+      const cliffBox = document.getElementById('cliffhangerBox');
+      const cliffBadge = document.getElementById('cliffhangerStatusBadge');
+
+      progressPill.textContent = `Step ${currentBenchStep} / 3 Complete`;
+
+      container.innerHTML = lab.game.tools.map((tool, i) => {
+        const stepNum = i + 1;
+        const done = stepNum <= currentBenchStep;
+        const isNext = stepNum === currentBenchStep + 1;
+        const locked = stepNum > currentBenchStep + 1;
+
+        return `
+          <button onclick="clickBenchTool(${stepNum})" ${locked ? 'disabled' : ''} class="p-3 rounded-xl border text-left transition ${
+            done
+              ? 'bg-bio-cyan/15 border-bio-cyan text-white'
+              : isNext
+                ? 'bg-bio-dark border-bio-cyan text-bio-cyan tool-next cursor-pointer hover:bg-bio-cyan/10'
+                : 'bg-slate-950/60 border-slate-800 text-slate-500 cursor-not-allowed'
+          }">
+            <div class="flex items-center justify-between text-base mb-1">
+              <span>${tool.icon}</span>
+              <span class="font-mono text-[10px]">${done ? '✓ DONE' : isNext ? 'CLICK ME' : 'LOCKED'}</span>
+            </div>
+            <div class="font-mono text-xs font-bold leading-snug">${tool.label}</div>
+          </button>
+        `;
+      }).join('');
+
+      if (currentBenchStep === 0) {
+        hintText.textContent = 'Click Tool #1 to start the experiment';
+        obsText.textContent = 'Your lab bench is clean and ready! Click the glowing Tool #1 button above to perform the first step of this protocol.';
+      } else {
+        obsText.textContent = lab.game.tools[currentBenchStep - 1].log;
+        hintText.textContent = currentBenchStep < 3
+          ? `Great! Now click Tool #${currentBenchStep + 1}`
+          : 'All 3 setup steps complete! Check the hypothesis challenge below.';
+      }
+
+      if (currentBenchStep === 3) {
+        cliffBox.className = 'rounded-2xl p-5 border transition-all duration-300 bg-gradient-to-r from-bio-purple/25 via-bio-dark to-bio-blue/20 border-bio-purple glow-cyan opacity-100';
+        cliffBadge.textContent = '🔓 SETUP COMPLETE — CAN YOU SOLVE THIS IN PERSON?';
+        cliffBadge.className = 'px-2.5 py-1 rounded bg-bio-purple/30 text-purple-200 font-mono text-xs font-bold';
+      } else {
+        cliffBox.className = 'rounded-2xl p-5 border transition-all duration-300 bg-bio-dark/60 border-bio-border opacity-75';
+        cliffBadge.textContent = '🔒 COMPLETE ALL 3 BENCH TOOLS TO UNLOCK YOUR HYPOTHESIS CHALLENGE';
+        cliffBadge.className = 'px-2.5 py-1 rounded bg-slate-800 text-slate-400 font-mono text-xs font-bold';
+      }
+    }
+
+    // Continuous Live 60FPS Apparatus Animation Loop
+    function animateBenchCanvas() {
+      const c = document.getElementById('benchVisualCanvas');
+      if (c && !document.getElementById('page-kids-lab').classList.contains('hidden')) {
+        const g = c.getContext('2d');
+        const W = c.width, H = c.height;
+        g.clearRect(0, 0, W, H);
+        animPhase += 0.04;
+
+        // Lab grid background
+        g.strokeStyle = 'rgba(56, 189, 248, 0.07)';
+        g.lineWidth = 1;
+        for (let x = 0; x < W; x += 24) { g.beginPath(); g.moveTo(x, 0); g.lineTo(x, H); g.stroke(); }
+        for (let y = 0; y < H; y += 24) { g.beginPath(); g.moveTo(0, y); g.lineTo(W, y); g.stroke(); }
+
+        const vType = labSuite[currentBenchIdx].game.visual;
+        const step = currentBenchStep;
+
+        if (vType === 'dna3d') {
+          // Real Rotating 3D Double Helix!
+          const cx = W / 2;
+          for (let i = 0; i < 6; i++) {
+            const y = 36 + i * 38;
+            const twist = animPhase + i * 0.65;
+            let rad = 85;
+            if (helixMorph === 'missense' && (i === 2 || i === 3)) rad = 115;
+            if (helixMorph === 'nonsense' && i >= 3) rad = 36;
+            if (helixMorph === 'startloss' && i <= 1) rad = 118;
+
+            const x1 = cx + Math.sin(twist) * rad;
+            const z1 = Math.cos(twist);
+            const x2 = cx + Math.sin(twist + Math.PI) * rad;
+            const z2 = Math.cos(twist + Math.PI);
+            const midX = (x1 + x2) / 2;
+
+            const bA = miniSeq[i];
+            const bB = complementMap[bA];
+            const mut = bA !== defaultMiniSeq[i];
+
+            g.lineWidth = mut ? 5 : 3.5;
+            g.strokeStyle = baseColors[bA];
+            g.beginPath(); g.moveTo(x1, y); g.lineTo(midX, y); g.stroke();
+
+            g.strokeStyle = baseColors[bB];
+            g.beginPath(); g.moveTo(midX, y); g.lineTo(x2, y); g.stroke();
+
+            const drawSphere = (x, z, lbl, col) => {
+              const r = 9 + z * 3;
+              g.fillStyle = mut ? '#a855f7' : col;
+              g.beginPath(); g.arc(x, y, Math.max(5, r), 0, Math.PI * 2); g.fill();
+              g.fillStyle = '#040911';
+              g.font = 'bold 10px JetBrains Mono';
+              g.textAlign = 'center'; g.textBaseline = 'middle';
+              g.fillText(lbl, x, y);
+            };
+            if (z1 < z2) { drawSphere(x1, z1, bA, '#00f5d4'); drawSphere(x2, z2, bB, '#38bdf8'); }
+            else { drawSphere(x2, z2, bB, '#38bdf8'); drawSphere(x1, z1, bA, '#00f5d4'); }
+          }
+        } else if (vType === 'tube') {
+          // Strawberry DNA Extraction Tube
+          g.strokeStyle = '#94a3b8'; g.lineWidth = 2.5;
+          g.strokeRect(150, 35, 80, 195);
+          if (step >= 1) {
+            g.fillStyle = 'rgba(244, 63, 94, 0.72)';
+            g.fillRect(152, 130, 76, 98);
+          }
+          if (step >= 3) {
+            g.fillStyle = 'rgba(186, 230, 253, 0.25)';
+            g.fillRect(152, 75, 76, 55);
+            // Floating white DNA strands at interphase
+            g.strokeStyle = '#ffffff'; g.lineWidth = 2.5;
+            g.beginPath();
+            for (let x = 158; x < 222; x += 6) {
+              g.lineTo(x, 128 + Math.sin(x * 0.3 + animPhase * 2) * 4);
+            }
+            g.stroke();
+          }
+        } else if (vType === 'gel') {
+          // Animated 4-Lane Gel Electrophoresis
+          g.strokeStyle = '#64748b'; g.lineWidth = 2;
+          g.strokeRect(55, 25, 270, 215);
+          for (let l = 0; l < 4; l++) {
+            const x = 80 + l * 60;
+            g.fillStyle = '#1e293b'; g.fillRect(x, 40, 36, 9);
+            if (step === 2) {
+              g.fillStyle = '#a855f7'; g.fillRect(x, 40, 36, 9);
+            } else if (step === 3) {
+              const travel = (Math.sin(animPhase) * 0.15 + 0.85) * 115;
+              g.fillStyle = l % 2 === 0 ? '#f43f5e' : '#38bdf8';
+              g.fillRect(x, 52 + travel, 36, 6);
+              if (l >= 2) {
+                g.fillStyle = '#fbbf24';
+                g.fillRect(x, 52 + travel * 0.52, 36, 6);
+              }
+            }
+          }
+        } else if (vType === 'cylinder' || vType === 'balloon') {
+          // Rising Oxygen Foam or Inflating CO2 Balloon
+          g.strokeStyle = '#94a3b8'; g.lineWidth = 2;
+          g.strokeRect(155, 110, 70, 125);
+          g.fillStyle = 'rgba(251, 191, 36, 0.45)';
+          g.fillRect(157, 175, 66, 58);
+          if (step >= 2) {
+            for (let b = 0; b < 14; b++) {
+              const bx = 165 + (b * 19) % 52;
+              const by = 225 - ((animPhase * 35 + b * 17) % 110);
+              g.beginPath(); g.arc(bx, by, 3.5, 0, Math.PI * 2);
+              g.fillStyle = '#00f5d4'; g.fill();
+            }
+          }
+          if (vType === 'balloon' && step >= 3) {
+            const rad = 34 + Math.sin(animPhase * 2) * 4;
+            g.beginPath(); g.arc(190, 108 - rad, rad, 0, Math.PI * 2);
+            g.fillStyle = 'rgba(168, 85, 247, 0.78)'; g.fill();
+            g.strokeStyle = '#e9d5ff'; g.stroke();
+          } else if (vType === 'cylinder' && step >= 3) {
+            const foamH = 95 + Math.sin(animPhase * 2) * 8;
+            g.fillStyle = 'rgba(0, 245, 212, 0.72)';
+            g.fillRect(157, 175 - foamH, 66, foamH);
+          }
+        } else if (vType === 'column' || vType === 'filter' || vType === 'bioreactor') {
+          // Syringe Column + Dripping Collection Beaker
+          g.strokeStyle = '#94a3b8'; g.lineWidth = 2;
+          g.strokeRect(145, 22, 90, 130);
+          g.fillStyle = '#1e293b'; g.fillRect(147, 55, 86, 95);
+          if (step >= 1) {
+            g.fillStyle = step === 1 ? '#a855f7' : (step === 2 ? '#38bdf8' : 'rgba(56,189,248,0.2)');
+            g.fillRect(148, 32 + (step - 1) * 35, 84, 14);
+          }
+          g.strokeRect(150, 175, 80, 65);
+          if (step >= 2) {
+            g.fillStyle = step === 2 ? 'rgba(244, 63, 94, 0.75)' : 'rgba(0, 245, 212, 0.75)';
+            g.fillRect(152, 238 - step * 16, 76, step * 16);
+          }
+        } else if (vType === 'plate') {
+          // 5-Well Serial Dilution + LED Pad Glow
+          if (step === 3) {
+            g.fillStyle = 'rgba(0, 245, 212, 0.12)';
+            g.fillRect(25, 75, 330, 120);
+          }
+          for (let i = 0; i < 5; i++) {
+            const cx = 64 + i * 63;
+            g.beginPath(); g.arc(cx, 135, 24, 0, Math.PI * 2);
+            const filled = (step === 1 && i === 0) || step >= 2;
+            g.fillStyle = filled ? `rgba(0, 245, 212, ${1 / Math.pow(1.65, i)})` : '#0f172a';
+            g.fill();
+            g.strokeStyle = '#38bdf8'; g.lineWidth = 2; g.stroke();
+          }
+        } else if (vType === 'petri' || vType === 'scope') {
+          // Circular Petri Dish or 140x Foldscope Lens
+          g.beginPath(); g.arc(W / 2, H / 2, 100, 0, Math.PI * 2);
+          g.fillStyle = vType === 'petri' ? '#1e1b4b' : '#022c22'; g.fill();
+          g.strokeStyle = '#00f5d4'; g.lineWidth = 3; g.stroke();
+          if (step >= 2) {
+            for (let i = 0; i < step * 7; i++) {
+              const ang = i * 0.75 + (vType === 'scope' ? animPhase * 0.4 : 0);
+              const r = 18 + (i * 11) % 68;
+              g.beginPath(); g.arc(W / 2 + Math.cos(ang) * r, H / 2 + Math.sin(ang) * r, step === 3 ? 5 : 3, 0, Math.PI * 2);
+              g.fillStyle = vType === 'petri' ? '#fbbf24' : '#34d399'; g.fill();
+            }
+          }
+        } else if (vType === 'ph' || vType === 'uv' || vType === 'spec' || vType === 'hydrogel') {
+          // 3-Well Colorimetric / UV / Hydrogel Stage
+          const colors = step === 0 ? ['#1e293b', '#1e293b', '#1e293b']
+            : step === 1 ? ['#8b5cf6', '#8b5cf6', '#8b5cf6']
+            : step === 2 ? ['#f43f5e', '#8b5cf6', '#8b5cf6']
+            : ['#f43f5e', '#8b5cf6', '#10b981'];
+          for (let w = 0; w < 3; w++) {
+            const x = 65 + w * 95;
+            g.strokeStyle = '#94a3b8'; g.lineWidth = 2;
+            g.strokeRect(x, 65, 65, 140);
+            g.fillStyle = colors[w];
+            g.fillRect(x + 2, 105, 61, 98);
+          }
+        } else {
+          // Egg / Droplet / TLC / Microbial Fuel Cell Stage
+          g.strokeStyle = '#38bdf8'; g.lineWidth = 2.5;
+          g.strokeRect(85, 50, 210, 170);
+          g.fillStyle = step === 0 ? '#1e293b' : (step === 1 ? '#38bdf8' : (step === 2 ? '#a855f7' : '#00f5d4'));
+          const pulse = 35 + step * 14 + Math.sin(animPhase * 2) * 3;
+          g.beginPath(); g.arc(W / 2, H / 2, pulse, 0, Math.PI * 2); g.fill();
+        }
+      }
+      requestAnimationFrame(animateBenchCanvas);
+    }
+
     selectBenchLab(0);
+    animateBenchCanvas();
 
     // ==========================================
-    // 6. 6-SESSION FRAMEWORK & IMPACT CALCULATOR
+    // 6. 6-SESSION FRAMEWORK & BUDGET ESTIMATOR
     // ==========================================
     const sessions = [
       {
@@ -1722,10 +1811,10 @@
       const badge = document.getElementById('tierUnlockBadge');
       const kitRec = document.getElementById('impactKitRec');
       if (students >= 100) {
-        badge.textContent = 'Unlocks Tier 2 Advanced Collegiate Chapter Kit';
+        badge.textContent = 'Recommended: Tier 2 Advanced Collegiate Chapter Kit';
         kitRec.textContent = 'Tier 2 Collegiate Suite ($420–$630)';
       } else {
-        badge.textContent = 'Unlocks Tier 1 Core DIY Chapter Kit';
+        badge.textContent = 'Recommended: Tier 1 Core DIY Chapter Kit';
         kitRec.textContent = 'Tier 1 DIY Launch Kit ($175–$250)';
       }
     }
@@ -1805,7 +1894,7 @@ Official Contact: contact@omnibiolabs.org | Website: https://omnibiolabs.org
         const plan = document.getElementById('chapPlan').value;
         const subject = encodeURIComponent(`[New Chapter Application] ${school} — ${name}`);
         const body = encodeURIComponent(
-          `NEW OMNIBIO LABS CHAPTER APPLICATION\n\nFounder(s): ${name}\nEmail: ${email}\nHigh School / Location: ${school}\nRequested Kit Tier: ${tier}\nSafety Charter Compliance: AGREED\n\nK-8 Partner Schools & Mentor Plan:\n${plan}`
+          `NEW OMNIBIO LABS CHAPTER APPLICATION\n\nFounder(s): ${name}\nEmail: ${email}\nHigh School / Location: ${school}\nTarget Kit Tier: ${tier}\nSafety Charter Compliance: AGREED\n\nK-8 Partner Schools & Mentor Plan:\n${plan}`
         );
         window.location.href = `mailto:contact@omnibiolabs.org?subject=${subject}&body=${body}`;
       } else {
