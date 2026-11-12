@@ -79,3 +79,608 @@
     </div>
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OmniBio Labs | Youth Hands-On Biotechnology & STEM Workshops</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            display: ['Space Grotesk', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            bio: {
+              dark: '#050b14',
+              card: '#0b1526',
+              border: '#172a46',
+              cyan: '#00f5d4',
+              blue: '#38bdf8',
+              purple: '#a855f7'
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { background-color: #050b14; color: #e2e8f0; }
+    .glow-cyan { box-shadow: 0 0 25px rgba(0, 245, 212, 0.18); }
+    .glass { background: rgba(11, 21, 38, 0.75); backdrop-filter: blur(12px); border: 1px solid rgba(56, 189, 248, 0.16); }
+    .gradient-text {
+      background: linear-gradient(135deg, #00f5d4 0%, #38bdf8 50%, #a855f7 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+  </style>
+</head>
+<body class="antialiased selection:bg-bio-cyan selection:text-bio-dark">
+
+  <!-- Navigation -->
+  <nav class="fixed top-0 w-full z-50 glass border-b border-bio-border">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+      <a href="#" class="flex items-center gap-2.5 font-display font-bold text-xl tracking-tight text-white">
+        <span class="w-8 h-8 rounded-lg bg-bio-cyan/10 border border-bio-cyan/40 flex items-center justify-center text-bio-cyan">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 014.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15.3M14.25 3.104c.251.023.501.05.75.082M19.8 15.3l-1.57.393A9.065 9.065 0 0112 15a9.065 9.065 0 00-6.23-.693L5 14.5m14.8.8l1.402 1.402c1.232 1.232.65 3.318-1.067 3.611A48.309 48.309 0 0112 21c-2.773 0-5.491-.235-8.135-.687-1.718-.293-2.3-2.379-1.067-3.61L5 14.5" />
+          </svg>
+        </span>
+        OmniBio <span class="text-bio-cyan">Labs</span>
+      </a>
+      <div class="hidden md:flex items-center gap-7 text-sm font-medium text-slate-300">
+        <a href="#sandbox" class="hover:text-bio-cyan transition">DNA Sandbox</a>
+        <a href="#workshops" class="hover:text-bio-cyan transition">Workshops</a>
+        <a href="#quiz" class="hover:text-bio-cyan transition">Bio-Track Quiz</a>
+        <a href="#contact" class="px-4 py-2 rounded-lg bg-bio-cyan text-bio-dark font-semibold hover:brightness-110 transition">Host a Workshop</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section with Live Animated DNA Canvas -->
+  <header class="relative pt-28 pb-20 md:pt-36 md:pb-28 overflow-hidden">
+    <canvas id="dnaCanvas" class="absolute inset-0 w-full h-full opacity-35 pointer-events-none"></canvas>
+    <div class="relative max-w-6xl mx-auto px-4 sm:px-6 text-center">
+      <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full glass text-xs font-mono text-bio-cyan mb-6">
+        <span class="w-2 h-2 rounded-full bg-bio-cyan animate-ping"></span>
+        YOUTH-LED BIOTECH & LIFE SCIENCES INITIATIVE
+      </div>
+      <h1 class="font-display text-4xl sm:text-6xl font-bold tracking-tight text-white max-w-4xl mx-auto leading-tight">
+        Bringing Real <span class="gradient-text">Wet-Lab Biology</span> to Every Classroom.
+      </h1>
+      <p class="mt-6 text-base sm:text-lg text-slate-300 max-w-2xl mx-auto leading-relaxed">
+        OmniBio Labs delivers free, hands-on biotechnology workshops, DNA extraction kits, and interactive bio-design labs to middle and high school students.
+      </p>
+      <div class="mt-9 flex flex-wrap items-center justify-center gap-4">
+        <a href="#contact" class="px-6 py-3.5 rounded-xl bg-bio-cyan text-bio-dark font-semibold text-sm sm:text-base glow-cyan hover:scale-[1.02] transition">
+          Bring OmniBio to Your School
+        </a>
+        <a href="#sandbox" class="px-6 py-3.5 rounded-xl glass text-white font-semibold text-sm sm:text-base hover:border-bio-cyan/50 transition">
+          Try the DNA Simulator ↓
+        </a>
+      </div>
+
+      <!-- Quick Stats -->
+      <div class="mt-16 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
+        <div class="glass rounded-xl p-4">
+          <div class="font-display text-2xl font-bold text-bio-cyan">$0</div>
+          <div class="text-xs text-slate-400 mt-1">Cost to Schools & Students</div>
+        </div>
+        <div class="glass rounded-xl p-4">
+          <div class="font-display text-2xl font-bold text-white">60–90m</div>
+          <div class="text-xs text-slate-400 mt-1">Turnkey Lab Sessions</div>
+        </div>
+        <div class="glass rounded-xl p-4">
+          <div class="font-display text-2xl font-bold text-bio-blue">Grades 5–12</div>
+          <div class="text-xs text-slate-400 mt-1">Scaffolded Curriculum</div>
+        </div>
+        <div class="glass rounded-xl p-4">
+          <div class="font-display text-2xl font-bold text-bio-purple">100%</div>
+          <div class="text-xs text-slate-400 mt-1">Lab Materials Supplied</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Interactive Feature 1: Live DNA Transcription & Mutation Sandbox -->
+  <section id="sandbox" class="py-20 border-t border-bio-border bg-bio-card/40">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6">
+      <div class="text-center mb-10">
+        <span class="font-mono text-xs uppercase tracking-widest text-bio-cyan">Interactive Lab Bench</span>
+        <h2 class="font-display text-3xl sm:text-4xl font-bold text-white mt-2">DNA-to-Protein Simulator</h2>
+        <p class="text-slate-400 mt-2 max-w-xl mx-auto text-sm sm:text-base">
+          Click any DNA nucleotide below to mutate the genetic code and watch how mRNA transcription and protein traits change live.
+        </p>
+      </div>
+
+      <div class="glass rounded-2xl p-6 sm:p-8 glow-cyan">
+        <div class="flex flex-wrap items-center justify-between gap-4 mb-6">
+          <div class="text-xs font-mono text-slate-400">CLICK BASES TO CYCLE (A → T → C → G)</div>
+          <div class="flex gap-2">
+            <button onclick="mutateRandom()" class="px-3.5 py-1.5 rounded-lg bg-bio-purple/20 border border-bio-purple/50 text-purple-300 text-xs font-mono hover:bg-bio-purple/30 transition">
+              ⚡ Trigger Random Mutation
+            </button>
+            <button onclick="resetDNA()" class="px-3.5 py-1.5 rounded-lg bg-slate-800 text-slate-300 text-xs font-mono hover:bg-slate-700 transition">
+              Reset Wild-Type
+            </button>
+          </div>
+        </div>
+
+        <!-- DNA Strand -->
+        <div class="mb-6">
+          <div class="text-xs font-mono text-bio-cyan mb-2">1. TEMPLATE DNA STRAND (3' → 5')</div>
+          <div id="dnaStrand" class="grid grid-cols-9 gap-2"></div>
+        </div>
+
+        <!-- mRNA Strand -->
+        <div class="mb-6">
+          <div class="text-xs font-mono text-bio-blue mb-2">2. TRANSCRIBED mRNA (5' → 3')</div>
+          <div id="mrnaStrand" class="grid grid-cols-9 gap-2"></div>
+        </div>
+
+        <!-- Codons & Resulting Protein -->
+        <div class="grid md:grid-cols-2 gap-4 pt-4 border-t border-bio-border">
+          <div class="bg-bio-dark/80 rounded-xl p-4 border border-bio-border">
+            <div class="text-xs font-mono text-slate-400 mb-2">3. TRANSLATED AMINO ACIDS (CODONS)</div>
+            <div id="aminoAcids" class="flex flex-wrap gap-2 font-mono text-sm"></div>
+          </div>
+          <div class="bg-bio-dark/80 rounded-xl p-4 border border-bio-border flex flex-col justify-center">
+            <div class="text-xs font-mono text-slate-400 mb-1">4. EXPRESSED CELLULAR TRAIT</div>
+            <div id="traitOutput" class="font-display text-lg font-bold text-bio-cyan"></div>
+            <div id="traitDesc" class="text-xs text-slate-400 mt-1"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive Feature 2: Workshop Curriculum Explorer -->
+  <section id="workshops" class="py-20 border-t border-bio-border">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+      <div class="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
+        <div>
+          <span class="font-mono text-xs uppercase tracking-widest text-bio-cyan">Curriculum Modules</span>
+          <h2 class="font-display text-3xl sm:text-4xl font-bold text-white mt-2">Hands-On Labs We Bring to You</h2>
+        </div>
+        <div class="flex gap-2 flex-wrap" id="filterButtons">
+          <button onclick="filterWorkshops('all')" class="filter-btn active px-3.5 py-1.5 rounded-lg text-xs font-mono bg-bio-cyan text-bio-dark font-bold">All Labs</button>
+          <button onclick="filterWorkshops('middle')" class="filter-btn px-3.5 py-1.5 rounded-lg text-xs font-mono glass text-slate-300 hover:text-white">Grades 5–8</button>
+          <button onclick="filterWorkshops('high')" class="filter-btn px-3.5 py-1.5 rounded-lg text-xs font-mono glass text-slate-300 hover:text-white">Grades 9–12</button>
+        </div>
+      </div>
+
+      <div id="workshopGrid" class="grid md:grid-cols-3 gap-6"></div>
+    </div>
+  </section>
+
+  <!-- Interactive Feature 3: Find Your Bio-Track Mini-Quiz -->
+  <section id="quiz" class="py-20 border-t border-bio-border bg-bio-card/40">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6">
+      <div class="text-center mb-8">
+        <span class="font-mono text-xs uppercase tracking-widest text-bio-purple">For Students</span>
+        <h2 class="font-display text-3xl font-bold text-white mt-2">Find Your Biotech Track</h2>
+        <p class="text-slate-400 text-sm mt-2">Answer 3 quick questions to discover which branch of life science matches how you think.</p>
+      </div>
+
+      <div class="glass rounded-2xl p-6 sm:p-8" id="quizContainer"></div>
+    </div>
+  </section>
+
+  <!-- Contact & Workshop Booking Section -->
+  <section id="contact" class="py-20 border-t border-bio-border">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 grid md:grid-cols-5 gap-10">
+      <div class="md:col-span-2 space-y-5">
+        <span class="font-mono text-xs uppercase tracking-widest text-bio-cyan">Partner With Us</span>
+        <h2 class="font-display text-3xl font-bold text-white">Host a Workshop or Sponsor a Kit</h2>
+        <p class="text-slate-300 text-sm leading-relaxed">
+          Are you a science teacher, club advisor, library coordinator, or local sponsor? Reach out to schedule a free pilot session or support lab supplies.
+        </p>
+
+        <div class="glass rounded-xl p-4 space-y-3">
+          <div class="text-xs font-mono text-slate-400">DIRECT ORGANIZATION EMAIL</div>
+          <div class="flex items-center justify-between gap-2">
+            <span class="font-mono text-sm text-bio-cyan truncate">contact@omnibiolabs.org</span>
+            <button onclick="copyEmail()" id="copyBtn" class="px-3 py-1 rounded bg-bio-cyan/15 text-bio-cyan text-xs font-mono hover:bg-bio-cyan/25 transition shrink-0">
+              Copy
+            </button>
+          </div>
+        </div>
+
+        <div class="glass rounded-xl p-4">
+          <div class="text-xs font-mono text-bio-blue mb-1">NONPROFIT FISCAL SPONSORSHIP</div>
+          <p class="text-xs text-slate-400 leading-relaxed">
+            OmniBio Labs operates as a youth STEM initiative fiscally sponsored by The Hack Foundation (HCB), a 501(c)(3) nonprofit organization.
+          </p>
+        </div>
+      </div>
+
+      <form onsubmit="sendInquiry(event)" class="md:col-span-3 glass rounded-2xl p-6 sm:p-8 space-y-4">
+        <div class="grid sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-mono text-slate-400 mb-1.5">YOUR NAME</label>
+            <input type="text" id="senderName" required placeholder="Alex Rivera" class="w-full px-3.5 py-2.5 rounded-lg bg-bio-dark border border-bio-border text-white text-sm focus:outline-none focus:border-bio-cyan" />
+          </div>
+          <div>
+            <label class="block text-xs font-mono text-slate-400 mb-1.5">YOUR EMAIL</label>
+            <input type="email" id="senderEmail" required placeholder="arivera@school.edu" class="w-full px-3.5 py-2.5 rounded-lg bg-bio-dark border border-bio-border text-white text-sm focus:outline-none focus:border-bio-cyan" />
+          </div>
+        </div>
+
+        <div class="grid sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-mono text-slate-400 mb-1.5">I AM A...</label>
+            <select id="senderRole" class="w-full px-3.5 py-2.5 rounded-lg bg-bio-dark border border-bio-border text-white text-sm focus:outline-none focus:border-bio-cyan">
+              <option>Teacher / School Administrator</option>
+              <option>Club Advisor / Librarian</option>
+              <option>Student / Parent</option>
+              <option>Sponsor / Donor</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-mono text-slate-400 mb-1.5">WORKSHOP OF INTEREST</label>
+            <select id="workshopSelect" class="w-full px-3.5 py-2.5 rounded-lg bg-bio-dark border border-bio-border text-white text-sm focus:outline-none focus:border-bio-cyan">
+              <option>Strawberry DNA Extraction Lab</option>
+              <option>Microbe Safari & Agar Art</option>
+              <option>CRISPR & Genetic Engineering Sim</option>
+              <option>Custom / Multiple Workshops</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-mono text-slate-400 mb-1.5">SCHOOL / ORGANIZATION & DETAILS</label>
+          <textarea id="senderMessage" rows="3" required placeholder="Tell us your grade level, estimated student count, or preferred dates..." class="w-full px-3.5 py-2.5 rounded-lg bg-bio-dark border border-bio-border text-white text-sm focus:outline-none focus:border-bio-cyan"></textarea>
+        </div>
+
+        <button type="submit" class="w-full py-3 rounded-xl bg-bio-cyan text-bio-dark font-semibold text-sm hover:brightness-110 transition">
+          Compose Email to OmniBio Labs →
+        </button>
+        <p id="formFeedback" class="text-xs text-center text-bio-cyan hidden">
+          Opening your email client addressed to contact@omnibiolabs.org...
+        </p>
+      </form>
+    </div>
+  </section>
+
+  <footer class="border-t border-bio-border py-8 text-center text-xs text-slate-500">
+    <div class="max-w-6xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-2">
+      <span>© 2026 OmniBio Labs. All rights reserved.</span>
+      <span>Contact: <a href="mailto:contact@omnibiolabs.org" class="text-bio-cyan hover:underline">contact@omnibiolabs.org</a></span>
+    </div>
+  </footer>
+
+  <script>
+    // 1. Animated DNA Double Helix Canvas
+    const canvas = document.getElementById('dnaCanvas');
+    const ctx = canvas.getContext('2d');
+    let width, height, tick = 0;
+
+    function resize() {
+      width = canvas.width = canvas.offsetWidth;
+      height = canvas.height = canvas.offsetHeight;
+    }
+    window.addEventListener('resize', resize);
+    resize();
+
+    function drawHelix() {
+      ctx.clearRect(0, 0, width, height);
+      const strands = 28;
+      const spacing = width / strands;
+      for (let i = 0; i <= strands; i++) {
+        const x = i * spacing;
+        const phase = i * 0.35 + tick;
+        const y1 = height * 0.5 + Math.sin(phase) * 75;
+        const y2 = height * 0.5 + Math.sin(phase + Math.PI) * 75;
+
+        ctx.strokeStyle = 'rgba(56, 189, 248, 0.22)';
+        ctx.lineWidth = 1.5;
+        ctx.beginPath();
+        ctx.moveTo(x, y1);
+        ctx.lineTo(x, y2);
+        ctx.stroke();
+
+        ctx.fillStyle = '#00f5d4';
+        ctx.beginPath();
+        ctx.arc(x, y1, 3.5, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.fillStyle = '#a855f7';
+        ctx.beginPath();
+        ctx.arc(x, y2, 3.5, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      tick += 0.025;
+      requestAnimationFrame(drawHelix);
+    }
+    drawHelix();
+
+    // 2. Interactive DNA-to-Protein Sandbox
+    const bases = ['A', 'T', 'C', 'G'];
+    const defaultDNA = ['T', 'A', 'C', 'G', 'G', 'A', 'T', 'T', 'A'];
+    let currentDNA = [...defaultDNA];
+
+    const transcribeMap = { A: 'U', T: 'A', C: 'G', G: 'C' };
+    const codonTable = {
+      AUG: 'Met (Start)', UUU: 'Phe', UUC: 'Phe', UUA: 'Leu', UUG: 'Leu',
+      CUU: 'Leu', CUC: 'Leu', CUA: 'Leu', CUG: 'Leu', AUU: 'Ile', AUC: 'Ile',
+      AUA: 'Ile', GUU: 'Val', GUC: 'Val', GUA: 'Val', GUG: 'Val', UCU: 'Ser',
+      UCC: 'Ser', UCA: 'Ser', UCG: 'Ser', CCU: 'Pro', CCC: 'Pro', CCA: 'Pro',
+      CCG: 'Pro', ACU: 'Thr', ACC: 'Thr', ACA: 'Thr', ACG: 'Thr', GCU: 'Ala',
+      GCC: 'Ala', GCA: 'Ala', GCG: 'Ala', UAU: 'Tyr', UAC: 'Tyr', UAA: 'STOP',
+      UAG: 'STOP', CAU: 'His', CAC: 'His', CAA: 'Gln', CAG: 'Gln', AAU: 'Asn',
+      AAC: 'Asn', AAA: 'Lys', AAG: 'Lys', GAU: 'Asp', GAC: 'Asp', GAA: 'Glu',
+      GAG: 'Glu', UGU: 'Cys', UGC: 'Cys', UGA: 'STOP', UGG: 'Trp', CGU: 'Arg',
+      CGC: 'Arg', CGA: 'Arg', CGG: 'Arg', AGU: 'Ser', AGC: 'Ser', AGA: 'Arg',
+      AGG: 'Arg', GGU: 'Gly', GGC: 'Gly', GGA: 'Gly', GGG: 'Gly'
+    };
+
+    function renderDNA() {
+      const dnaEl = document.getElementById('dnaStrand');
+      const mrnaEl = document.getElementById('mrnaStrand');
+      const aaEl = document.getElementById('aminoAcids');
+      const traitOut = document.getElementById('traitOutput');
+      const traitDesc = document.getElementById('traitDesc');
+
+      dnaEl.innerHTML = '';
+      mrnaEl.innerHTML = '';
+
+      const mrna = currentDNA.map(b => transcribeMap[b]);
+
+      currentDNA.forEach((base, idx) => {
+        const isMutated = base !== defaultDNA[idx];
+        const btn = document.createElement('button');
+        btn.onclick = () => {
+          const next = bases[(bases.indexOf(base) + 1) % bases.length];
+          currentDNA[idx] = next;
+          renderDNA();
+        };
+        btn.className = `py-2.5 rounded-lg font-mono font-bold text-sm sm:text-base transition border ${
+          isMutated
+            ? 'bg-bio-purple/25 border-bio-purple text-purple-200 scale-105'
+            : 'bg-bio-dark border-bio-border text-bio-cyan hover:border-bio-cyan'
+        }`;
+        btn.textContent = base;
+        dnaEl.appendChild(btn);
+
+        const rnaBox = document.createElement('div');
+        rnaBox.className = 'py-2 rounded-lg font-mono text-center text-sm bg-bio-dark/50 border border-bio-border/60 text-bio-blue';
+        rnaBox.textContent = mrna[idx];
+        mrnaEl.appendChild(rnaBox);
+      });
+
+      const codons = [mrna.slice(0, 3).join(''), mrna.slice(3, 6).join(''), mrna.slice(6, 9).join('')];
+      const proteins = codons.map(c => codonTable[c] || 'Unknown');
+
+      aaEl.innerHTML = proteins.map((p, i) => `
+        <span class="px-2.5 py-1 rounded bg-bio-card border border-bio-border text-slate-200">
+          <span class="text-slate-500 text-xs">${codons[i]}:</span> ${p}
+        </span>
+      `).join('');
+
+      if (proteins[0] !== 'Met (Start)') {
+        traitOut.textContent = '⚠️ Missing Start Codon (No Protein)';
+        traitOut.className = 'font-display text-lg font-bold text-amber-400';
+        traitDesc.textContent = 'Without AUG at the start, ribosomes cannot initiate translation.';
+      } else if (proteins.includes('STOP') && proteins.indexOf('STOP') < 2) {
+        traitOut.textContent = '🛑 Nonsense Mutation (Truncated Protein)';
+        traitOut.className = 'font-display text-lg font-bold text-rose-400';
+        traitDesc.textContent = 'An early STOP codon cut protein synthesis short.';
+      } else if (currentDNA.join('') === defaultDNA.join('')) {
+        traitOut.textContent = '✨ Wild-Type GFP Bioluminescence';
+        traitOut.className = 'font-display text-lg font-bold text-bio-cyan';
+        traitDesc.textContent = 'Healthy Green Fluorescent Protein folds properly and glows under UV light.';
+      } else {
+        traitOut.textContent = '🧬 Variant Protein Folding';
+        traitOut.className = 'font-display text-lg font-bold text-bio-purple';
+        traitDesc.textContent = `Modified sequence produces ${proteins.join(' → ')}, altering enzyme structure.`;
+      }
+    }
+
+    function mutateRandom() {
+      const idx = Math.floor(Math.random() * currentDNA.length);
+      const others = bases.filter(b => b !== currentDNA[idx]);
+      currentDNA[idx] = others[Math.floor(Math.random() * others.length)];
+      renderDNA();
+    }
+
+    function resetDNA() {
+      currentDNA = [...defaultDNA];
+      renderDNA();
+    }
+    renderDNA();
+
+    // 3. Workshop Curriculum Explorer
+    const workshops = [
+      {
+        title: 'Strawberry DNA Extraction Lab',
+        level: 'middle',
+        badge: 'Grades 5–9 • 60 Mins',
+        desc: 'Students lyse plant cells using buffer solutions and precipitate visible strands of genomic DNA to take home in microcentrifuge tubes.',
+        skills: ['Cell Membrane Lysis', 'Micropipetting Basics', 'Genomic Isolation']
+      },
+      {
+        title: 'Microbe Safari & Agar Art',
+        level: 'middle',
+        badge: 'Grades 6–12 • 75 Mins',
+        desc: 'Swab everyday surfaces, culture harmless environmental microbes on nutrient agar plates, and explore aseptic lab technique.',
+        skills: ['Aseptic Technique', 'Colony Morphology', 'Microbiome Ecology']
+      },
+      {
+        title: 'CRISPR & Genetic Engineering Sim',
+        level: 'high',
+        badge: 'Grades 9–12 • 90 Mins',
+        desc: 'Design guide RNAs to target specific gene sequences, model Cas9 cleavage, and debate real-world bioethics in medicine.',
+        skills: ['Guide RNA Design', 'Gene Editing Logic', 'Bioethics']
+      }
+    ];
+
+    function filterWorkshops(filter) {
+      document.querySelectorAll('.filter-btn').forEach(b => {
+        b.className = 'filter-btn px-3.5 py-1.5 rounded-lg text-xs font-mono glass text-slate-300 hover:text-white';
+      });
+      event.target.className = 'filter-btn active px-3.5 py-1.5 rounded-lg text-xs font-mono bg-bio-cyan text-bio-dark font-bold';
+
+      const grid = document.getElementById('workshopGrid');
+      const items = filter === 'all' ? workshops : workshops.filter(w => w.level === filter);
+      grid.innerHTML = items.map(w => `
+        <div class="glass rounded-2xl p-6 flex flex-col justify-between hover:border-bio-cyan/50 transition">
+          <div>
+            <span class="inline-block px-2.5 py-1 rounded-md bg-bio-cyan/10 text-bio-cyan font-mono text-xs mb-4">${w.badge}</span>
+            <h3 class="font-display text-xl font-bold text-white mb-2">${w.title}</h3>
+            <p class="text-sm text-slate-300 leading-relaxed mb-5">${w.desc}</p>
+            <div class="flex flex-wrap gap-1.5 mb-6">
+              ${w.skills.map(s => `<span class="px-2 py-0.5 rounded bg-bio-dark text-slate-400 font-mono text-xs border border-bio-border">${s}</span>`).join('')}
+            </div>
+          </div>
+          <button onclick="selectWorkshop('${w.title}')" class="w-full py-2.5 rounded-xl bg-bio-dark border border-bio-cyan/40 text-bio-cyan text-xs font-mono font-bold hover:bg-bio-cyan hover:text-bio-dark transition">
+            Book This Lab →
+          </button>
+        </div>
+      `).join('');
+    }
+    // Initial render
+    document.getElementById('workshopGrid').innerHTML = workshops.map(w => `
+      <div class="glass rounded-2xl p-6 flex flex-col justify-between hover:border-bio-cyan/50 transition">
+        <div>
+          <span class="inline-block px-2.5 py-1 rounded-md bg-bio-cyan/10 text-bio-cyan font-mono text-xs mb-4">${w.badge}</span>
+          <h3 class="font-display text-xl font-bold text-white mb-2">${w.title}</h3>
+          <p class="text-sm text-slate-300 leading-relaxed mb-5">${w.desc}</p>
+          <div class="flex flex-wrap gap-1.5 mb-6">
+            ${w.skills.map(s => `<span class="px-2 py-0.5 rounded bg-bio-dark text-slate-400 font-mono text-xs border border-bio-border">${s}</span>`).join('')}
+          </div>
+        </div>
+        <button onclick="selectWorkshop('${w.title}')" class="w-full py-2.5 rounded-xl bg-bio-dark border border-bio-cyan/40 text-bio-cyan text-xs font-mono font-bold hover:bg-bio-cyan hover:text-bio-dark transition">
+          Book This Lab →
+        </button>
+      </div>
+    `).join('');
+
+    function selectWorkshop(title) {
+      document.getElementById('workshopSelect').value = title;
+      document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // 4. Bio-Track Mini-Quiz
+    const quizQuestions = [
+      {
+        q: '1. If you had unlimited access to a biotech lab, what would you build first?',
+        options: [
+          { text: 'Glow-in-the-dark plants that replace streetlamps', track: 'genetic' },
+          { text: 'Eco-friendly bacteria that break down ocean plastics', track: 'microbe' },
+          { text: 'AI software that predicts new protein medicines', track: 'comp' }
+        ]
+      },
+      {
+        q: '2. Which part of a science experiment is your favorite?',
+        options: [
+          { text: 'Using micropipettes and mixing precise reagents', track: 'genetic' },
+          { text: 'Checking petri dishes to see what grew overnight', track: 'microbe' },
+          { text: 'Finding patterns in data and troubleshooting variables', track: 'comp' }
+        ]
+      },
+      {
+        q: '3. Pick a superpower for your cells:',
+        options: [
+          { text: 'Instant DNA self-repair', track: 'genetic' },
+          { text: 'Symbiotic immunity against any pathogen', track: 'microbe' },
+          { text: 'Neural speed-reading of genetic code', track: 'comp' }
+        ]
+      }
+    ];
+
+    const trackResults = {
+      genetic: {
+        title: '🧬 Synthetic & Genetic Engineer',
+        desc: 'You love reprogramming biological circuits! Start with our Strawberry DNA Extraction and CRISPR Guide RNA workshops.'
+      },
+      microbe: {
+        title: '🦠 Microbial & Environmental Explorer',
+        desc: 'You see invisible ecosystems everywhere! Our Microbe Safari & Agar Art lab is built for your curiosity.'
+      },
+      comp: {
+        title: '💻 Computational Bio-Designer',
+        desc: 'You treat DNA like programmable code! Explore protein folding and bioinformatics alongside our wet-lab modules.'
+      }
+    };
+
+    let quizStep = 0;
+    let scores = { genetic: 0, microbe: 0, comp: 0 };
+
+    function renderQuiz() {
+      const box = document.getElementById('quizContainer');
+      if (quizStep < quizQuestions.length) {
+        const item = quizQuestions[quizStep];
+        box.innerHTML = `
+          <div class="text-xs font-mono text-bio-cyan mb-2">QUESTION ${quizStep + 1} OF ${quizQuestions.length}</div>
+          <h3 class="font-display text-xl font-bold text-white mb-5">${item.q}</h3>
+          <div class="space-y-3">
+            ${item.options.map(opt => `
+              <button onclick="answerQuiz('${opt.track}')" class="w-full text-left p-4 rounded-xl bg-bio-dark border border-bio-border hover:border-bio-cyan text-sm text-slate-200 transition">
+                ${opt.text}
+              </button>
+            `).join('')}
+          </div>
+        `;
+      } else {
+        const winner = Object.keys(scores).reduce((a, b) => scores[a] >= scores[b] ? a : b);
+        const res = trackResults[winner];
+        box.innerHTML = `
+          <div class="text-center space-y-4">
+            <div class="text-xs font-mono text-bio-purple">YOUR BIOTECH ARCHETYPE</div>
+            <h3 class="font-display text-2xl sm:text-3xl font-bold text-bio-cyan">${res.title}</h3>
+            <p class="text-slate-300 text-sm max-w-lg mx-auto leading-relaxed">${res.desc}</p>
+            <button onclick="restartQuiz()" class="mt-2 px-4 py-2 rounded-lg glass text-xs font-mono text-slate-300 hover:text-white">
+              Retake Quiz
+            </button>
+          </div>
+        `;
+      }
+    }
+
+    function answerQuiz(track) {
+      scores[track]++;
+      quizStep++;
+      renderQuiz();
+    }
+
+    function restartQuiz() {
+      quizStep = 0;
+      scores = { genetic: 0, microbe: 0, comp: 0 };
+      renderQuiz();
+    }
+    renderQuiz();
+
+    // 5. Contact Form & Copy Email
+    function copyEmail() {
+      navigator.clipboard.writeText('contact@omnibiolabs.org');
+      const btn = document.getElementById('copyBtn');
+      btn.textContent = 'Copied!';
+      setTimeout(() => btn.textContent = 'Copy', 2000);
+    }
+
+    function sendInquiry(e) {
+      e.preventDefault();
+      const name = document.getElementById('senderName').value;
+      const email = document.getElementById('senderEmail').value;
+      const role = document.getElementById('senderRole').value;
+      const workshop = document.getElementById('workshopSelect').value;
+      const msg = document.getElementById('senderMessage').value;
+
+      const subject = encodeURIComponent(`[OmniBio Inquiry] ${workshop} — ${name}`);
+      const body = encodeURIComponent(
+        `Name: ${name}\nEmail: ${email}\nRole: ${role}\nWorkshop Interest: ${workshop}\n\nDetails:\n${msg}`
+      );
+      document.getElementById('formFeedback').classList.remove('hidden');
+      window.location.href = `mailto:contact@omnibiolabs.org?subject=${subject}&body=${body}`;
+    }
+  </script>
+</body>
+</html>
