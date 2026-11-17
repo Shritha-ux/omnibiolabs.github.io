@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>OmniBio Labs | Collegiate-Level Biotech & STEM for K–8 Students</title>
+  <title>OmniBio Labs | 501(c)(3) Biotech & STEM for K–8 Students</title>
+  <meta name="description" content="OmniBio Labs is a 501(c)(3) fiscally sponsored nonprofit bringing 20 collegiate-level wet-lab biotechnology workshops to K–8 schools and libraries at zero cost." />
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -55,44 +56,50 @@
   <!-- Top App Header & Multi-Tab Bar -->
   <header class="sticky top-0 z-40 glass border-b border-bio-border">
     <div class="max-w-7xl mx-auto px-4 sm:px-6">
-      <div class="h-16 flex items-center justify-between gap-4">
+      <div class="h-16 flex items-center justify-between gap-3">
         <button onclick="switchPage('overview')" class="flex items-center gap-2.5 font-display font-bold text-xl tracking-tight text-white text-left">
           <span class="w-8 h-8 rounded-lg bg-bio-cyan/10 border border-bio-cyan/40 flex items-center justify-center text-bio-cyan shrink-0">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 014.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15.3M14.25 3.104c.251.023.501.05.75.082M19.8 15.3l-1.57.393A9.065 9.065 0 0112 15a9.065 9.065 0 00-6.23-.693L5 14.5m14.8.8l1.402 1.402c1.232 1.232.65 3.318-1.067 3.611A48.309 48.309 0 0112 21c-2.773 0-5.491-.235-8.135-.687-1.718-.293-2.3-2.379-1.067-3.61L5 14.5" />
             </svg>
           </span>
-          <span>OmniBio <span class="text-bio-cyan">Labs</span></span>
+          <div>
+            <span>OmniBio <span class="text-bio-cyan">Labs</span></span>
+            <span class="hidden sm:inline-block ml-2 px-2 py-0.5 rounded bg-emerald-500/15 border border-emerald-400/40 text-emerald-300 font-mono text-[10px] align-middle">501(c)(3) NONPROFIT</span>
+          </div>
         </button>
 
-        <div class="flex items-center gap-2.5">
+        <div class="flex items-center gap-2">
           <button id="selectedBadge" onclick="switchPage('apply'); switchFormMode('host');" class="px-3 py-1.5 rounded-lg bg-bio-purple/20 border border-bio-purple/50 text-purple-200 font-mono text-xs font-bold hover:bg-bio-purple/30 transition">
             Booking Cart: 0 Labs
           </button>
-          <button onclick="switchPage('apply')" class="px-4 py-2 rounded-lg bg-bio-cyan text-bio-dark font-semibold text-xs sm:text-sm hover:brightness-110 transition">
-            Start Chapter / Book Lab
+          <a id="headerDonateBtn" href="https://hcb.hackclub.com/donations/start/omnibio-labs" target="_blank" rel="noopener noreferrer" class="px-3.5 py-2 rounded-lg bg-emerald-400/15 border border-emerald-400/50 text-emerald-300 font-mono text-xs font-bold hover:bg-emerald-400 hover:text-bio-dark transition">
+            💚 Donate
+          </a>
+          <button onclick="switchPage('apply')" class="px-3.5 py-2 rounded-lg bg-bio-cyan text-bio-dark font-semibold text-xs sm:text-sm hover:brightness-110 transition">
+            Book / Chapter
           </button>
         </div>
       </div>
 
       <!-- Primary Tab Navigation Strip -->
       <nav class="flex items-center gap-1.5 overflow-x-auto pb-3 pt-1" aria-label="Main Tabs">
-        <button data-tab="overview" onclick="switchPage('overview')" class="nav-tab px-3.5 py-2 rounded-lg text-xs font-mono font-bold bg-bio-cyan text-bio-dark whitespace-nowrap transition">
-          1. Overview & How It Works
+        <button data-tab="overview" onclick="switchPage('overview')" class="nav-tab px-3 py-2 rounded-lg text-xs font-mono font-bold bg-bio-cyan text-bio-dark whitespace-nowrap transition">
+          1. Overview
         </button>
-        <button data-tab="workshops" onclick="switchPage('workshops')" class="nav-tab px-3.5 py-2 rounded-lg text-xs font-mono bg-bio-dark/70 text-slate-300 hover:text-white border border-bio-border whitespace-nowrap transition">
-          2. All 20 Wet-Labs
+        <button data-tab="workshops" onclick="switchPage('workshops')" class="nav-tab px-3 py-2 rounded-lg text-xs font-mono bg-bio-dark/70 text-slate-300 hover:text-white border border-bio-border whitespace-nowrap transition">
+          2. All 20 Labs
         </button>
-        <button data-tab="kids-lab" onclick="switchPage('kids-lab')" class="nav-tab px-3.5 py-2 rounded-lg text-xs font-mono bg-bio-dark/70 text-bio-cyan hover:text-white border border-bio-cyan/40 whitespace-nowrap transition">
-          3. Interactive Lab Console (20 Mini-Games) 🎮
+        <button data-tab="kids-lab" onclick="switchPage('kids-lab')" class="nav-tab px-3 py-2 rounded-lg text-xs font-mono bg-bio-dark/70 text-bio-cyan hover:text-white border border-bio-cyan/40 whitespace-nowrap transition">
+          3. Interactive Lab Console 🎮
         </button>
-        <button data-tab="framework" onclick="switchPage('framework')" class="nav-tab px-3.5 py-2 rounded-lg text-xs font-mono bg-bio-dark/70 text-slate-300 hover:text-white border border-bio-border whitespace-nowrap transition">
+        <button data-tab="framework" onclick="switchPage('framework')" class="nav-tab px-3 py-2 rounded-lg text-xs font-mono bg-bio-dark/70 text-slate-300 hover:text-white border border-bio-border whitespace-nowrap transition">
           4. 6-Session Pipeline
         </button>
-        <button data-tab="safety-grants" onclick="switchPage('safety-grants')" class="nav-tab px-3.5 py-2 rounded-lg text-xs font-mono bg-bio-dark/70 text-slate-300 hover:text-white border border-bio-border whitespace-nowrap transition">
-          5. Safety Rules, Kits & Chapters
+        <button data-tab="safety-grants" onclick="switchPage('safety-grants')" class="nav-tab px-3 py-2 rounded-lg text-xs font-mono bg-bio-dark/70 text-slate-300 hover:text-white border border-bio-border whitespace-nowrap transition">
+          5. Safety, Kits & Donate
         </button>
-        <button data-tab="apply" onclick="switchPage('apply')" class="nav-tab px-3.5 py-2 rounded-lg text-xs font-mono bg-bio-dark/70 text-slate-300 hover:text-white border border-bio-border whitespace-nowrap transition">
+        <button data-tab="apply" onclick="switchPage('apply')" class="nav-tab px-3 py-2 rounded-lg text-xs font-mono bg-bio-dark/70 text-slate-300 hover:text-white border border-bio-border whitespace-nowrap transition">
           6. Apply / Book Labs
         </button>
       </nav>
@@ -110,13 +117,13 @@
         <div class="text-center max-w-4xl mx-auto">
           <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full glass text-xs font-mono text-bio-cyan mb-5">
             <span class="w-2 h-2 rounded-full bg-bio-cyan animate-ping"></span>
-            STUDENT-LED BIOTECH INITIATIVE • ZERO COST TO K–8 SCHOOLS
+            501(c)(3) FISCALLY SPONSORED NONPROFIT • ZERO COST TO K–8 SCHOOLS
           </div>
           <h1 class="font-display text-4xl sm:text-6xl font-bold tracking-tight text-white leading-tight">
             Collegiate Wet-Lab Science, Engineered for <span class="gradient-text">K–8 Classrooms</span>.
           </h1>
           <p class="mt-5 text-base sm:text-lg text-slate-300 max-w-2xl mx-auto leading-relaxed">
-            Most elementary and middle school students never touch a micropipette, gel box, or microscope until college. OmniBio Labs trains high school mentors to bring 20 safe, turnkey biotechnology workshops directly into K–8 classrooms and libraries—100% free.
+            Most elementary and middle school students never touch a micropipette, gel box, or microscope until college. OmniBio Labs is a 501(c)(3) student-led nonprofit bringing 20 safe, turnkey biotechnology workshops directly into K–8 classrooms and libraries—100% free.
           </p>
           <div class="mt-8 flex flex-wrap items-center justify-center gap-4">
             <button onclick="switchPage('kids-lab')" class="px-6 py-3.5 rounded-xl bg-bio-cyan text-bio-dark font-semibold text-sm sm:text-base glow-cyan hover:scale-[1.02] transition">
@@ -202,7 +209,7 @@
           <span class="font-mono text-xs uppercase tracking-widest text-bio-cyan">Master Curriculum & Safety Matrix</span>
           <h2 class="font-display text-3xl sm:text-4xl font-bold text-white mt-1">All 20 Hands-On Wet-Lab Workshops</h2>
           <p class="text-slate-400 text-sm mt-1.5 max-w-2xl">
-            Click <strong class="text-white">Protocol & Safety</strong> for step-by-step instructions, <strong class="text-purple-300">Play Virtual Lab</strong> to run the interactive pre-lab game, or <strong class="text-bio-cyan">+ Add to Cart</strong> to request workshops for your school.
+            Click <strong class="text-white">Protocol & Safety</strong> for step-by-step instructions, <strong class="text-purple-300">Play Lab Game</strong> to run the interactive pre-lab bench, or <strong class="text-bio-cyan">+ Add to Booking Cart</strong> to request workshops for your school.
           </p>
         </div>
 
@@ -229,7 +236,6 @@
     <!-- TAB 3: FULL-CONSOLE INTERACTIVE LAB SANDBOX (ALL 20 LABS) -->
     <!-- ========================================================= -->
     <section id="page-kids-lab" class="tab-panel hidden max-w-7xl mx-auto px-4 sm:px-6 py-8">
-      <!-- Top Instruction Banner -->
       <div class="glass rounded-2xl p-4 sm:p-5 mb-6 border-bio-cyan/40 flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <div class="font-mono text-xs text-bio-cyan font-bold">🎮 INTERACTIVE STUDENT WET-LAB CONSOLE • ALL 20 EXPERIMENTS</div>
@@ -248,7 +254,6 @@
       </div>
 
       <div class="grid lg:grid-cols-12 gap-6 items-start">
-        <!-- Left Sidebar: All 20 Lab Selector List -->
         <div class="lg:col-span-4 glass rounded-2xl p-4">
           <div class="flex items-center justify-between mb-3 px-1">
             <span class="font-mono text-xs text-bio-cyan font-bold">SELECT EXPERIMENT (1–20):</span>
@@ -257,12 +262,9 @@
           <div id="benchLabMenu" class="space-y-1.5 max-h-[680px] overflow-y-auto pr-1"></div>
         </div>
 
-        <!-- Right Full Interactive Lab Bench Console -->
         <div class="lg:col-span-8 glass rounded-2xl p-5 sm:p-7 glow-cyan space-y-5">
-          <!-- Lab Title & Hypothesis Header -->
           <div id="benchStageHeader"></div>
 
-          <!-- Interactive Toolbelt (Clickable Lab Instruments!) -->
           <div class="bg-bio-dark/90 rounded-2xl p-4 border border-bio-border">
             <div class="flex items-center justify-between mb-2.5">
               <span class="font-mono text-xs text-amber-300 font-bold">🧰 YOUR LAB BENCH TOOLBELT (CLICK TOOLS IN SEQUENCE):</span>
@@ -271,7 +273,6 @@
             <div id="benchToolButtons" class="grid sm:grid-cols-3 gap-2.5"></div>
           </div>
 
-          <!-- Big Live Animated Canvas Stage + Live Telemetry Readout -->
           <div class="grid md:grid-cols-12 gap-4 items-stretch">
             <div class="md:col-span-7 bg-slate-950 rounded-2xl p-3 border-2 border-slate-800 flex flex-col items-center justify-center relative overflow-hidden">
               <div class="w-full flex items-center justify-between px-2 pb-1 text-[10px] font-mono text-slate-400">
@@ -281,14 +282,12 @@
               <canvas id="benchVisualCanvas" width="380" height="270" class="w-full h-[270px] rounded-xl bg-[#03070e]"></canvas>
             </div>
 
-            <!-- Live Bench Log & Bonus 3D DNA Base Mutator when on Genetics Labs -->
             <div class="md:col-span-5 bg-bio-dark/95 rounded-2xl p-4 border border-bio-border flex flex-col justify-between space-y-4">
               <div>
                 <div class="font-mono text-xs text-emerald-300 font-bold mb-1.5">📋 LIVE BENCH LOG & EXPLANATION:</div>
                 <p id="benchObservationText" class="text-xs sm:text-sm text-slate-200 leading-relaxed"></p>
               </div>
 
-              <!-- Interactive 3D DNA Base Mutator & Disease Dex Widget (Shown on DNA/Genetics Labs, or toggleable!) -->
               <div id="dnaMutatorPanel" class="hidden pt-3 border-t border-bio-border space-y-2.5">
                 <div class="flex items-center justify-between">
                   <span class="font-mono text-[11px] text-bio-cyan font-bold">🧬 CLICK BASES TO MUTATE 3D HELIX:</span>
@@ -306,7 +305,6 @@
             </div>
           </div>
 
-          <!-- Cliffhanger Mystery Lockbox (Unlocks only after running all 3 bench tools!) -->
           <div id="cliffhangerBox" class="rounded-2xl p-5 border transition-all duration-300 bg-bio-dark/60 border-bio-border opacity-75">
             <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
               <span id="cliffhangerStatusBadge" class="px-2.5 py-1 rounded bg-slate-800 text-slate-400 font-mono text-xs font-bold">
@@ -347,7 +345,7 @@
     </section>
 
     <!-- ========================================================= -->
-    <!-- TAB 5: SAFETY RULES, KITS & CHAPTERS                      -->
+    <!-- TAB 5: SAFETY RULES, KITS & 501(c)(3) DONATION SUPPORT    -->
     <!-- ========================================================= -->
     <section id="page-safety-grants" class="tab-panel hidden max-w-6xl mx-auto px-4 sm:px-6 py-12 space-y-16">
       
@@ -386,14 +384,34 @@
             <p class="text-xs text-slate-300 leading-relaxed">Every session requires at least 1 trained high school mentor per 6 K–8 students, plus an on-site school teacher or librarian present at all times.</p>
           </div>
           <div class="glass rounded-2xl p-5 border-l-4 border-l-emerald-400">
-            <div class="font-mono text-xs text-emerald-400 mb-1">RULE 05 • ZERO-COST ACCESS</div>
+            <div class="font-mono text-xs text-emerald-400 mb-1">RULE 05 • 501(c)(3) ZERO-COST ACCESS</div>
             <h3 class="font-display font-bold text-white text-base mb-2">100% Free to K–8 Participants</h3>
-            <p class="text-xs text-slate-300 leading-relaxed">Chapters never charge students or public schools. Supplies are funded through local STEM micro-grants, school PTSA partnerships, and community sponsors.</p>
+            <p class="text-xs text-slate-300 leading-relaxed">Chapters never charge students or public schools. Supplies are funded through tax-deductible 501(c)(3) donations, STEM micro-grants, and school PTSA sponsors.</p>
           </div>
           <div class="glass rounded-2xl p-5 border-l-4 border-l-rose-400">
             <div class="font-mono text-xs text-rose-400 mb-1">RULE 06 • ALLERGY & SAFETY CHECK</div>
             <h3 class="font-display font-bold text-white text-base mb-2">Mandatory 5-Minute Briefing</h3>
             <p class="text-xs text-slate-300 leading-relaxed">Allergy checks (latex balloons, dairy/lactase, plant leaves, raw eggs) and micropipette vertical-handling rules are reviewed before opening any kit.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 501(c)(3) Tax-Deductible Support & Grant Banner -->
+      <div class="glass rounded-2xl p-6 sm:p-8 border-emerald-400/40 bg-gradient-to-r from-emerald-950/30 via-bio-card to-bio-dark">
+        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+          <div class="space-y-2 max-w-2xl">
+            <span class="px-2.5 py-0.5 rounded bg-emerald-500/15 border border-emerald-400/40 text-emerald-300 font-mono text-xs font-bold">
+              OFFICIAL 501(c)(3) FISCALLY SPONSORED NONPROFIT • EIN: 81-2908499
+            </span>
+            <h3 class="font-display text-2xl font-bold text-white">Fund a K–8 Wet-Lab Kit (100% Tax-Deductible)</h3>
+            <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+              OmniBio Labs is fiscally sponsored by <strong>The Hack Foundation (EIN: 81-2908499)</strong>, a registered 501(c)(3) public charity. Every $20 sponsors a full wet-lab reagent kit for 10 elementary or middle school students, and donors automatically receive an official IRS tax receipt.
+            </p>
+          </div>
+          <div class="flex flex-col sm:flex-row gap-3 shrink-0">
+            <a id="sectionDonateBtn" href="https://hcb.hackclub.com/donations/start/omnibio-labs" target="_blank" rel="noopener noreferrer" class="px-6 py-3.5 rounded-xl bg-emerald-400 text-bio-dark font-mono text-xs sm:text-sm font-bold text-center hover:brightness-110 transition">
+              💚 Make a Tax-Deductible Donation →
+            </a>
           </div>
         </div>
       </div>
@@ -499,10 +517,10 @@
             </div>
           </div>
 
-          <div class="glass rounded-xl p-4">
-            <div class="text-xs font-mono text-bio-blue mb-1">ZERO-COST SCHOOL GUARANTEE</div>
-            <p class="text-xs text-slate-400 leading-relaxed">
-              Every OmniBio Labs workshop is 100% free to K–8 schools, classrooms, and public libraries. Our student chapters supply all reagents, safety goggles, and trained mentors.
+          <div class="glass rounded-xl p-4 border-emerald-400/30">
+            <div class="text-xs font-mono text-emerald-300 mb-1">501(c)(3) NONPROFIT GUARANTEE</div>
+            <p class="text-xs text-slate-300 leading-relaxed">
+              OmniBio Labs is a fiscally sponsored 501(c)(3) nonprofit under The Hack Foundation (EIN: 81-2908499). Every workshop is 100% free to K–8 schools, classrooms, and public libraries.
             </p>
           </div>
         </div>
@@ -540,7 +558,6 @@
               </select>
             </div>
 
-            <!-- DYNAMIC REPEATABLE DROPDOWN ROWS -->
             <div class="space-y-2.5 bg-bio-dark/60 p-4 rounded-xl border border-bio-border">
               <div class="flex items-center justify-between">
                 <label class="block text-xs font-mono text-bio-cyan font-bold">YOUR WORKSHOP BOOKING CART:</label>
@@ -621,14 +638,29 @@
     </div>
   </div>
 
-  <footer class="border-t border-bio-border py-6 text-center text-xs text-slate-500">
-    <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-2">
-      <span>© 2026 OmniBio Labs • 20-Lab K–8 Collegiate Biotech Initiative</span>
-      <span>Contact & Chapters: <a href="mailto:contact@omnibiolabs.org" class="text-bio-cyan hover:underline">contact@omnibiolabs.org</a></span>
+  <footer class="border-t border-bio-border py-6 text-xs text-slate-400">
+    <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left">
+      <div>
+        <div class="text-slate-300 font-medium">© 2026 OmniBio Labs • A 501(c)(3) fiscally sponsored project of The Hack Foundation (EIN: 81-2908499)</div>
+        <div class="text-[11px] text-slate-500 mt-0.5">All donations are tax-deductible to the extent allowed by law.</div>
+      </div>
+      <div class="flex items-center gap-4 shrink-0">
+        <a id="footerDonateBtn" href="https://hcb.hackclub.com/donations/start/omnibio-labs" target="_blank" rel="noopener noreferrer" class="text-emerald-300 hover:underline font-mono">Donate</a>
+        <a href="mailto:contact@omnibiolabs.org" class="text-bio-cyan hover:underline font-mono">contact@omnibiolabs.org</a>
+      </div>
     </div>
   </footer>
 
   <script>
+    // ==========================================
+    // 0. PASTE YOUR EXACT HCB DONATION URL BELOW
+    // ==========================================
+    const HCB_DONATE_URL = "https://hcb.hackclub.com/donations/start/omnibio-labs";
+    ["headerDonateBtn", "sectionDonateBtn", "footerDonateBtn"].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.href = HCB_DONATE_URL;
+    });
+
     // ==========================================
     // 1. MULTI-TAB PAGE ROUTER
     // ==========================================
@@ -639,16 +671,16 @@
 
       document.querySelectorAll('.nav-tab').forEach(btn => {
         if (btn.dataset.tab === pageId) {
-          btn.className = 'nav-tab px-3.5 py-2 rounded-lg text-xs font-mono font-bold bg-bio-cyan text-bio-dark whitespace-nowrap transition';
+          btn.className = 'nav-tab px-3 py-2 rounded-lg text-xs font-mono font-bold bg-bio-cyan text-bio-dark whitespace-nowrap transition';
         } else {
-          btn.className = 'nav-tab px-3.5 py-2 rounded-lg text-xs font-mono bg-bio-dark/70 text-slate-300 hover:text-white border border-bio-border whitespace-nowrap transition';
+          btn.className = 'nav-tab px-3 py-2 rounded-lg text-xs font-mono bg-bio-dark/70 text-slate-300 hover:text-white border border-bio-border whitespace-nowrap transition';
         }
       });
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     // ==========================================
-    // 2. MASTER 20-WORKSHOP DATABASE (WITH CLICKABLE TOOLBELT GAMES)
+    // 2. MASTER 20-WORKSHOP DATABASE
     // ==========================================
     const labSuite = [
       {
@@ -1348,10 +1380,9 @@
     // 5. INTERACTIVE 20-LAB TOOLBENCH & 3D HELIX ENGINE
     // ==========================================
     let currentBenchIdx = 0;
-    let currentBenchStep = 0; // 0 = initial, 1 = tool 1 clicked, 2 = tool 2 clicked, 3 = tool 3 clicked
+    let currentBenchStep = 0;
     let animPhase = 0;
 
-    // 3D DNA Base Mutator State (for Genetics/DNA labs)
     const dnaBases = ['A', 'T', 'C', 'G'];
     const baseColors = { A: '#10b981', T: '#f43f5e', C: '#38bdf8', G: '#fbbf24' };
     const complementMap = { A: 'T', T: 'A', C: 'G', G: 'C' };
@@ -1530,7 +1561,6 @@
       }
     }
 
-    // Continuous Live 60FPS Apparatus Animation Loop
     function animateBenchCanvas() {
       const c = document.getElementById('benchVisualCanvas');
       if (c && !document.getElementById('page-kids-lab').classList.contains('hidden')) {
@@ -1539,7 +1569,6 @@
         g.clearRect(0, 0, W, H);
         animPhase += 0.04;
 
-        // Lab grid background
         g.strokeStyle = 'rgba(56, 189, 248, 0.07)';
         g.lineWidth = 1;
         for (let x = 0; x < W; x += 24) { g.beginPath(); g.moveTo(x, 0); g.lineTo(x, H); g.stroke(); }
@@ -1549,7 +1578,6 @@
         const step = currentBenchStep;
 
         if (vType === 'dna3d') {
-          // Real Rotating 3D Double Helix!
           const cx = W / 2;
           for (let i = 0; i < 6; i++) {
             const y = 36 + i * 38;
@@ -1589,7 +1617,6 @@
             else { drawSphere(x2, z2, bB, '#38bdf8'); drawSphere(x1, z1, bA, '#00f5d4'); }
           }
         } else if (vType === 'tube') {
-          // Strawberry DNA Extraction Tube
           g.strokeStyle = '#94a3b8'; g.lineWidth = 2.5;
           g.strokeRect(150, 35, 80, 195);
           if (step >= 1) {
@@ -1599,7 +1626,6 @@
           if (step >= 3) {
             g.fillStyle = 'rgba(186, 230, 253, 0.25)';
             g.fillRect(152, 75, 76, 55);
-            // Floating white DNA strands at interphase
             g.strokeStyle = '#ffffff'; g.lineWidth = 2.5;
             g.beginPath();
             for (let x = 158; x < 222; x += 6) {
@@ -1608,7 +1634,6 @@
             g.stroke();
           }
         } else if (vType === 'gel') {
-          // Animated 4-Lane Gel Electrophoresis
           g.strokeStyle = '#64748b'; g.lineWidth = 2;
           g.strokeRect(55, 25, 270, 215);
           for (let l = 0; l < 4; l++) {
@@ -1627,7 +1652,6 @@
             }
           }
         } else if (vType === 'cylinder' || vType === 'balloon') {
-          // Rising Oxygen Foam or Inflating CO2 Balloon
           g.strokeStyle = '#94a3b8'; g.lineWidth = 2;
           g.strokeRect(155, 110, 70, 125);
           g.fillStyle = 'rgba(251, 191, 36, 0.45)';
@@ -1651,7 +1675,6 @@
             g.fillRect(157, 175 - foamH, 66, foamH);
           }
         } else if (vType === 'column' || vType === 'filter' || vType === 'bioreactor') {
-          // Syringe Column + Dripping Collection Beaker
           g.strokeStyle = '#94a3b8'; g.lineWidth = 2;
           g.strokeRect(145, 22, 90, 130);
           g.fillStyle = '#1e293b'; g.fillRect(147, 55, 86, 95);
@@ -1665,7 +1688,6 @@
             g.fillRect(152, 238 - step * 16, 76, step * 16);
           }
         } else if (vType === 'plate') {
-          // 5-Well Serial Dilution + LED Pad Glow
           if (step === 3) {
             g.fillStyle = 'rgba(0, 245, 212, 0.12)';
             g.fillRect(25, 75, 330, 120);
@@ -1679,7 +1701,6 @@
             g.strokeStyle = '#38bdf8'; g.lineWidth = 2; g.stroke();
           }
         } else if (vType === 'petri' || vType === 'scope') {
-          // Circular Petri Dish or 140x Foldscope Lens
           g.beginPath(); g.arc(W / 2, H / 2, 100, 0, Math.PI * 2);
           g.fillStyle = vType === 'petri' ? '#1e1b4b' : '#022c22'; g.fill();
           g.strokeStyle = '#00f5d4'; g.lineWidth = 3; g.stroke();
@@ -1692,7 +1713,6 @@
             }
           }
         } else if (vType === 'ph' || vType === 'uv' || vType === 'spec' || vType === 'hydrogel') {
-          // 3-Well Colorimetric / UV / Hydrogel Stage
           const colors = step === 0 ? ['#1e293b', '#1e293b', '#1e293b']
             : step === 1 ? ['#8b5cf6', '#8b5cf6', '#8b5cf6']
             : step === 2 ? ['#f43f5e', '#8b5cf6', '#8b5cf6']
@@ -1705,7 +1725,6 @@
             g.fillRect(x + 2, 105, 61, 98);
           }
         } else {
-          // Egg / Droplet / TLC / Microbial Fuel Cell Stage
           g.strokeStyle = '#38bdf8'; g.lineWidth = 2.5;
           g.strokeRect(85, 50, 210, 170);
           g.fillStyle = step === 0 ? '#1e293b' : (step === 1 ? '#38bdf8' : (step === 2 ? '#a855f7' : '#00f5d4'));
@@ -1821,6 +1840,7 @@
 
     function downloadSafetyChecklist() {
       const content = `OMNIBIO LABS — MANDATORY MENTOR PRE-LAB SAFETY & COMPLIANCE CHECKLIST
+501(c)(3) Fiscally Sponsored Project of The Hack Foundation (EIN: 81-2908499)
 Official Contact: contact@omnibiolabs.org | Website: https://omnibiolabs.org
 
 [ ] 1. SUPERVISION RATIO: Confirm at least 1 trained High School Mentor per 6 K-8 students + 1 on-site adult teacher/librarian.
