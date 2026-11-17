@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>OmniBio Labs | 501(c)(3) Biotech & STEM for K–8 Students</title>
   <meta name="description" content="OmniBio Labs is a 501(c)(3) fiscally sponsored nonprofit bringing 20 collegiate-level wet-lab biotechnology workshops to K–8 schools and libraries at zero cost." />
+  <link rel="icon" type="image/png" href="logo.png" />
+  <link rel="apple-touch-icon" href="logo.png" />
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -58,11 +60,7 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6">
       <div class="h-16 flex items-center justify-between gap-3">
         <button onclick="switchPage('overview')" class="flex items-center gap-2.5 font-display font-bold text-xl tracking-tight text-white text-left">
-          <span class="w-8 h-8 rounded-lg bg-bio-cyan/10 border border-bio-cyan/40 flex items-center justify-center text-bio-cyan shrink-0">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 014.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15.3M14.25 3.104c.251.023.501.05.75.082M19.8 15.3l-1.57.393A9.065 9.065 0 0112 15a9.065 9.065 0 00-6.23-.693L5 14.5m14.8.8l1.402 1.402c1.232 1.232.65 3.318-1.067 3.611A48.309 48.309 0 0112 21c-2.773 0-5.491-.235-8.135-.687-1.718-.293-2.3-2.379-1.067-3.61L5 14.5" />
-            </svg>
-          </span>
+          <img src="logo.png" alt="OmniBio Labs Logo" class="w-9 h-9 rounded-lg object-cover border border-bio-cyan/40 shrink-0" />
           <div>
             <span>OmniBio <span class="text-bio-cyan">Labs</span></span>
             <span class="hidden sm:inline-block ml-2 px-2 py-0.5 rounded bg-emerald-500/15 border border-emerald-400/40 text-emerald-300 font-mono text-[10px] align-middle">501(c)(3) NONPROFIT</span>
@@ -1978,20 +1976,5 @@ Official Contact: contact@omnibiolabs.org | Website: https://omnibiolabs.org
     }
     drawHelix();
   </script>
-  <script>
-    // Set browser tab favicon to logo.png
-    const iconLink = document.createElement('link');
-    iconLink.rel = 'icon';
-    iconLink.type = 'image/png';
-    iconLink.href = 'logo.png';
-    document.head.appendChild(iconLink);
-
-    // Replace top-left header flask icon with logo.png
-    const headerIconBox = document.querySelector('header button span.w-8.h-8');
-    if (headerIconBox) {
-      headerIconBox.outerHTML = '<img src="logo.png" alt="OmniBio Labs Logo" class="w-9 h-9 rounded-lg object-cover border border-bio-cyan/40 shrink-0" />';
-    }
-  </script>
-</body>
 </body>
 </html>
