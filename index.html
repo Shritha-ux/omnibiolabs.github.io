@@ -1978,5 +1978,20 @@ Official Contact: contact@omnibiolabs.org | Website: https://omnibiolabs.org
     }
     drawHelix();
   </script>
+  <script>
+    // Set browser tab favicon to logo.png
+    const iconLink = document.createElement('link');
+    iconLink.rel = 'icon';
+    iconLink.type = 'image/png';
+    iconLink.href = 'logo.png';
+    document.head.appendChild(iconLink);
+
+    // Replace top-left header flask icon with logo.png
+    const headerIconBox = document.querySelector('header button span.w-8.h-8');
+    if (headerIconBox) {
+      headerIconBox.outerHTML = '<img src="logo.png" alt="OmniBio Labs Logo" class="w-9 h-9 rounded-lg object-cover border border-bio-cyan/40 shrink-0" />';
+    }
+  </script>
+</body>
 </body>
 </html>
