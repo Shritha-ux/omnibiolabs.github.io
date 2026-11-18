@@ -1,40 +1,43 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>OmniBio Labs — Hands-On Wet-Lab Biotech for K–8 Classrooms</title>
-  <meta name="description" content="Student-led 501(c)(3) nonprofit based in Mountain House, CA bringing free hands-on wet-lab biotechnology workshops to K–8 classrooms." />
+  <title>OmniBio Labs — Free Hands-On Biotech Workshops for K–8 Schools</title>
+  <meta name="description" content="Student-led 501(c)(3) nonprofit fiscally sponsored by HCB, bringing free hands-on wet-lab biotechnology workshops to K–8 classrooms." />
 
-  <!-- Tailwind CSS -->
+  <!-- Crisp High-Contrast Circular DNA Monogram Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='31' fill='%23ffffff'/%3E%3Ccircle cx='32' cy='32' r='26' fill='none' stroke='%23171947' stroke-width='5'/%3E%3Cpath d='M24 13C24 24 40 27 40 32C40 37 24 40 24 51' fill='none' stroke='%233882F6' stroke-width='5.5' stroke-linecap='round'/%3E%3Cpath d='M40 13C40 24 24 27 24 32C24 37 40 40 40 51' fill='none' stroke='%23171947' stroke-width='5.5' stroke-linecap='round'/%3E%3C/svg%3E" />
+
+  <!-- Tailwind CSS & Three.js for Interactive 3D Lab Simulator -->
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
   <!-- Google Fonts: Plus Jakarta Sans, Inter & JetBrains Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet" />
 
   <script>
     tailwind.config = {
       theme: {
         extend: {
           fontFamily: {
-            sans: ['"Plus Jakarta Sans"', '"Inter"', 'system-ui', 'sans-serif'],
-            body: ['"Inter"', 'system-ui', 'sans-serif'],
-            mono: ['"JetBrains Mono"', 'monospace'],
+            sans: ['Plus Jakarta Sans', 'Inter', 'sans-serif'],
+            body: ['Inter', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
           },
           colors: {
             indigoDeep: '#111338',
-            indigoSlate: '#0F172A',
-            mist: '#F6F9FC',
-            mistBorder: '#E2E8F0',
+            navyLogo: '#06218B',
+            cobaltLogo: '#3C5BB7',
             bioBlue: '#2563EB',
-            bioSky: '#0EA5E9',
+            bioCyan: '#0EA5E9',
             bioMint: '#10B981',
           },
           boxShadow: {
-            soft: '0 14px 38px -14px rgba(17, 19, 56, 0.07)',
-            card: '0 4px 20px -6px rgba(17, 19, 56, 0.04)',
+            soft: '0 14px 36px -10px rgba(17, 19, 56, 0.08)',
+            card: '0 6px 20px -4px rgba(37, 99, 235, 0.06)',
           }
         }
       }
@@ -42,1007 +45,747 @@
   </script>
 
   <style>
-    /* Subtle biotech dot-matrix & calm organic animations */
-    .bio-grid-bg {
-      background-image: radial-gradient(rgba(37, 99, 235, 0.11) 1.2px, transparent 1.2px);
-      background-size: 28px 28px;
+    body {
+      font-family: 'Inter', sans-serif;
+      color: #111338;
+      background-color: #EBF3FC;
+      background-image:
+        radial-gradient(at 8% 6%, rgba(56, 130, 246, 0.14) 0px, transparent 48%),
+        radial-gradient(at 92% 10%, rgba(16, 185, 129, 0.12) 0px, transparent 46%),
+        radial-gradient(at 50% 52%, rgba(99, 102, 241, 0.07) 0px, transparent 58%),
+        radial-gradient(circle at 1px 1px, rgba(37, 99, 235, 0.085) 1px, transparent 0);
+      background-size: 100% 100%, 100% 100%, 100% 100%, 26px 26px;
+      background-attachment: fixed;
     }
 
-    @keyframes floatSlow {
-      0%, 100% { transform: translateY(0px); }
-      50% { transform: translateY(-6px); }
+    h1, h2, h3, h4, .font-display {
+      font-family: 'Plus Jakarta Sans', sans-serif;
     }
 
-    @keyframes pulseRing {
-      0%, 100% { opacity: 0.35; transform: scale(1); }
-      50% { opacity: 0.7; transform: scale(1.03); }
+    .glass-card {
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
     }
 
-    @keyframes tabFadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(10px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+    .hover-card {
+      transition: transform 0.24s cubic-bezier(0.22, 1, 0.36, 1),
+                  box-shadow 0.24s cubic-bezier(0.22, 1, 0.36, 1),
+                  border-color 0.24s ease;
+    }
+    .hover-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 18px 34px -10px rgba(37, 99, 235, 0.14);
+      border-color: rgba(56, 130, 246, 0.45);
     }
 
-    .animate-float-slow {
-      animation: floatSlow 6s ease-in-out infinite;
+    .hover-icon-pop {
+      transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
-
-    .animate-pulse-ring {
-      animation: pulseRing 7s ease-in-out infinite;
-      transform-origin: center;
+    .hover-card:hover .hover-icon-pop {
+      transform: scale(1.1) rotate(-4deg);
     }
 
     .tab-panel {
-      display: none;
+      animation: tabFadeIn 0.28s cubic-bezier(0.16, 1, 0.3, 1);
     }
-
-    .tab-panel.active {
-      display: block;
-      animation: tabFadeIn 0.38s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-    }
-
-    /* Custom smooth range slider */
-    input[type="range"] {
-      -webkit-appearance: none;
-      appearance: none;
-      background: transparent;
-      cursor: pointer;
-    }
-    input[type="range"]::-webkit-slider-runnable-track {
-      height: 8px;
-      border-radius: 999px;
-      background: #E2E8F0;
-    }
-    input[type="range"]::-webkit-slider-thumb {
-      -webkit-appearance: none;
-      appearance: none;
-      height: 22px;
-      width: 22px;
-      border-radius: 999px;
-      background: #2563EB;
-      border: 3px solid #FFFFFF;
-      box-shadow: 0 2px 8px rgba(17, 19, 56, 0.22);
-      margin-top: -7px;
-      transition: transform 0.15s ease;
-    }
-    input[type="range"]::-webkit-slider-thumb:hover {
-      transform: scale(1.1);
+    @keyframes tabFadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
     }
   </style>
 </head>
-<body class="bg-white text-slate-600 font-sans antialiased selection:bg-blue-100 selection:text-indigoDeep flex flex-col min-h-screen overflow-x-hidden">
+<body class="antialiased selection:bg-sky-200 selection:text-indigoDeep flex flex-col min-h-screen">
 
-  <!-- ==================== STICKY FROSTED-GLASS TOP NAVBAR ==================== -->
-  <header class="sticky top-0 z-40 w-full bg-white/85 backdrop-blur-md border-b border-mistBorder/80">
-    <div class="max-w-6xl mx-auto px-5 sm:px-8 h-20 flex items-center justify-between gap-4">
+  <!-- Sticky Minimal Frosted Navbar -->
+  <header class="sticky top-0 z-40 bg-white/85 backdrop-blur-lg border-b border-sky-200/80">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-18 flex items-center justify-between gap-2">
 
-      <!-- Custom Inline SVG OmniBio Labs Logo Lockup (Clicking returns to Home tab) -->
-      <button
-        type="button"
-        onclick="switchTab('home')"
-        class="flex items-center gap-3 group focus:outline-none text-left cursor-pointer"
-        aria-label="OmniBio Labs Home"
-      >
-        <svg class="w-11 h-11 shrink-0 transition-transform duration-300 group-hover:scale-105 group-hover:rotate-3" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <!-- Outer Midnight-Indigo Concentric Rings -->
-          <circle cx="50" cy="50" r="45" stroke="#111338" stroke-width="5.5" />
-          <circle cx="50" cy="50" r="35" stroke="#111338" stroke-width="4.5" stroke-dasharray="155 65" stroke-linecap="round" />
-          <!-- Interlocking DNA Double Helix -->
-          <path d="M40 22C40 35 60 39 60 50C60 61 40 65 40 78" stroke="#0EA5E9" stroke-width="5.5" stroke-linecap="round" />
-          <path d="M60 22C60 35 40 39 40 50C40 61 60 65 60 78" stroke="#111338" stroke-width="5.5" stroke-linecap="round" />
-          <!-- Clean Base-Pair Rungs -->
-          <line x1="44" y1="29" x2="56" y2="29" stroke="#38BDF8" stroke-width="3.2" stroke-linecap="round" />
-          <line x1="43" y1="50" x2="57" y2="50" stroke="#38BDF8" stroke-width="3.2" stroke-linecap="round" />
-          <line x1="44" y1="71" x2="56" y2="71" stroke="#38BDF8" stroke-width="3.2" stroke-linecap="round" />
+      <!-- Clean Segmented Concentric Double-Ring DNA Monogram + Two-Tone Wordmark -->
+      <a href="#home" onclick="switchTab('home'); return false;" class="flex items-center gap-2.5 group shrink-0">
+        <svg class="w-10 h-10 sm:w-11 sm:h-11 transition-transform duration-300 group-hover:scale-105" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="OmniBio Labs Logo">
+          <!-- Outer Segmented Rings -->
+          <path d="M54 10C28.5 13.2 10 34.4 10 60C10 85.6 28.5 106.8 54 110" stroke="#171947" stroke-width="8" stroke-linecap="round"/>
+          <path d="M66 10C91.5 13.2 110 34.4 110 60C110 85.6 91.5 106.8 66 110" stroke="#171947" stroke-width="8" stroke-linecap="round"/>
+          <!-- Inner Concentric Arcs -->
+          <path d="M35 28C26.5 36.2 22 47.6 22 60C22 72.4 26.5 83.8 35 92" stroke="#171947" stroke-width="7.5" stroke-linecap="round"/>
+          <path d="M85 28C93.5 36.2 98 47.6 98 60C98 72.4 93.5 83.8 85 92" stroke="#171947" stroke-width="7.5" stroke-linecap="round"/>
+          <!-- Base Pair Rungs -->
+          <line x1="48" y1="30" x2="72" y2="30" stroke="#4A89F3" stroke-width="4.5" stroke-linecap="round"/>
+          <line x1="45" y1="53" x2="75" y2="53" stroke="#4A89F3" stroke-width="4.5" stroke-linecap="round"/>
+          <line x1="45" y1="67" x2="75" y2="67" stroke="#4A89F3" stroke-width="4.5" stroke-linecap="round"/>
+          <line x1="48" y1="90" x2="72" y2="90" stroke="#4A89F3" stroke-width="4.5" stroke-linecap="round"/>
+          <!-- Sky-Blue Helix Ribbon -->
+          <path d="M66 10C42 22 42 44 60 60C78 76 78 98 54 110" stroke="#4A89F3" stroke-width="8" stroke-linecap="round"/>
+          <!-- Midnight-Indigo Over-Strand Ribbon -->
+          <path d="M54 10C78 22 78 44 60 60C42 76 42 98 66 110" stroke="#171947" stroke-width="8" stroke-linecap="round"/>
         </svg>
-
-        <div class="flex flex-col leading-none">
-          <span class="text-[21px] font-extrabold tracking-tight text-indigoDeep">OmniBio</span>
-          <span class="text-[15px] font-semibold tracking-wide text-bioBlue mt-0.5">Labs</span>
+        <div class="leading-[0.94] tracking-tight">
+          <div class="font-display font-extrabold text-[19px] sm:text-[21px]">
+            <span class="text-navyLogo">Omni</span><span class="text-cobaltLogo">Bio</span>
+          </div>
+          <div class="font-display font-bold text-[17px] sm:text-[18px] text-cobaltLogo">Labs</div>
         </div>
-      </button>
+      </a>
 
-      <!-- Desktop Multi-Tab Navigation -->
-      <nav class="hidden lg:flex items-center gap-1.5 p-1.5 rounded-full bg-mist border border-mistBorder/80" aria-label="Primary Tabs">
-        <button type="button" data-tab="home" onclick="switchTab('home')" class="nav-tab px-4 py-2 rounded-full text-sm font-semibold transition-all cursor-pointer">
+      <!-- Desktop Navigation Tabs -->
+      <nav aria-label="Primary Navigation" class="hidden lg:flex items-center gap-0.5 bg-sky-100/75 p-1 rounded-full border border-sky-200/80">
+        <button type="button" data-tab="home" onclick="switchTab('home')" class="nav-tab-btn px-3 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer">
           Home
         </button>
-        <button type="button" data-tab="workshops" onclick="switchTab('workshops')" class="nav-tab px-4 py-2 rounded-full text-sm font-semibold transition-all cursor-pointer">
-          Workshops
+        <button type="button" data-tab="workshops" onclick="switchTab('workshops')" class="nav-tab-btn px-3 py-1.5 rounded-full text-xs font-semibold transition-all cursor-pointer">
+          Workshops <span class="ml-0.5 font-mono text-[10px] px-1.5 py-0.5 rounded-full bg-white text-bioBlue">24</span>
         </button>
-        <button type="button" data-tab="mission" onclick="switchTab('mission')" class="nav-tab px-4 py-2 rounded-full text-sm font-semibold transition-all cursor-pointer">
+        <button type="button" data-tab="chapters" onclick="switchTab('chapters')" class="nav-tab-btn px-3 py-1.5 rounded-full text-xs font-semibold transition-all cursor-pointer">
+          Chapters
+        </button>
+        <button type="button" data-tab="donate" onclick="switchTab('donate')" class="nav-tab-btn px-3 py-1.5 rounded-full text-xs font-semibold transition-all cursor-pointer">
+          Donate
+        </button>
+        <button type="button" data-tab="mission" onclick="switchTab('mission')" class="nav-tab-btn px-3 py-1.5 rounded-full text-xs font-semibold transition-all cursor-pointer">
           Our Mission
         </button>
-        <button type="button" data-tab="involved" onclick="switchTab('involved')" class="nav-tab px-4 py-2 rounded-full text-sm font-semibold transition-all cursor-pointer">
+        <button type="button" data-tab="involved" onclick="switchTab('involved')" class="nav-tab-btn px-3 py-1.5 rounded-full text-xs font-semibold transition-all cursor-pointer">
           Get Involved
         </button>
-        <button type="button" data-tab="contact" onclick="switchTab('contact')" class="nav-tab px-4 py-2 rounded-full text-sm font-semibold transition-all cursor-pointer">
+        <button type="button" data-tab="contact" onclick="switchTab('contact')" class="nav-tab-btn px-3 py-1.5 rounded-full text-xs font-semibold transition-all cursor-pointer">
           Contact
         </button>
       </nav>
 
-      <!-- Primary Pill CTA + Mobile Hamburger -->
-      <div class="flex items-center gap-2.5">
+      <!-- Top Action Pills + Mobile Menu Trigger -->
+      <div class="flex items-center gap-2 shrink-0">
+        <button
+          type="button"
+          onclick="switchTab('donate')"
+          class="hidden sm:inline-flex items-center gap-1.5 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs px-3.5 py-2 shadow-xs transition-all hover:scale-105 cursor-pointer"
+        >
+          <span>♥</span> Donate
+        </button>
         <button
           type="button"
           onclick="goToBooking('Teacher / School Admin')"
-          class="inline-flex items-center gap-2 rounded-full bg-indigoDeep hover:bg-blue-950 text-white text-xs sm:text-sm font-semibold px-4 sm:px-5 py-2.5 shadow-sm transition-all duration-200 hover:-translate-y-0.5 cursor-pointer"
+          class="rounded-full bg-indigoDeep hover:bg-blue-950 text-white font-semibold text-xs sm:text-sm px-4 py-2 shadow-xs transition-all hover:scale-105 cursor-pointer"
         >
-          <span>Book a Workshop</span>
-          <svg class="w-3.5 h-3.5 text-sky-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.4">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
-          </svg>
+          Book a Lab
         </button>
-
         <button
           type="button"
+          id="mobileMenuBtn"
           onclick="toggleMobileMenu()"
-          class="lg:hidden p-2.5 rounded-xl border border-mistBorder text-indigoDeep hover:bg-mist transition-colors cursor-pointer"
           aria-label="Toggle Menu"
+          class="lg:hidden p-2 rounded-xl border border-sky-200 bg-white text-indigoDeep hover:bg-sky-50 cursor-pointer"
         >
-          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
           </svg>
         </button>
       </div>
     </div>
 
-    <!-- Responsive Mobile Navigation Drawer -->
-    <div id="mobileMenu" class="hidden lg:hidden bg-white border-b border-mistBorder px-5 py-4 space-y-1.5">
-      <button type="button" data-tab="home" onclick="switchTab('home'); toggleMobileMenu();" class="nav-tab-mobile w-full text-left px-4 py-2.5 rounded-xl text-sm font-semibold transition-colors">
-        Home
-      </button>
-      <button type="button" data-tab="workshops" onclick="switchTab('workshops'); toggleMobileMenu();" class="nav-tab-mobile w-full text-left px-4 py-2.5 rounded-xl text-sm font-semibold transition-colors">
-        Workshops
-      </button>
-      <button type="button" data-tab="mission" onclick="switchTab('mission'); toggleMobileMenu();" class="nav-tab-mobile w-full text-left px-4 py-2.5 rounded-xl text-sm font-semibold transition-colors">
-        Our Mission
-      </button>
-      <button type="button" data-tab="involved" onclick="switchTab('involved'); toggleMobileMenu();" class="nav-tab-mobile w-full text-left px-4 py-2.5 rounded-xl text-sm font-semibold transition-colors">
-        Get Involved
-      </button>
-      <button type="button" data-tab="contact" onclick="switchTab('contact'); toggleMobileMenu();" class="nav-tab-mobile w-full text-left px-4 py-2.5 rounded-xl text-sm font-semibold transition-colors">
-        Contact
-      </button>
+    <!-- Mobile Collapsible Navigation Drawer -->
+    <div id="mobileMenu" class="hidden lg:hidden border-t border-sky-100 bg-white/95 backdrop-blur-md px-4 py-3 space-y-1">
+      <button type="button" data-tab="home" onclick="switchTab('home'); toggleMobileMenu()" class="mobile-tab-btn w-full text-left px-3.5 py-2 rounded-xl text-sm font-semibold">Home</button>
+      <button type="button" data-tab="workshops" onclick="switchTab('workshops'); toggleMobileMenu()" class="mobile-tab-btn w-full text-left px-3.5 py-2 rounded-xl text-sm font-semibold">Workshops (All 24 Labs)</button>
+      <button type="button" data-tab="chapters" onclick="switchTab('chapters'); toggleMobileMenu()" class="mobile-tab-btn w-full text-left px-3.5 py-2 rounded-xl text-sm font-semibold">Chapters</button>
+      <button type="button" data-tab="donate" onclick="switchTab('donate'); toggleMobileMenu()" class="mobile-tab-btn w-full text-left px-3.5 py-2 rounded-xl text-sm font-semibold text-emerald-700">♥ Donate (501c3 via HCB)</button>
+      <button type="button" data-tab="mission" onclick="switchTab('mission'); toggleMobileMenu()" class="mobile-tab-btn w-full text-left px-3.5 py-2 rounded-xl text-sm font-semibold">Our Mission</button>
+      <button type="button" data-tab="involved" onclick="switchTab('involved'); toggleMobileMenu()" class="mobile-tab-btn w-full text-left px-3.5 py-2 rounded-xl text-sm font-semibold">Get Involved</button>
+      <button type="button" data-tab="contact" onclick="switchTab('contact'); toggleMobileMenu()" class="mobile-tab-btn w-full text-left px-3.5 py-2 rounded-xl text-sm font-semibold">Contact</button>
     </div>
   </header>
 
-  <!-- ==================== MAIN TAB CONTENT AREA ==================== -->
+  <!-- Main Multi-Tab Content Viewport -->
   <main class="flex-1">
 
-    <!-- ================================================================
-         TAB 1: HOME (OVERVIEW & HERO)
-    ================================================================= -->
-    <section id="tab-home" class="tab-panel active">
-      <!-- Airy Hero Section -->
-      <div class="relative overflow-hidden bg-gradient-to-b from-white via-[#F9FBFE] to-mist pt-14 pb-20 sm:pt-20 sm:pb-24 border-b border-mistBorder/70">
-        <div class="absolute inset-0 bio-grid-bg opacity-75 pointer-events-none"></div>
-        <div class="absolute -top-24 -right-24 w-[440px] h-[440px] rounded-full bg-blue-100/50 blur-3xl pointer-events-none"></div>
-        <div class="absolute top-40 -left-24 w-[320px] h-[320px] rounded-full bg-emerald-100/40 blur-3xl pointer-events-none"></div>
+    <!-- ==================== TAB 1: HOME ==================== -->
+    <section id="tab-home" class="tab-panel">
+      <!-- Compact, Balanced Hero Section -->
+      <div class="pt-8 pb-10 sm:pt-12 sm:pb-14">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="grid lg:grid-cols-12 gap-8 lg:gap-10 items-center">
 
-        <!-- Subtle Floating Hexagonal & DNA Vector Geometry -->
-        <svg class="hidden xl:block absolute right-10 top-12 w-56 h-56 text-bioBlue/10 pointer-events-none animate-pulse-ring" viewBox="0 0 200 200" fill="none">
-          <polygon points="100,15 174,57 174,143 100,185 26,143 26,57" stroke="currentColor" stroke-width="2" stroke-dasharray="6 6" />
-          <polygon points="100,42 150,71 150,129 100,158 50,129 50,71" stroke="#10B981" stroke-opacity="0.35" stroke-width="1.5" />
-        </svg>
-
-        <div class="relative max-w-6xl mx-auto px-5 sm:px-8">
-          <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-
-            <!-- Left Hero Copy -->
-            <div class="lg:col-span-7 space-y-6">
-              <div class="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-white border border-mistBorder shadow-card">
-                <span class="w-2 h-2 rounded-full bg-bioMint"></span>
-                <span class="text-xs font-semibold text-indigoDeep">501(c)(3) Student-Led Biotech Nonprofit • Mountain House, CA</span>
+            <!-- Left Headline & Action Buttons -->
+            <div class="lg:col-span-6 space-y-5">
+              <div class="inline-flex flex-wrap items-center gap-2 px-3 py-1.5 rounded-full bg-white/90 border border-sky-200 shadow-2xs">
+                <span class="w-2 h-2 rounded-full bg-bioMint animate-pulse"></span>
+                <span class="font-mono text-[11px] font-semibold text-indigoDeep tracking-wide">
+                  501(c)(3) NONPROFIT • FISCALLY SPONSORED BY HCB
+                </span>
               </div>
 
-              <h1 class="text-4xl sm:text-5xl lg:text-[52px] font-extrabold text-indigoDeep tracking-tight leading-[1.12]">
-                Real wet-lab biotech, brought straight to
-                <span class="text-transparent bg-clip-text bg-gradient-to-r from-bioBlue to-bioSky">K–8 classrooms.</span>
+              <h1 class="text-3xl sm:text-5xl font-extrabold text-indigoDeep tracking-tight leading-[1.12]">
+                Real wet-lab biotech for <span class="bg-gradient-to-r from-bioBlue via-sky-500 to-emerald-500 bg-clip-text text-transparent">every K–8 classroom.</span>
               </h1>
 
-              <p class="font-body text-base sm:text-lg text-slate-600 leading-relaxed max-w-2xl">
-                We pack real micropipettes, DNA extraction kits, and gel electrophoresis chambers into a traveling classroom lab—guided by approachable student mentors at <span class="font-semibold text-indigoDeep">zero cost to schools</span>.
+              <p class="font-body text-base sm:text-lg text-slate-600 leading-relaxed max-w-xl">
+                We pack real micropipettes, DNA extraction kits, and 24 hands-on biotech experiments into a traveling classroom lab—guided by approachable student mentors at <strong class="font-semibold text-indigoDeep">zero cost to schools</strong>.
               </p>
 
-              <!-- Two Clean CTA Buttons -->
-              <div class="flex flex-wrap items-center gap-4 pt-2">
+              <div class="flex flex-wrap items-center gap-2.5 pt-1">
                 <button
                   type="button"
                   onclick="goToBooking('Teacher / School Admin')"
-                  class="inline-flex items-center justify-center gap-2 rounded-full bg-bioBlue hover:bg-blue-700 text-white font-semibold text-sm sm:text-base px-7 py-3.5 shadow-soft transition-all duration-200 hover:-translate-y-0.5 cursor-pointer"
+                  class="rounded-full bg-indigoDeep hover:bg-blue-950 text-white font-bold text-sm px-6 py-3 shadow-soft transition-all hover:scale-105 cursor-pointer"
                 >
-                  <span>Book a Free Workshop</span>
-                  <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                  </svg>
+                  Book a Free Workshop →
                 </button>
-
                 <button
                   type="button"
                   onclick="switchTab('workshops')"
-                  class="inline-flex items-center justify-center gap-2 rounded-full bg-white hover:bg-mist text-indigoDeep border border-mistBorder font-semibold text-sm sm:text-base px-7 py-3.5 transition-all duration-200 cursor-pointer"
+                  class="rounded-full bg-white hover:bg-sky-50 text-indigoDeep border border-sky-200 font-bold text-sm px-5 py-3 transition-all hover:scale-105 cursor-pointer"
                 >
-                  <span>Explore Lab Kits</span>
+                  Explore All 24 Labs
+                </button>
+                <button
+                  type="button"
+                  onclick="switchTab('chapters')"
+                  class="rounded-full bg-sky-100/90 hover:bg-sky-200/80 text-bioBlue font-bold text-sm px-5 py-3 transition-all hover:scale-105 cursor-pointer"
+                >
+                  Start a Chapter
                 </button>
               </div>
             </div>
 
-            <!-- Right Interactive Floating 'Mobile Wet-Lab Kit' Visual Card -->
-            <div class="lg:col-span-5">
-              <div class="bg-white rounded-3xl border border-mistBorder shadow-soft p-6 sm:p-7 animate-float-slow">
-                <div class="flex items-center justify-between pb-4 mb-5 border-b border-slate-100">
+            <!-- Right Interactive 3D Wet-Lab Simulator & Lesson Intro Game -->
+            <div class="lg:col-span-6">
+              <div class="glass-card rounded-3xl border border-sky-200/90 shadow-soft p-5 sm:p-6">
+                <!-- Simulator Top Header & Lab Dropdown Selector -->
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 pb-3 mb-3 border-b border-sky-100">
                   <div class="flex items-center gap-2">
-                    <span class="w-2.5 h-2.5 rounded-full bg-bioBlue"></span>
-                    <span class="text-sm font-bold text-indigoDeep">Mobile Wet-Lab Kit</span>
+                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping shrink-0"></span>
+                    <div>
+                      <div class="text-sm font-extrabold text-indigoDeep leading-tight">Interactive 3D Lab Walkthrough</div>
+                      <div class="font-mono text-[10px] text-slate-500">Pick any of our 24 labs to inspect tools, steps & 3D visuals</div>
+                    </div>
                   </div>
-                  <span class="font-mono text-[11px] font-semibold px-2.5 py-0.5 rounded-full bg-blue-50 text-bioBlue">
-                    INTERACTIVE PREVIEW
+                  <span id="simScoreBadge" class="self-start sm:self-auto font-mono text-[10px] font-bold px-2.5 py-1 rounded-full bg-indigoDeep text-sky-300 shrink-0">
+                    STEP 1 / 4
                   </span>
                 </div>
 
-                <!-- Dynamic Micro-Item Readout Stage -->
-                <div class="rounded-2xl bg-mist border border-mistBorder/90 p-5 mb-4 flex items-start gap-4">
-                  <div id="homeKitIcon" class="w-14 h-14 rounded-2xl bg-white border border-mistBorder shadow-card shrink-0 flex items-center justify-center text-bioBlue">
-                    <svg class="w-8 h-8" viewBox="0 0 48 48" fill="none">
-                      <rect x="20" y="4" width="8" height="6" rx="1.5" fill="#111338"/>
-                      <rect x="22" y="10" width="4" height="5" fill="#2563EB"/>
-                      <rect x="18" y="15" width="12" height="16" rx="3" fill="#111338"/>
-                      <path d="M21 31H27L25 40H23L21 31Z" fill="#DBEAFE" stroke="#2563EB" stroke-width="1.5"/>
-                      <circle cx="24" cy="44" r="2.2" fill="#0EA5E9"/>
-                    </svg>
-                  </div>
-                  <div class="space-y-1">
-                    <div id="homeKitTag" class="font-mono text-[11px] font-semibold text-bioBlue uppercase">PRECISION GEAR</div>
-                    <h2 id="homeKitTitle" class="text-base font-bold text-indigoDeep">P20 Micropipettes</h2>
-                    <p id="homeKitDesc" class="font-body text-xs sm:text-sm text-slate-600 leading-relaxed">
-                      Real adjustable microliter pipettes so kids can measure tiny colorful droplets just like research biologists.
-                    </p>
-                  </div>
+                <!-- Dropdown to Pick Any of the 24 Labs -->
+                <div class="mb-3">
+                  <label for="simLabSelector" class="block font-mono text-[10px] font-bold uppercase tracking-wider text-bioBlue mb-1">
+                    Select a K–8 Wet-Lab Experiment (24 Available):
+                  </label>
+                  <select
+                    id="simLabSelector"
+                    onchange="selectSimulatorLab(this.value)"
+                    class="w-full rounded-2xl border border-sky-200 bg-white px-3.5 py-2 text-xs sm:text-sm font-bold text-indigoDeep shadow-2xs focus:outline-none focus:border-bioBlue cursor-pointer"
+                  ></select>
                 </div>
 
-                <!-- 4 Clickable Micro-Items -->
-                <div class="grid grid-cols-2 gap-2.5" id="homeKitGrid">
-                  <button type="button" onclick="selectHomeKit(0)" class="home-kit-btn text-left p-3 rounded-2xl border border-bioBlue bg-blue-50/50 transition-all cursor-pointer">
-                    <div class="font-mono text-[10px] font-semibold text-bioBlue">01 • GEAR</div>
-                    <div class="text-xs sm:text-sm font-bold text-indigoDeep mt-0.5">P20 Micropipettes</div>
-                  </button>
-                  <button type="button" onclick="selectHomeKit(1)" class="home-kit-btn text-left p-3 rounded-2xl border border-mistBorder bg-white hover:bg-mist transition-all cursor-pointer">
-                    <div class="font-mono text-[10px] font-semibold text-slate-400">02 • DNA</div>
-                    <div class="text-xs sm:text-sm font-bold text-indigoDeep mt-0.5">Gel Electrophoresis</div>
-                  </button>
-                  <button type="button" onclick="selectHomeKit(2)" class="home-kit-btn text-left p-3 rounded-2xl border border-mistBorder bg-white hover:bg-mist transition-all cursor-pointer">
-                    <div class="font-mono text-[10px] font-semibold text-slate-400">03 • LAB</div>
-                    <div class="text-xs sm:text-sm font-bold text-indigoDeep mt-0.5">Fruit DNA Extraction</div>
-                  </button>
-                  <button type="button" onclick="selectHomeKit(3)" class="home-kit-btn text-left p-3 rounded-2xl border border-mistBorder bg-white hover:bg-mist transition-all cursor-pointer">
-                    <div class="font-mono text-[10px] font-semibold text-slate-400">04 • ACCESS</div>
-                    <div class="text-xs sm:text-sm font-bold text-indigoDeep mt-0.5">$0 School Cost</div>
-                  </button>
-                </div>
-              </div>
-            </div>
+                <!-- Interactive 3D Three.js Canvas Stage -->
+                <div class="relative rounded-2xl overflow-hidden border border-sky-200 bg-gradient-to-b from-[#0E1638] via-[#152459] to-[#1B3373] h-52 sm:h-60 mb-3 select-none">
+                  <canvas id="bio3dCanvas" class="w-full h-full block cursor-grab active:cursor-grabbing"></canvas>
 
-          </div>
-        </div>
-      </div>
-
-      <!-- 3-Card 'Why OmniBio Labs?' Section -->
-      <div class="py-20 bg-white">
-        <div class="max-w-6xl mx-auto px-5 sm:px-8">
-          <div class="max-w-2xl mb-12 space-y-2.5">
-            <div class="font-mono text-xs font-semibold uppercase tracking-wider text-bioBlue">Why OmniBio Labs?</div>
-            <h2 class="text-3xl font-extrabold text-indigoDeep tracking-tight">
-              Sleek science, zero classroom stress.
-            </h2>
-          </div>
-
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <!-- Card 1 -->
-            <div class="p-7 rounded-2xl bg-white border border-mistBorder shadow-card hover:-translate-y-1 transition-all duration-200">
-              <div class="w-11 h-11 rounded-xl bg-emerald-50 border border-emerald-200/70 text-bioMint flex items-center justify-center mb-5">
-                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              </div>
-              <h3 class="text-lg font-bold text-indigoDeep mb-2">Zero Cost to Schools</h3>
-              <p class="font-body text-sm text-slate-600 leading-relaxed">
-                As a registered 501(c)(3) nonprofit, we provide every pipette tip, tube, reagent, and pair of gloves completely free for partner schools.
-              </p>
-            </div>
-
-            <!-- Card 2 -->
-            <div class="p-7 rounded-2xl bg-white border border-mistBorder shadow-card hover:-translate-y-1 transition-all duration-200">
-              <div class="w-11 h-11 rounded-xl bg-blue-50 border border-blue-200/70 text-bioBlue flex items-center justify-center mb-5">
-                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
-                </svg>
-              </div>
-              <h3 class="text-lg font-bold text-indigoDeep mb-2">Real Biotech Gear</h3>
-              <p class="font-body text-sm text-slate-600 leading-relaxed">
-                No toy plastic kits—students handle genuine adjustable micropipettes, agar plates, and safe electrophoresis chambers designed for K–8 hands.
-              </p>
-            </div>
-
-            <!-- Card 3 -->
-            <div class="p-7 rounded-2xl bg-white border border-mistBorder shadow-card hover:-translate-y-1 transition-all duration-200">
-              <div class="w-11 h-11 rounded-xl bg-sky-50 border border-sky-200/70 text-bioSky flex items-center justify-center mb-5">
-                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
-                </svg>
-              </div>
-              <h3 class="text-lg font-bold text-indigoDeep mb-2">Peer-Led & Approachable</h3>
-              <p class="font-body text-sm text-slate-600 leading-relaxed">
-                Trained student mentors lead every lab step-by-step, turning intimidating biotech concepts into playful, memorable discoveries.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Quick Impact & Preview Strip -->
-      <div class="py-16 bg-mist border-t border-mistBorder/70">
-        <div class="max-w-6xl mx-auto px-5 sm:px-8 space-y-10">
-          <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
-            <div class="rounded-2xl bg-white border border-mistBorder p-7 shadow-card">
-              <div class="font-mono text-xs font-semibold text-bioBlue mb-1">SCHOOL TUITION</div>
-              <div class="text-3xl sm:text-4xl font-extrabold text-indigoDeep">100% Free</div>
-              <p class="font-body text-xs sm:text-sm text-slate-600 mt-2">Zero fees for K–8 classrooms, teachers, or families.</p>
-            </div>
-            <div class="rounded-2xl bg-white border border-mistBorder p-7 shadow-card">
-              <div class="font-mono text-xs font-semibold text-bioMint mb-1">AGE-TAILORED LABS</div>
-              <div class="text-3xl sm:text-4xl font-extrabold text-indigoDeep">Grades K–8</div>
-              <p class="font-body text-xs sm:text-sm text-slate-600 mt-2">Scaffolded protocols built for elementary and middle schoolers.</p>
-            </div>
-            <div class="rounded-2xl bg-white border border-mistBorder p-7 shadow-card">
-              <div class="font-mono text-xs font-semibold text-bioSky mb-1">NONPROFIT STATUS</div>
-              <div class="text-3xl sm:text-4xl font-extrabold text-indigoDeep">501(c)(3)</div>
-              <p class="font-body text-xs sm:text-sm text-slate-600 mt-2">Student-founded charity rooted in Mountain House, CA.</p>
-            </div>
-          </div>
-
-          <!-- Cross-Tab CTA Banner -->
-          <div class="rounded-3xl bg-indigoDeep text-white p-8 sm:p-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 shadow-soft">
-            <div class="space-y-2 max-w-xl">
-              <div class="font-mono text-xs font-semibold uppercase tracking-wider text-sky-300">Ready to explore?</div>
-              <h3 class="text-2xl sm:text-3xl font-extrabold tracking-tight">See what happens inside a 45-minute workshop.</h3>
-              <p class="font-body text-sm sm:text-base text-slate-300">
-                Browse our K–8 lab protocols, learn how our student mentors run sessions, or request a date for your school.
-              </p>
-            </div>
-            <div class="flex flex-wrap gap-3 shrink-0">
-              <button type="button" onclick="switchTab('workshops')" class="rounded-full bg-white hover:bg-blue-50 text-indigoDeep font-semibold text-sm px-6 py-3 transition-colors cursor-pointer">
-                View Workshops
-              </button>
-              <button type="button" onclick="switchTab('involved')" class="rounded-full bg-white/10 hover:bg-white/20 text-white border border-white/20 font-semibold text-sm px-6 py-3 transition-colors cursor-pointer">
-                Get Involved
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ================================================================
-         TAB 2: WORKSHOPS (K–8 LAB CURRICULUM & KIT EXPLORER)
-    ================================================================= -->
-    <section id="tab-workshops" class="tab-panel">
-      <div class="py-14 sm:py-20 bg-white">
-        <div class="max-w-6xl mx-auto px-5 sm:px-8 space-y-12">
-
-          <!-- Header + Grade Filter Pills -->
-          <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
-            <div class="space-y-2.5 max-w-2xl">
-              <div class="font-mono text-xs font-semibold uppercase tracking-wider text-bioBlue">K–8 Lab Curriculum</div>
-              <h1 class="text-3xl sm:text-4xl font-extrabold text-indigoDeep tracking-tight">
-                Hands-on wet-lab workshops.
-              </h1>
-              <p class="font-body text-base text-slate-600 leading-relaxed">
-                Every session runs 45–50 minutes, uses 100% classroom-safe reagents, and puts real biotech instruments into every student's hands.
-              </p>
-            </div>
-
-            <div class="inline-flex flex-wrap gap-1.5 p-1.5 rounded-2xl sm:rounded-full bg-mist border border-mistBorder self-start">
-              <button type="button" onclick="filterWorkshops('all', this)" class="ws-filter-btn px-4 py-2 rounded-full text-xs font-semibold bg-indigoDeep text-white transition-all cursor-pointer">
-                All Labs
-              </button>
-              <button type="button" onclick="filterWorkshops('k2', this)" class="ws-filter-btn px-4 py-2 rounded-full text-xs font-semibold text-slate-600 hover:text-indigoDeep transition-all cursor-pointer">
-                Grades K–2
-              </button>
-              <button type="button" onclick="filterWorkshops('35', this)" class="ws-filter-btn px-4 py-2 rounded-full text-xs font-semibold text-slate-600 hover:text-indigoDeep transition-all cursor-pointer">
-                Grades 3–5
-              </button>
-              <button type="button" onclick="filterWorkshops('68', this)" class="ws-filter-btn px-4 py-2 rounded-full text-xs font-semibold text-slate-600 hover:text-indigoDeep transition-all cursor-pointer">
-                Grades 6–8
-              </button>
-            </div>
-          </div>
-
-          <!-- 4 Sleek Workshop Cards -->
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-
-            <!-- Workshop 1 -->
-            <article data-grades="k2 35" class="ws-card rounded-3xl bg-white border border-mistBorder p-7 sm:p-8 shadow-card flex flex-col justify-between">
-              <div>
-                <div class="flex flex-wrap items-center justify-between gap-2 mb-5">
-                  <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200/70">
-                    <span class="w-1.5 h-1.5 rounded-full bg-bioMint"></span>
-                    Grades K–5
-                  </span>
-                  <span class="font-mono text-xs text-slate-500">45 MINS • GENOMICS</span>
-                </div>
-
-                <h2 class="text-xl font-bold text-indigoDeep mb-2">Fruit DNA Extraction</h2>
-                <p class="font-body text-sm text-slate-600 leading-relaxed mb-5">
-                  Students lyse strawberry cells with soap-and-salt buffer, filter the cellular soup, and spool real, visible genomic DNA strands out of chilled ethanol.
-                </p>
-
-                <div class="flex flex-wrap gap-2 mb-6">
-                  <span class="font-mono text-[11px] px-2.5 py-1 rounded-lg bg-mist border border-mistBorder text-slate-600">Conical Tubes</span>
-                  <span class="font-mono text-[11px] px-2.5 py-1 rounded-lg bg-mist border border-mistBorder text-slate-600">Lysis Buffer</span>
-                  <span class="font-mono text-[11px] px-2.5 py-1 rounded-lg bg-mist border border-mistBorder text-slate-600">Keepsake DNA Vial</span>
-                </div>
-              </div>
-
-              <div class="pt-4 border-t border-slate-100 flex items-center justify-between gap-3">
-                <button type="button" onclick="openProtocolModal(0)" class="text-xs font-semibold text-bioBlue hover:underline cursor-pointer">
-                  View Lab Protocol →
-                </button>
-                <button type="button" onclick="goToBooking('Teacher / School Admin', 'Fruit DNA Extraction')" class="rounded-full bg-indigoDeep hover:bg-blue-950 text-white text-xs font-semibold px-4 py-2 transition-colors cursor-pointer">
-                  Request Lab
-                </button>
-              </div>
-            </article>
-
-            <!-- Workshop 2 -->
-            <article data-grades="35 68" class="ws-card rounded-3xl bg-white border border-mistBorder p-7 sm:p-8 shadow-card flex flex-col justify-between">
-              <div>
-                <div class="flex flex-wrap items-center justify-between gap-2 mb-5">
-                  <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-blue-50 text-bioBlue border border-blue-200/70">
-                    <span class="w-1.5 h-1.5 rounded-full bg-bioBlue"></span>
-                    Grades 3–8
-                  </span>
-                  <span class="font-mono text-xs text-slate-500">45 MINS • LIQUID HANDLING</span>
-                </div>
-
-                <h2 class="text-xl font-bold text-indigoDeep mb-2">Micropipette Art & Precision Lab</h2>
-                <p class="font-body text-sm text-slate-600 leading-relaxed mb-5">
-                  Students master microliter accuracy—learning first-stop and second-stop plunger control—by pipetting vibrant color gradients onto 96-well plates.
-                </p>
-
-                <div class="flex flex-wrap gap-2 mb-6">
-                  <span class="font-mono text-[11px] px-2.5 py-1 rounded-lg bg-mist border border-mistBorder text-slate-600">P20 & P200 Pipettes</span>
-                  <span class="font-mono text-[11px] px-2.5 py-1 rounded-lg bg-mist border border-mistBorder text-slate-600">96-Well Plates</span>
-                  <span class="font-mono text-[11px] px-2.5 py-1 rounded-lg bg-mist border border-mistBorder text-slate-600">Sterile Tips</span>
-                </div>
-              </div>
-
-              <div class="pt-4 border-t border-slate-100 flex items-center justify-between gap-3">
-                <button type="button" onclick="openProtocolModal(1)" class="text-xs font-semibold text-bioBlue hover:underline cursor-pointer">
-                  View Lab Protocol →
-                </button>
-                <button type="button" onclick="goToBooking('Teacher / School Admin', 'Micropipette Art & Precision Lab')" class="rounded-full bg-indigoDeep hover:bg-blue-950 text-white text-xs font-semibold px-4 py-2 transition-colors cursor-pointer">
-                  Request Lab
-                </button>
-              </div>
-            </article>
-
-            <!-- Workshop 3 -->
-            <article data-grades="k2 35 68" class="ws-card rounded-3xl bg-white border border-mistBorder p-7 sm:p-8 shadow-card flex flex-col justify-between">
-              <div>
-                <div class="flex flex-wrap items-center justify-between gap-2 mb-5">
-                  <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-sky-50 text-sky-700 border border-sky-200/70">
-                    <span class="w-1.5 h-1.5 rounded-full bg-bioSky"></span>
-                    Grades K–8
-                  </span>
-                  <span class="font-mono text-xs text-slate-500">45 MINS • MICROBIOLOGY</span>
-                </div>
-
-                <h2 class="text-xl font-bold text-indigoDeep mb-2">Micro-World & Agar Exploration</h2>
-                <p class="font-body text-sm text-slate-600 leading-relaxed mb-5">
-                  Students swab everyday classroom surfaces, practice safe aseptic streaking on pre-poured nutrient agar plates, and examine harmless slides up close.
-                </p>
-
-                <div class="flex flex-wrap gap-2 mb-6">
-                  <span class="font-mono text-[11px] px-2.5 py-1 rounded-lg bg-mist border border-mistBorder text-slate-600">Nutrient Agar Dishes</span>
-                  <span class="font-mono text-[11px] px-2.5 py-1 rounded-lg bg-mist border border-mistBorder text-slate-600">Sterile Swabs</span>
-                  <span class="font-mono text-[11px] px-2.5 py-1 rounded-lg bg-mist border border-mistBorder text-slate-600">Pocket Microscopes</span>
-                </div>
-              </div>
-
-              <div class="pt-4 border-t border-slate-100 flex items-center justify-between gap-3">
-                <button type="button" onclick="openProtocolModal(2)" class="text-xs font-semibold text-bioBlue hover:underline cursor-pointer">
-                  View Lab Protocol →
-                </button>
-                <button type="button" onclick="goToBooking('Teacher / School Admin', 'Micro-World & Agar Exploration')" class="rounded-full bg-indigoDeep hover:bg-blue-950 text-white text-xs font-semibold px-4 py-2 transition-colors cursor-pointer">
-                  Request Lab
-                </button>
-              </div>
-            </article>
-
-            <!-- Workshop 4 -->
-            <article data-grades="68" class="ws-card rounded-3xl bg-white border border-mistBorder p-7 sm:p-8 shadow-card flex flex-col justify-between">
-              <div>
-                <div class="flex flex-wrap items-center justify-between gap-2 mb-5">
-                  <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-indigo-50 text-indigoDeep border border-indigo-200/70">
-                    <span class="w-1.5 h-1.5 rounded-full bg-indigoDeep"></span>
-                    Grades 6–8
-                  </span>
-                  <span class="font-mono text-xs text-slate-500">50 MINS • MOLECULAR BIO</span>
-                </div>
-
-                <h2 class="text-xl font-bold text-indigoDeep mb-2">Mystery Gel Electrophoresis</h2>
-                <p class="font-body text-sm text-slate-600 leading-relaxed mb-5">
-                  Middle schoolers load colorful simulated DNA dye samples into agarose gel wells and run real low-voltage chambers to separate molecules by size.
-                </p>
-
-                <div class="flex flex-wrap gap-2 mb-6">
-                  <span class="font-mono text-[11px] px-2.5 py-1 rounded-lg bg-mist border border-mistBorder text-slate-600">Electrophoresis Box</span>
-                  <span class="font-mono text-[11px] px-2.5 py-1 rounded-lg bg-mist border border-mistBorder text-slate-600">Agarose Gels</span>
-                  <span class="font-mono text-[11px] px-2.5 py-1 rounded-lg bg-mist border border-mistBorder text-slate-600">P20 Micropipettes</span>
-                </div>
-              </div>
-
-              <div class="pt-4 border-t border-slate-100 flex items-center justify-between gap-3">
-                <button type="button" onclick="openProtocolModal(3)" class="text-xs font-semibold text-bioBlue hover:underline cursor-pointer">
-                  View Lab Protocol →
-                </button>
-                <button type="button" onclick="goToBooking('Teacher / School Admin', 'Mystery Gel Electrophoresis')" class="rounded-full bg-indigoDeep hover:bg-blue-950 text-white text-xs font-semibold px-4 py-2 transition-colors cursor-pointer">
-                  Request Lab
-                </button>
-              </div>
-            </article>
-
-          </div>
-
-          <!-- Interactive 'What We Bring' Checklist Toggle -->
-          <div class="rounded-3xl bg-mist border border-mistBorder p-7 sm:p-9">
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
-              <div>
-                <div class="font-mono text-xs font-semibold text-bioBlue uppercase">Zero Teacher Prep</div>
-                <h3 class="text-xl sm:text-2xl font-bold text-indigoDeep mt-1">What OmniBio Brings vs. What Your School Provides</h3>
-              </div>
-
-              <!-- Toggle Switch -->
-              <div class="inline-flex p-1 rounded-full bg-white border border-mistBorder self-start">
-                <button type="button" id="checklistOmniBtn" onclick="toggleChecklist('omnibio')" class="px-4 py-2 rounded-full text-xs font-semibold bg-bioBlue text-white transition-all cursor-pointer">
-                  OmniBio Brings (100%)
-                </button>
-                <button type="button" id="checklistSchoolBtn" onclick="toggleChecklist('school')" class="px-4 py-2 rounded-full text-xs font-semibold text-slate-600 hover:text-indigoDeep transition-all cursor-pointer">
-                  School Provides
-                </button>
-              </div>
-            </div>
-
-            <!-- OmniBio Checklist Panel -->
-            <div id="checklistOmniPanel" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5">
-              <div class="flex items-center gap-3 p-4 rounded-2xl bg-white border border-mistBorder">
-                <span class="w-6 h-6 rounded-full bg-emerald-50 text-bioMint flex items-center justify-center text-xs font-bold">✓</span>
-                <span class="text-sm font-medium text-indigoDeep">Sanitized P20/P200 Micropipettes</span>
-              </div>
-              <div class="flex items-center gap-3 p-4 rounded-2xl bg-white border border-mistBorder">
-                <span class="w-6 h-6 rounded-full bg-emerald-50 text-bioMint flex items-center justify-center text-xs font-bold">✓</span>
-                <span class="text-sm font-medium text-indigoDeep">Sterile Tips, Tubes & Agarose Gels</span>
-              </div>
-              <div class="flex items-center gap-3 p-4 rounded-2xl bg-white border border-mistBorder">
-                <span class="w-6 h-6 rounded-full bg-emerald-50 text-bioMint flex items-center justify-center text-xs font-bold">✓</span>
-                <span class="text-sm font-medium text-indigoDeep">Kid-Sized Nitrile Gloves & Table Mats</span>
-              </div>
-              <div class="flex items-center gap-3 p-4 rounded-2xl bg-white border border-mistBorder">
-                <span class="w-6 h-6 rounded-full bg-emerald-50 text-bioMint flex items-center justify-center text-xs font-bold">✓</span>
-                <span class="text-sm font-medium text-indigoDeep">100% Non-Toxic Classroom Reagents</span>
-              </div>
-              <div class="flex items-center gap-3 p-4 rounded-2xl bg-white border border-mistBorder">
-                <span class="w-6 h-6 rounded-full bg-emerald-50 text-bioMint flex items-center justify-center text-xs font-bold">✓</span>
-                <span class="text-sm font-medium text-indigoDeep">Trained Student Lab Mentors</span>
-              </div>
-              <div class="flex items-center gap-3 p-4 rounded-2xl bg-white border border-mistBorder">
-                <span class="w-6 h-6 rounded-full bg-emerald-50 text-bioMint flex items-center justify-center text-xs font-bold">✓</span>
-                <span class="text-sm font-medium text-indigoDeep">Full Setup & Desk Cleanup</span>
-              </div>
-            </div>
-
-            <!-- School Checklist Panel -->
-            <div id="checklistSchoolPanel" class="hidden grid grid-cols-1 sm:grid-cols-3 gap-3.5">
-              <div class="flex items-center gap-3 p-4 rounded-2xl bg-white border border-mistBorder">
-                <span class="w-6 h-6 rounded-full bg-blue-50 text-bioBlue flex items-center justify-center text-xs font-bold">1</span>
-                <span class="text-sm font-medium text-indigoDeep">Standard Classroom Desks or Tables</span>
-              </div>
-              <div class="flex items-center gap-3 p-4 rounded-2xl bg-white border border-mistBorder">
-                <span class="w-6 h-6 rounded-full bg-blue-50 text-bioBlue flex items-center justify-center text-xs font-bold">2</span>
-                <span class="text-sm font-medium text-indigoDeep">45–50 Minutes of Science Block Time</span>
-              </div>
-              <div class="flex items-center gap-3 p-4 rounded-2xl bg-white border border-mistBorder">
-                <span class="w-6 h-6 rounded-full bg-blue-50 text-bioBlue flex items-center justify-center text-xs font-bold">3</span>
-                <span class="text-sm font-medium text-indigoDeep">Curious Students Ready to Experiment!</span>
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </section>
-
-    <!-- ================================================================
-         TAB 3: OUR MISSION (ABOUT THE 501(C)(3), IMPACT & HOW IT WORKS)
-    ================================================================= -->
-    <section id="tab-mission" class="tab-panel">
-      <div class="py-14 sm:py-20 bg-white">
-        <div class="max-w-5xl mx-auto px-5 sm:px-8 space-y-16">
-
-          <!-- Editorial Storytelling Header -->
-          <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
-            <div class="lg:col-span-5 space-y-3">
-              <div class="font-mono text-xs font-semibold uppercase tracking-wider text-bioBlue">Our Story</div>
-              <h1 class="text-3xl sm:text-4xl font-extrabold text-indigoDeep tracking-tight leading-tight">
-                Closing the gap between textbooks and real biotech.
-              </h1>
-            </div>
-
-            <div class="lg:col-span-7 space-y-4 font-body text-base text-slate-600 leading-relaxed">
-              <p>
-                Founded by student scientists in <strong class="font-semibold text-indigoDeep">Mountain House, California</strong>, OmniBio Labs started with a simple observation: most students don't touch a micropipette or run a DNA gel until late high school or college—long after many decide science "isn't for them."
-              </p>
-              <p>
-                We built OmniBio Labs as a <strong class="font-semibold text-indigoDeep">student-led 501(c)(3) nonprofit</strong> to change that early. By bringing mobile wet-lab equipment directly into K–8 classrooms at zero cost, we give younger students the thrill of doing real science alongside approachable student mentors.
-              </p>
-            </div>
-          </div>
-
-          <!-- 3-Step Visual Timeline -->
-          <div class="rounded-3xl bg-mist border border-mistBorder p-8 sm:p-10 space-y-8">
-            <div class="space-y-1.5">
-              <div class="font-mono text-xs font-semibold text-bioBlue uppercase">How It Works</div>
-              <h2 class="text-2xl font-bold text-indigoDeep">From booking to lab day in three steps</h2>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <div class="rounded-2xl bg-white border border-mistBorder p-6 shadow-card">
-                <div class="w-9 h-9 rounded-xl bg-blue-50 text-bioBlue font-mono font-bold text-sm flex items-center justify-center mb-4">1</div>
-                <h3 class="text-base font-bold text-indigoDeep mb-1.5">Request a Date</h3>
-                <p class="font-body text-sm text-slate-600 leading-relaxed">
-                  Teachers or parents pick a workshop module and a 45-minute class window that fits their schedule.
-                </p>
-              </div>
-
-              <div class="rounded-2xl bg-white border border-mistBorder p-6 shadow-card">
-                <div class="w-9 h-9 rounded-xl bg-sky-50 text-bioSky font-mono font-bold text-sm flex items-center justify-center mb-4">2</div>
-                <h3 class="text-base font-bold text-indigoDeep mb-1.5">We Pack the Mobile Lab</h3>
-                <p class="font-body text-sm text-slate-600 leading-relaxed">
-                  Our student team prepares calibrated micropipettes, fresh reagents, gloves, and safe consumables at $0 cost.
-                </p>
-              </div>
-
-              <div class="rounded-2xl bg-white border border-mistBorder p-6 shadow-card">
-                <div class="w-9 h-9 rounded-xl bg-emerald-50 text-bioMint font-mono font-bold text-sm flex items-center justify-center mb-4">3</div>
-                <h3 class="text-base font-bold text-indigoDeep mb-1.5">Students Run Real Experiments</h3>
-                <p class="font-body text-sm text-slate-600 leading-relaxed">
-                  Mentors guide small table groups through hands-on discovery—and handle 100% of setup and cleanup.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <!-- 501(c)(3) Transparency & Classroom Safety Callout -->
-          <div class="rounded-3xl bg-white border border-mistBorder p-8 sm:p-10 shadow-card grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
-            <div class="md:col-span-8 space-y-3">
-              <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 font-mono text-xs font-semibold">
-                501(c)(3) TRANSPARENCY & SAFETY
-              </div>
-              <h3 class="text-2xl font-bold text-indigoDeep">Safe reagents, supervised labs, public accountability.</h3>
-              <p class="font-body text-sm sm:text-base text-slate-600 leading-relaxed">
-                Every OmniBio protocol uses food-grade, non-toxic, biosafety-level-1-exempt materials designed specifically for K–8 classrooms. All student mentors complete safety training prior to visiting partner schools.
-              </p>
-            </div>
-            <div class="md:col-span-4 flex md:justify-end">
-              <button type="button" onclick="goToBooking('Teacher / School Admin')" class="rounded-full bg-indigoDeep hover:bg-blue-950 text-white font-semibold text-sm px-6 py-3.5 transition-colors cursor-pointer">
-                Partner With Us →
-              </button>
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </section>
-
-    <!-- ================================================================
-         TAB 4: GET INVOLVED (PATHWAYS & INTERACTIVE IMPACT SLIDER)
-    ================================================================= -->
-    <section id="tab-involved" class="tab-panel">
-      <div class="py-14 sm:py-20 bg-white">
-        <div class="max-w-6xl mx-auto px-5 sm:px-8 space-y-14">
-
-          <div class="max-w-2xl space-y-2.5">
-            <div class="font-mono text-xs font-semibold uppercase tracking-wider text-bioBlue">Get Involved</div>
-            <h1 class="text-3xl sm:text-4xl font-extrabold text-indigoDeep tracking-tight">
-              Help put real science in young hands.
-            </h1>
-            <p class="font-body text-base text-slate-600 leading-relaxed">
-              Whether you're an educator, a high school student who loves biology, or a community supporter, there is a simple way to jump in.
-            </p>
-          </div>
-
-          <!-- 3-Column Pathway Cards -->
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <!-- Pathway 1 -->
-            <div class="rounded-3xl bg-white border border-mistBorder p-7 sm:p-8 shadow-card flex flex-col justify-between">
-              <div class="space-y-3">
-                <span class="font-mono text-xs font-semibold text-bioBlue uppercase">Educators & Admins</span>
-                <h2 class="text-xl font-bold text-indigoDeep">For K–8 Teachers & Principals</h2>
-                <p class="font-body text-sm text-slate-600 leading-relaxed">
-                  Bring a zero-cost wet-lab workshop to your classroom, science night, or after-school STEM club in Mountain House and neighboring districts.
-                </p>
-              </div>
-              <div class="pt-6">
-                <button type="button" onclick="goToBooking('Teacher / School Admin')" class="w-full rounded-full bg-bioBlue hover:bg-blue-700 text-white font-semibold text-sm py-3 transition-colors cursor-pointer">
-                  Host a Free Workshop
-                </button>
-              </div>
-            </div>
-
-            <!-- Pathway 2 -->
-            <div class="rounded-3xl bg-white border border-mistBorder p-7 sm:p-8 shadow-card flex flex-col justify-between">
-              <div class="space-y-3">
-                <span class="font-mono text-xs font-semibold text-bioSky uppercase">Student Team</span>
-                <h2 class="text-xl font-bold text-indigoDeep">For High School & College Students</h2>
-                <p class="font-body text-sm text-slate-600 leading-relaxed">
-                  Join our volunteer team to pack lab kits, design K–8 curricula, and mentor young students during classroom visits while earning volunteer hours.
-                </p>
-              </div>
-              <div class="pt-6">
-                <button type="button" onclick="goToBooking('Student Volunteer')" class="w-full rounded-full bg-indigoDeep hover:bg-blue-950 text-white font-semibold text-sm py-3 transition-colors cursor-pointer">
-                  Become a Lab Mentor
-                </button>
-              </div>
-            </div>
-
-            <!-- Pathway 3 -->
-            <div class="rounded-3xl bg-white border border-mistBorder p-7 sm:p-8 shadow-card flex flex-col justify-between">
-              <div class="space-y-3">
-                <span class="font-mono text-xs font-semibold text-bioMint uppercase">501(c)(3) Giving</span>
-                <h2 class="text-xl font-bold text-indigoDeep">For Donors & Community Sponsors</h2>
-                <p class="font-body text-sm text-slate-600 leading-relaxed">
-                  Just <strong class="font-semibold text-indigoDeep">$25</strong> supplies sterile pipette tips, tubes, and safe reagents for an entire classroom workshop.
-                </p>
-              </div>
-              <div class="pt-6">
-                <button type="button" onclick="goToBooking('Sponsor / Parent')" class="w-full rounded-full bg-bioMint hover:bg-emerald-600 text-white font-semibold text-sm py-3 transition-colors cursor-pointer">
-                  Fund a Lab Kit
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <!-- Interactive Mini Impact Slider -->
-          <div class="rounded-3xl bg-mist border border-mistBorder p-8 sm:p-10">
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-              <div class="lg:col-span-6 space-y-4">
-                <div class="font-mono text-xs font-semibold text-bioBlue uppercase">Interactive Impact Calculator</div>
-                <h3 class="text-2xl font-bold text-indigoDeep">See what your support funds</h3>
-                <p class="font-body text-sm text-slate-600">
-                  Slide to explore how every dollar goes directly into classroom lab consumables and calibrated equipment.
-                </p>
-
-                <div class="pt-2 space-y-2">
-                  <div class="flex items-center justify-between">
-                    <span class="text-xs font-semibold text-slate-500">Contribution Amount</span>
-                    <span id="sliderAmountDisplay" class="text-2xl font-extrabold text-bioBlue">$50</span>
-                  </div>
-                  <input
-                    id="impactSlider"
-                    type="range"
-                    min="15"
-                    max="250"
-                    step="5"
-                    value="50"
-                    oninput="updateImpactSlider(this.value)"
-                    class="w-full"
-                    aria-label="Contribution Amount Slider"
-                  />
-                  <div class="flex justify-between font-mono text-[11px] text-slate-400">
-                    <span>$15</span>
-                    <span>$100</span>
-                    <span>$250</span>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Dynamic Breakdown Cards -->
-              <div class="lg:col-span-6 grid grid-cols-1 sm:grid-cols-3 gap-4">
-                <div class="rounded-2xl bg-white border border-mistBorder p-5 shadow-card">
-                  <div id="impactStudents" class="text-2xl sm:text-3xl font-extrabold text-indigoDeep">60</div>
-                  <div class="text-xs font-semibold text-bioBlue mt-1">Students Equipped</div>
-                  <p class="font-body text-xs text-slate-500 mt-1">Sterile pipette tips & micro-tubes</p>
-                </div>
-
-                <div class="rounded-2xl bg-white border border-mistBorder p-5 shadow-card">
-                  <div id="impactGels" class="text-2xl sm:text-3xl font-extrabold text-indigoDeep">10</div>
-                  <div class="text-xs font-semibold text-bioSky mt-1">Agarose Gels</div>
-                  <p class="font-body text-xs text-slate-500 mt-1">Electrophoresis & agar plates</p>
-                </div>
-
-                <div class="rounded-2xl bg-white border border-mistBorder p-5 shadow-card">
-                  <div id="impactGloves" class="text-2xl sm:text-3xl font-extrabold text-indigoDeep">120</div>
-                  <div class="text-xs font-semibold text-bioMint mt-1">Lab Gloves</div>
-                  <p class="font-body text-xs text-slate-500 mt-1">Kid-sized nitrile safety pairs</p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </section>
-
-    <!-- ================================================================
-         TAB 5: CONTACT (BOOKING FORM, COPY EMAIL & FAQ ACCORDION)
-    ================================================================= -->
-    <section id="tab-contact" class="tab-panel">
-      <div class="py-14 sm:py-20 bg-white">
-        <div class="max-w-6xl mx-auto px-5 sm:px-8">
-
-          <div class="max-w-2xl mb-12 space-y-2.5">
-            <div class="font-mono text-xs font-semibold uppercase tracking-wider text-bioBlue">Contact & Booking</div>
-            <h1 class="text-3xl sm:text-4xl font-extrabold text-indigoDeep tracking-tight">
-              Let's bring biotech to your school.
-            </h1>
-            <p class="font-body text-base text-slate-600">
-              Have a question about workshops, volunteering, or sponsoring lab kits? Reach out directly or send a quick note below.
-            </p>
-          </div>
-
-          <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
-
-            <!-- Left Column: Direct Contact Card + FAQ Accordion -->
-            <div class="lg:col-span-5 space-y-6">
-
-              <!-- Direct Email & Social Card -->
-              <div class="rounded-3xl bg-mist border border-mistBorder p-7 space-y-5">
-                <div>
-                  <div class="font-mono text-xs font-semibold text-slate-400 uppercase mb-1.5">Direct Email</div>
-                  <div class="flex flex-wrap items-center justify-between gap-2 p-3 rounded-2xl bg-white border border-mistBorder">
-                    <span id="contactEmailText" class="font-mono text-xs sm:text-sm font-semibold text-indigoDeep select-all">
-                      contact@omnibiolabs.org
+                  <!-- Floating HUD Top-Left Pill -->
+                  <div class="absolute top-3 left-3 right-3 pointer-events-none flex items-center justify-between gap-2">
+                    <div class="px-2.5 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-[10px] font-mono text-sky-200 truncate">
+                      <span>🔬</span>
+                      <span id="simHudStage">TOOL: CALIBRATED P20 MICROPIPETTE</span>
+                    </div>
+                    <span id="simVisualTag" class="hidden sm:inline-block shrink-0 px-2.5 py-1 rounded-full bg-emerald-500/20 backdrop-blur-md border border-emerald-300/30 text-[10px] font-mono text-emerald-200">
+                      3D MODEL: HELIX
                     </span>
+                  </div>
+
+                  <!-- Floating HUD Bottom-Left Visual Description + Bottom-Right Drag Hint -->
+                  <div class="absolute bottom-2.5 left-3 right-3 pointer-events-none flex items-end justify-between gap-2">
+                    <div id="simVisualLook" class="px-2.5 py-1 rounded-xl bg-black/45 backdrop-blur-md border border-white/15 text-[10px] text-sky-100 leading-snug max-w-[72%]">
+                      Visual: Blue-and-emerald double helix spinning inside a clear reaction chamber.
+                    </div>
+                    <div class="px-2 py-1 rounded-full bg-black/35 backdrop-blur-sm text-[9px] font-mono text-white/80 shrink-0">
+                      ↻ Drag 3D
+                    </div>
+                  </div>
+                </div>
+
+                <!-- 4 Detailed Step Tabs for Selected Lab -->
+                <div id="simStepTabs" class="grid grid-cols-4 gap-1.5 mb-3"></div>
+
+                <!-- Detailed Step Card: Exact Tools, Reagents & What Students Do -->
+                <div class="rounded-2xl bg-sky-50/95 border border-sky-200/90 p-3.5 space-y-2.5">
+                  <div class="flex flex-wrap items-center justify-between gap-1.5">
+                    <span id="simStepToolPill" class="font-mono text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-blue-100 text-bioBlue">
+                      🧰 Tool: P20 Pipette + Sterile Tips
+                    </span>
+                    <span id="simStepReagentPill" class="font-mono text-[10px] font-semibold px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800">
+                      🧪 Add: 20 µL Lysis Buffer
+                    </span>
+                  </div>
+
+                  <div>
+                    <div id="simMissionTitle" class="text-xs sm:text-sm font-extrabold text-indigoDeep"></div>
+                    <p id="simMissionDesc" class="font-body text-xs text-slate-600 leading-relaxed mt-0.5"></p>
+                  </div>
+
+                  <div class="flex items-center justify-between gap-2 pt-1 border-t border-sky-200/70">
+                    <span id="simLabGradeInfo" class="font-mono text-[10px] text-slate-500">Grades K–5 • 45 min • $0 Cost</span>
                     <button
                       type="button"
-                      id="copyEmailBtn"
-                      onclick="copyContactEmail()"
-                      class="inline-flex items-center gap-1.5 rounded-xl bg-blue-50 hover:bg-blue-100 text-bioBlue font-semibold text-xs px-3 py-1.5 transition-colors cursor-pointer"
+                      id="simActionBtn"
+                      onclick="triggerLabAction()"
+                      class="shrink-0 rounded-full bg-bioBlue hover:bg-blue-700 text-white font-bold text-xs px-4 py-2 shadow-xs transition-all hover:scale-105 cursor-pointer"
                     >
-                      <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
-                      </svg>
-                      <span id="copyEmailLabel">Copy Email</span>
+                      Run Step & Next →
                     </button>
                   </div>
                 </div>
-
-                <div class="grid grid-cols-2 gap-4 pt-1 text-sm">
-                  <div>
-                    <div class="font-mono text-[11px] font-semibold text-slate-400 uppercase">Instagram</div>
-                    <a href="https://instagram.com/omnibio_labs" target="_blank" rel="noopener noreferrer" class="font-semibold text-indigoDeep hover:text-bioBlue transition-colors mt-0.5 inline-block">
-                      @omnibio_labs ↗
-                    </a>
-                  </div>
-                  <div>
-                    <div class="font-mono text-[11px] font-semibold text-slate-400 uppercase">Based In</div>
-                    <div class="font-semibold text-indigoDeep mt-0.5">Mountain House, CA</div>
-                  </div>
-                </div>
               </div>
+            </div>
 
-              <!-- Quick FAQ Accordion -->
-              <div class="rounded-3xl bg-white border border-mistBorder p-7 space-y-3 shadow-card">
-                <div class="font-mono text-xs font-semibold text-bioBlue uppercase mb-2">Quick FAQ</div>
+          </div>
+        </div>
+      </div>
 
-                <!-- FAQ 1 -->
-                <div class="border-b border-slate-100 pb-3">
-                  <button type="button" onclick="toggleFaq(0)" class="w-full flex items-center justify-between text-left text-sm font-bold text-indigoDeep py-1.5 cursor-pointer">
-                    <span>Is it really 100% free?</span>
-                    <span class="faq-icon font-mono text-bioBlue text-base">+</span>
-                  </button>
-                  <p class="faq-answer hidden font-body text-xs sm:text-sm text-slate-600 leading-relaxed pt-1.5">
-                    Yes! OmniBio Labs is a student-led 501(c)(3) nonprofit. Schools, teachers, and parents pay $0 for workshops, lab gear, or consumables.
-                  </p>
-                </div>
+      <!-- Tight 3-Pillar Overview + Impact Strip -->
+      <div class="pb-14 sm:pb-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+          <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-2">
+            <div>
+              <span class="font-mono text-xs font-bold uppercase tracking-wider text-bioBlue">Why OmniBio Labs?</span>
+              <h2 class="text-2xl sm:text-3xl font-extrabold text-indigoDeep tracking-tight mt-0.5">Sleek science, zero classroom stress.</h2>
+            </div>
+            <button type="button" onclick="switchTab('workshops')" class="text-sm font-bold text-bioBlue hover:underline self-start sm:self-auto cursor-pointer">
+              Browse all 24 experiments →
+            </button>
+          </div>
 
-                <!-- FAQ 2 -->
-                <div class="border-b border-slate-100 pb-3">
-                  <button type="button" onclick="toggleFaq(1)" class="w-full flex items-center justify-between text-left text-sm font-bold text-indigoDeep py-1.5 cursor-pointer">
-                    <span>What classroom space do we need?</span>
-                    <span class="faq-icon font-mono text-bioBlue text-base">+</span>
-                  </button>
-                  <p class="faq-answer hidden font-body text-xs sm:text-sm text-slate-600 leading-relaxed pt-1.5">
-                    Any standard classroom with desks or lab tables works great! We bring protective table mats and do not need sinks or fume hoods.
-                  </p>
-                </div>
+          <div class="grid md:grid-cols-3 gap-5">
+            <div class="hover-card rounded-3xl glass-card border border-sky-200/80 p-6 shadow-card">
+              <div class="hover-icon-pop w-10 h-10 rounded-2xl bg-emerald-100 text-emerald-700 flex items-center justify-center mb-3.5">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              </div>
+              <h3 class="text-base font-extrabold text-indigoDeep mb-1.5">Zero Cost to Schools</h3>
+              <p class="font-body text-sm text-slate-600 leading-relaxed">
+                Fiscally sponsored by HCB as a 501(c)(3) nonprofit, we provide every pipette tip, tube, reagent, and glove completely free for partner schools.
+              </p>
+            </div>
 
-                <!-- FAQ 3 -->
+            <div class="hover-card rounded-3xl glass-card border border-sky-200/80 p-6 shadow-card">
+              <div class="hover-icon-pop w-10 h-10 rounded-2xl bg-blue-100 text-bioBlue flex items-center justify-center mb-3.5">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/></svg>
+              </div>
+              <h3 class="text-base font-extrabold text-indigoDeep mb-1.5">24 Real Biotech Labs</h3>
+              <p class="font-body text-sm text-slate-600 leading-relaxed">
+                From strawberry DNA spooling and glowing GFP bacteria to alginate molecular boba and CRISPR paper-clip simulations.
+              </p>
+            </div>
+
+            <div class="hover-card rounded-3xl glass-card border border-sky-200/80 p-6 shadow-card">
+              <div class="hover-icon-pop w-10 h-10 rounded-2xl bg-indigo-100 text-indigo-700 flex items-center justify-center mb-3.5">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+              </div>
+              <h3 class="text-base font-extrabold text-indigoDeep mb-1.5">Student-Led Chapters</h3>
+              <p class="font-body text-sm text-slate-600 leading-relaxed">
+                High school student teams lead every lab step-by-step—and students anywhere can launch an OmniBio chapter at their own school.
+              </p>
+            </div>
+          </div>
+
+          <!-- Compact Metrics Strip -->
+          <div class="grid sm:grid-cols-3 gap-4">
+            <div class="hover-card rounded-2xl glass-card border border-sky-200/80 px-5 py-4 flex items-center justify-between">
+              <div>
+                <div class="font-mono text-[10px] font-bold text-bioBlue uppercase">Lab Curriculum</div>
+                <div class="text-2xl font-extrabold text-indigoDeep">24 Wet-Labs</div>
+              </div>
+              <span class="text-xs font-medium text-slate-500 text-right max-w-[140px]">Grades K–8 NGSS aligned</span>
+            </div>
+            <div class="hover-card rounded-2xl glass-card border border-sky-200/80 px-5 py-4 flex items-center justify-between">
+              <div>
+                <div class="font-mono text-[10px] font-bold text-emerald-600 uppercase">School Tuition</div>
+                <div class="text-2xl font-extrabold text-indigoDeep">$0 Cost</div>
+              </div>
+              <span class="text-xs font-medium text-slate-500 text-right max-w-[140px]">100% grant & donor funded</span>
+            </div>
+            <div class="hover-card rounded-2xl glass-card border border-sky-200/80 px-5 py-4 flex items-center justify-between">
+              <div>
+                <div class="font-mono text-[10px] font-bold text-indigo-600 uppercase">Fiscal Sponsor</div>
+                <div class="text-2xl font-extrabold text-indigoDeep">501(c)(3) HCB</div>
+              </div>
+              <span class="text-xs font-medium text-slate-500 text-right max-w-[140px]">Backed by The Hack Foundation</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== TAB 2: WORKSHOPS (ALL 24 LABS) ==================== -->
+    <section id="tab-workshops" class="tab-panel hidden py-10 sm:py-12">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+        <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-4">
+          <div class="max-w-2xl space-y-1.5">
+            <span class="font-mono text-xs font-bold uppercase tracking-wider text-bioBlue">Complete 24-Lab Curriculum</span>
+            <h1 class="text-2xl sm:text-4xl font-extrabold text-indigoDeep tracking-tight">Hands-On Wet-Lab Workshops</h1>
+            <p class="font-body text-sm sm:text-base text-slate-600">
+              Search or filter all 24 classroom-tested biotech workshops. Every lab runs 45–50 minutes with zero prep required from teachers.
+            </p>
+          </div>
+
+          <div class="w-full lg:w-72">
+            <input
+              type="text"
+              id="labSearchInput"
+              oninput="renderWorkshops()"
+              placeholder="Search DNA, CRISPR, pipettes..."
+              class="w-full rounded-full border border-sky-200 bg-white/95 px-4 py-2.5 text-sm text-indigoDeep placeholder:text-slate-400 focus:outline-none focus:border-bioBlue"
+            />
+          </div>
+        </div>
+
+        <!-- Grade & Category Filter Bar -->
+        <div class="flex flex-wrap items-center justify-between gap-2.5 bg-white/75 p-2 rounded-2xl border border-sky-200/80">
+          <div class="flex flex-wrap items-center gap-1">
+            <button type="button" onclick="setGradeFilter('all', this)" class="ws-grade-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-indigoDeep text-white cursor-pointer">All Grades</button>
+            <button type="button" onclick="setGradeFilter('k2', this)" class="ws-grade-btn px-3 py-1.5 rounded-xl text-xs font-semibold text-slate-600 hover:bg-sky-50 cursor-pointer">Grades K–2</button>
+            <button type="button" onclick="setGradeFilter('35', this)" class="ws-grade-btn px-3 py-1.5 rounded-xl text-xs font-semibold text-slate-600 hover:bg-sky-50 cursor-pointer">Grades 3–5</button>
+            <button type="button" onclick="setGradeFilter('68', this)" class="ws-grade-btn px-3 py-1.5 rounded-xl text-xs font-semibold text-slate-600 hover:bg-sky-50 cursor-pointer">Grades 6–8</button>
+          </div>
+
+          <div class="flex flex-wrap items-center gap-1">
+            <button type="button" onclick="setCategoryFilter('all', this)" class="ws-cat-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-bioBlue text-white cursor-pointer">All Topics</button>
+            <button type="button" onclick="setCategoryFilter('Genetics & DNA', this)" class="ws-cat-btn px-3 py-1.5 rounded-xl text-xs font-semibold text-slate-600 hover:bg-sky-50 cursor-pointer">Genetics & DNA</button>
+            <button type="button" onclick="setCategoryFilter('Microbiology', this)" class="ws-cat-btn px-3 py-1.5 rounded-xl text-xs font-semibold text-slate-600 hover:bg-sky-50 cursor-pointer">Microbiology</button>
+            <button type="button" onclick="setCategoryFilter('Biochemistry', this)" class="ws-cat-btn px-3 py-1.5 rounded-xl text-xs font-semibold text-slate-600 hover:bg-sky-50 cursor-pointer">Biochemistry</button>
+            <button type="button" onclick="setCategoryFilter('Bio-Engineering', this)" class="ws-cat-btn px-3 py-1.5 rounded-xl text-xs font-semibold text-slate-600 hover:bg-sky-50 cursor-pointer">Bio-Engineering</button>
+          </div>
+        </div>
+
+        <div class="flex items-center justify-between text-xs font-mono text-slate-500">
+          <span id="workshopCountLabel">Showing all 24 wet-lab workshops</span>
+          <button type="button" onclick="resetWorkshopFilters()" class="text-bioBlue font-semibold hover:underline cursor-pointer">Reset Filters</button>
+        </div>
+
+        <div id="workshopsGrid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-5"></div>
+      </div>
+    </section>
+
+    <!-- ==================== TAB 3: CHAPTERS ==================== -->
+    <section id="tab-chapters" class="tab-panel hidden py-10 sm:py-12">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+        <div class="max-w-3xl space-y-2">
+          <span class="font-mono text-xs font-bold uppercase tracking-wider text-bioBlue">Student-Led Network</span>
+          <h1 class="text-2xl sm:text-4xl font-extrabold text-indigoDeep tracking-tight">OmniBio Labs Chapters</h1>
+          <p class="font-body text-sm sm:text-base text-slate-600 leading-relaxed">
+            Every workshop is taught by high school student leaders in their local community. Explore our active chapters or launch an official chapter at your school with full HCB 501(c)(3) backing.
+          </p>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-5">
+          <div class="hover-card rounded-3xl glass-card border-2 border-bioBlue/40 p-6 shadow-soft flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-3">
+                <span class="font-mono text-[10px] font-bold px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-700">HQ • ACTIVE</span>
+                <span class="font-mono text-xs text-slate-400">Chapter #01</span>
+              </div>
+              <h3 class="text-xl font-extrabold text-indigoDeep mb-1">Mountain House, CA</h3>
+              <div class="text-xs font-semibold text-bioBlue mb-2.5">Founding Chapter • Lammersville USD</div>
+              <p class="font-body text-sm text-slate-600 leading-relaxed mb-4">
+                Our flagship team serving K–8 elementary and middle school classrooms across Mountain House with mobile micropipette, DNA extraction, and microbiology workshops.
+              </p>
+            </div>
+            <button type="button" onclick="goToBooking('Teacher / School Admin')" class="w-full rounded-full bg-indigoDeep hover:bg-blue-950 text-white font-semibold text-xs py-2.5 transition-colors cursor-pointer">
+              Request Mountain House Visit →
+            </button>
+          </div>
+
+          <div class="hover-card rounded-3xl glass-card border border-sky-200/90 p-6 shadow-card flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-3">
+                <span class="font-mono text-[10px] font-bold px-2.5 py-1 rounded-full bg-sky-100 text-bioBlue">EXPANDING</span>
+                <span class="font-mono text-xs text-slate-400">Chapter #02</span>
+              </div>
+              <h3 class="text-xl font-extrabold text-indigoDeep mb-1">Tracy & Tri-Valley, CA</h3>
+              <div class="text-xs font-semibold text-bioBlue mb-2.5">Northern California Regional Hub</div>
+              <p class="font-body text-sm text-slate-600 leading-relaxed mb-4">
+                Recruiting high school student leads and partner K–8 schools in Tracy, Livermore, Dublin, and Pleasanton for Spring & Fall wet-lab sessions.
+              </p>
+            </div>
+            <button type="button" onclick="goToBooking('High School Student Volunteer')" class="w-full rounded-full bg-white hover:bg-sky-50 text-indigoDeep border border-sky-200 font-semibold text-xs py-2.5 transition-colors cursor-pointer">
+              Join Regional Team →
+            </button>
+          </div>
+
+          <div class="hover-card rounded-3xl bg-gradient-to-br from-indigoDeep to-blue-950 text-white p-6 shadow-soft flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-3">
+                <span class="font-mono text-[10px] font-bold px-2.5 py-1 rounded-full bg-sky-400/20 text-sky-300">YOUR CITY</span>
+                <span class="font-mono text-xs text-sky-300/70">Open Charter</span>
+              </div>
+              <h3 class="text-xl font-extrabold mb-1">Start a Local Chapter</h3>
+              <div class="text-xs font-semibold text-sky-300 mb-2.5">High School & College Founders</div>
+              <p class="font-body text-sm text-slate-200 leading-relaxed mb-4">
+                Get our 24-lab curriculum, starter reagent grant support through HCB, safety training, and outreach templates to bring free biotech labs to your hometown.
+              </p>
+            </div>
+            <button type="button" onclick="goToBooking('Start a New Chapter')" class="w-full rounded-full bg-emerald-500 hover:bg-emerald-400 text-indigoDeep font-extrabold text-xs py-2.5 transition-all cursor-pointer">
+              Apply to Launch a Chapter →
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== TAB 4: DONATE ==================== -->
+    <section id="tab-donate" class="tab-panel hidden py-10 sm:py-12">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid lg:grid-cols-12 gap-8 items-start">
+          <div class="lg:col-span-6 space-y-5">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-100/90 border border-emerald-200 text-emerald-800 font-mono text-[11px] font-bold">
+              <span>✓</span> 501(c)(3) TAX-DEDUCTIBLE • FISCALLY SPONSORED BY HCB
+            </div>
+
+            <h1 class="text-2xl sm:text-4xl font-extrabold text-indigoDeep tracking-tight leading-tight">
+              Fund free wet-lab biotech for <span class="text-bioBlue">the next generation.</span>
+            </h1>
+
+            <p class="font-body text-sm sm:text-base text-slate-600 leading-relaxed">
+              Every single dollar goes directly into micropipette tips, agarose gels, safe DNA reagents, and classroom lab kits. OmniBio Labs is fiscally sponsored by <strong>HCB (The Hack Foundation, EIN 81-2908499)</strong>, making all contributions 100% tax-deductible.
+            </p>
+
+            <div class="grid sm:grid-cols-2 gap-3.5">
+              <div class="hover-card rounded-2xl glass-card border border-sky-200/80 p-4">
+                <div class="font-mono text-xs font-bold text-bioBlue mb-0.5">$15 • 1 Student Kit</div>
+                <p class="font-body text-xs text-slate-600">Supplies gloves, micro-tubes, pipette tips, and take-home DNA spooling vials for one K–8 student.</p>
+              </div>
+              <div class="hover-card rounded-2xl glass-card border border-sky-200/80 p-4">
+                <div class="font-mono text-xs font-bold text-emerald-700 mb-0.5">$75 • Full Class Lab</div>
+                <p class="font-body text-xs text-slate-600">Covers all consumables and buffers for an entire 30-student classroom workshop.</p>
+              </div>
+              <div class="hover-card rounded-2xl glass-card border border-sky-200/80 p-4">
+                <div class="font-mono text-xs font-bold text-indigo-700 mb-0.5">$150 • P20 Pipette Set</div>
+                <p class="font-body text-xs text-slate-600">Adds calibrated precision micropipettes to our traveling mobile wet-lab fleet.</p>
+              </div>
+              <div class="hover-card rounded-2xl glass-card border border-sky-200/80 p-4">
+                <div class="font-mono text-xs font-bold text-sky-700 mb-0.5">$300 • New Chapter Grant</div>
+                <p class="font-body text-xs text-slate-600">Seeds a brand-new student chapter with a complete starter kit for 4 classrooms.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="lg:col-span-6 glass-card rounded-3xl border border-sky-200/90 p-6 sm:p-7 shadow-soft space-y-5">
+            <div class="flex items-center justify-between border-b border-sky-100 pb-3.5">
+              <div>
+                <h2 class="text-lg font-extrabold text-indigoDeep">Make a Tax-Deductible Gift</h2>
+                <p class="font-mono text-[11px] text-slate-500">Transparent ledger powered by HCB</p>
+              </div>
+              <span class="font-mono text-xs font-bold px-2.5 py-1 rounded-full bg-sky-100 text-bioBlue">100% Direct</span>
+            </div>
+
+            <div class="grid grid-cols-2 gap-1.5 bg-sky-100/80 p-1 rounded-2xl">
+              <button type="button" id="freqOnceBtn" onclick="setDonationFrequency('once')" class="py-2 rounded-xl text-xs font-bold bg-white text-indigoDeep shadow-2xs cursor-pointer">One-Time Gift</button>
+              <button type="button" id="freqMonthlyBtn" onclick="setDonationFrequency('monthly')" class="py-2 rounded-xl text-xs font-semibold text-slate-600 cursor-pointer">Monthly Supporter</button>
+            </div>
+
+            <div>
+              <label class="block font-mono text-[11px] font-bold uppercase text-slate-500 mb-2">Select Amount (USD)</label>
+              <div class="grid grid-cols-4 gap-2 mb-2.5">
+                <button type="button" onclick="selectDonationAmount(15, this)" class="amt-btn py-2.5 rounded-2xl border border-sky-200 bg-white font-extrabold text-sm text-indigoDeep hover:border-bioBlue cursor-pointer">$15</button>
+                <button type="button" onclick="selectDonationAmount(35, this)" class="amt-btn py-2.5 rounded-2xl border border-sky-200 bg-white font-extrabold text-sm text-indigoDeep hover:border-bioBlue cursor-pointer">$35</button>
+                <button type="button" onclick="selectDonationAmount(75, this)" class="amt-btn py-2.5 rounded-2xl border-2 border-bioBlue bg-blue-50 font-extrabold text-sm text-bioBlue cursor-pointer">$75</button>
+                <button type="button" onclick="selectDonationAmount(150, this)" class="amt-btn py-2.5 rounded-2xl border border-sky-200 bg-white font-extrabold text-sm text-indigoDeep hover:border-bioBlue cursor-pointer">$150</button>
+              </div>
+              <div class="relative">
+                <span class="absolute left-4 top-1/2 -translate-y-1/2 font-bold text-slate-400">$</span>
+                <input
+                  type="number"
+                  id="customDonationInput"
+                  min="5"
+                  value="75"
+                  oninput="handleCustomAmount(this.value)"
+                  class="w-full rounded-2xl border border-sky-200 bg-white pl-8 pr-4 py-2.5 text-sm font-bold text-indigoDeep focus:outline-none focus:border-bioBlue"
+                />
+              </div>
+            </div>
+
+            <div class="rounded-2xl bg-gradient-to-r from-sky-50 to-emerald-50/70 border border-sky-200/80 p-3.5 flex items-center justify-between gap-3">
+              <div>
+                <div class="font-mono text-[10px] font-bold text-emerald-700 uppercase">Your Direct Classroom Impact</div>
+                <div id="donationImpactText" class="text-sm font-extrabold text-indigoDeep mt-0.5">Funds 1 full classroom wet-lab (30 K–8 students)</div>
+              </div>
+              <div id="donationStudentsBadge" class="font-mono text-lg font-extrabold text-bioBlue shrink-0">30 kids</div>
+            </div>
+
+            <button
+              type="button"
+              onclick="submitDonationRequest()"
+              class="w-full rounded-full bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-sm py-3.5 shadow-soft transition-all hover:scale-[1.01] cursor-pointer"
+            >
+              Continue to HCB Tax-Deductible Donation →
+            </button>
+
+            <div id="donationFeedback" class="hidden rounded-2xl bg-emerald-50 border border-emerald-200 p-3.5 text-xs text-emerald-900 leading-relaxed"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== TAB 5: OUR MISSION ==================== -->
+    <section id="tab-mission" class="tab-panel hidden py-10 sm:py-12">
+      <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+        <div class="glass-card rounded-3xl border border-sky-200/90 p-7 sm:p-10 shadow-soft space-y-5">
+          <span class="font-mono text-xs font-bold uppercase tracking-wider text-bioBlue">Our Story & Fiscal Transparency</span>
+          <h1 class="text-2xl sm:text-4xl font-extrabold text-indigoDeep tracking-tight leading-tight">
+            Why wait until college to hold a micropipette?
+          </h1>
+          <p class="font-body text-sm sm:text-base text-slate-600 leading-relaxed">
+            Founded by high school students in Mountain House, California, OmniBio Labs started with a simple observation: elementary and middle school students love real science, yet schools rarely have the budget or lab gear to move beyond textbook worksheets.
+          </p>
+          <p class="font-body text-sm sm:text-base text-slate-600 leading-relaxed">
+            We bridge that gap by bringing sanitized, classroom-safe biotechnology instruments directly into K–8 classrooms—completely free of charge—taught by trained student mentors who make science approachable, safe, and genuinely fun.
+          </p>
+
+          <div class="grid sm:grid-cols-2 gap-4 pt-2">
+            <div class="rounded-2xl bg-sky-50/90 border border-sky-200 p-5">
+              <div class="font-mono text-xs font-bold text-bioBlue mb-1">501(c)(3) VIA HCB</div>
+              <p class="font-body text-xs sm:text-sm text-slate-600 leading-relaxed">
+                OmniBio Labs operates under the fiscal sponsorship of <strong>HCB (The Hack Foundation)</strong>, ensuring full financial transparency, tax-deductible receipts for donors, and strict classroom safety standards.
+              </p>
+            </div>
+            <div class="rounded-2xl bg-emerald-50/80 border border-emerald-200 p-5">
+              <div class="font-mono text-xs font-bold text-emerald-700 mb-1">PEACEFUL, INCLUSIVE LEARNING</div>
+              <p class="font-body text-xs sm:text-sm text-slate-600 leading-relaxed">
+                Every lab is designed so shy learners, visual thinkers, and future scientists alike get their own hands-on tools—never watching from the back of the room.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== TAB 6: GET INVOLVED ==================== -->
+    <section id="tab-involved" class="tab-panel hidden py-10 sm:py-12">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+        <div class="max-w-2xl space-y-1.5">
+          <span class="font-mono text-xs font-bold uppercase tracking-wider text-bioBlue">Join the Movement</span>
+          <h1 class="text-2xl sm:text-4xl font-extrabold text-indigoDeep tracking-tight">Three ways to get involved.</h1>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-5">
+          <div class="hover-card rounded-3xl glass-card border border-sky-200/90 p-6 shadow-card flex flex-col justify-between space-y-5">
+            <div>
+              <div class="font-mono text-xs font-bold text-bioBlue mb-1.5">01 • FOR EDUCATORS</div>
+              <h3 class="text-xl font-extrabold text-indigoDeep mb-2">Host a Free Workshop</h3>
+              <p class="font-body text-sm text-slate-600 leading-relaxed">
+                Choose any of our 24 NGSS-aligned wet-labs. We bring all instruments, reagents, and student mentors straight to your K–8 classroom at $0 cost.
+              </p>
+            </div>
+            <button type="button" onclick="goToBooking('Teacher / School Admin')" class="w-full rounded-full bg-indigoDeep hover:bg-blue-950 text-white font-semibold text-sm py-3 transition-colors cursor-pointer">
+              Request a Classroom Visit →
+            </button>
+          </div>
+
+          <div class="hover-card rounded-3xl glass-card border border-sky-200/90 p-6 shadow-card flex flex-col justify-between space-y-5">
+            <div>
+              <div class="font-mono text-xs font-bold text-emerald-700 mb-1.5">02 • FOR STUDENTS</div>
+              <h3 class="text-xl font-extrabold text-indigoDeep mb-2">Mentor or Start a Chapter</h3>
+              <p class="font-body text-sm text-slate-600 leading-relaxed">
+                Earn verified volunteer service hours teaching wet-labs locally—or apply to launch an official OmniBio Labs chapter at your high school.
+              </p>
+            </div>
+            <button type="button" onclick="switchTab('chapters')" class="w-full rounded-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-sm py-3 transition-colors cursor-pointer">
+              Explore Chapters & Roles →
+            </button>
+          </div>
+
+          <div class="hover-card rounded-3xl glass-card border border-sky-200/90 p-6 shadow-card flex flex-col justify-between space-y-5">
+            <div>
+              <div class="font-mono text-xs font-bold text-indigo-700 mb-1.5">03 • FOR SPONSORS</div>
+              <h3 class="text-xl font-extrabold text-indigoDeep mb-2">Sponsor Lab Kits via HCB</h3>
+              <p class="font-body text-sm text-slate-600 leading-relaxed">
+                Every $15 equips a student with real lab consumables. Donate directly or partner with us for employer matching and lab supply grants.
+              </p>
+            </div>
+            <button type="button" onclick="switchTab('donate')" class="w-full rounded-full bg-bioBlue hover:bg-blue-700 text-white font-semibold text-sm py-3 transition-colors cursor-pointer">
+              Go to Donate Page →
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== TAB 7: CONTACT ==================== -->
+    <section id="tab-contact" class="tab-panel hidden py-10 sm:py-12">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid lg:grid-cols-12 gap-8 items-start">
+          <div class="lg:col-span-5 space-y-5">
+            <div class="space-y-1.5">
+              <span class="font-mono text-xs font-bold uppercase tracking-wider text-bioBlue">Get in Touch</span>
+              <h1 class="text-2xl sm:text-4xl font-extrabold text-indigoDeep tracking-tight">Let’s bring biotech to your school.</h1>
+              <p class="font-body text-sm text-slate-600 leading-relaxed">
+                Reach out to book a free K–8 workshop, start a student chapter, or ask about HCB tax-deductible sponsorships.
+              </p>
+            </div>
+
+            <div class="glass-card rounded-3xl border border-sky-200/90 p-5 space-y-3 shadow-card">
+              <div class="font-mono text-[10px] font-bold uppercase text-slate-400">Official Organization Email</div>
+              <div class="flex flex-wrap items-center justify-between gap-2">
+                <a href="mailto:contact@omnibiolabs.org" class="font-mono text-sm font-bold text-bioBlue hover:underline">
+                  contact@omnibiolabs.org
+                </a>
+                <button
+                  type="button"
+                  id="copyEmailBtn"
+                  onclick="copyOfficialEmail()"
+                  class="rounded-full bg-sky-100 hover:bg-sky-200 text-indigoDeep font-semibold text-xs px-3.5 py-1.5 transition-colors cursor-pointer"
+                >
+                  Copy Email
+                </button>
+              </div>
+              <div class="pt-2.5 border-t border-sky-100 flex items-center justify-between text-xs text-slate-500">
+                <span>Mountain House, CA • HCB 501(c)(3)</span>
+                <a href="https://instagram.com/omnibio_labs" target="_blank" rel="noopener noreferrer" class="font-semibold text-indigoDeep hover:text-bioBlue">
+                  @omnibio_labs ↗
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="lg:col-span-7 glass-card rounded-3xl border border-sky-200/90 p-6 sm:p-7 shadow-soft">
+            <h2 class="text-lg font-extrabold text-indigoDeep mb-4">Send a Message or Workshop Request</h2>
+            <form id="contactForm" onsubmit="handleContactSubmit(event)" class="space-y-3.5">
+              <div class="grid sm:grid-cols-2 gap-3.5">
                 <div>
-                  <button type="button" onclick="toggleFaq(2)" class="w-full flex items-center justify-between text-left text-sm font-bold text-indigoDeep py-1.5 cursor-pointer">
-                    <span>How long is a session?</span>
-                    <span class="faq-icon font-mono text-bioBlue text-base">+</span>
-                  </button>
-                  <p class="faq-answer hidden font-body text-xs sm:text-sm text-slate-600 leading-relaxed pt-1.5">
-                    Each workshop is designed to fit comfortably inside a single 45–50 minute class period, including setup and cleanup.
-                  </p>
+                  <label class="block font-mono text-[10px] font-bold uppercase text-slate-500 mb-1">Your Name</label>
+                  <input type="text" id="senderName" required placeholder="Alex Rivera" class="w-full rounded-2xl border border-sky-200 bg-white px-4 py-2.5 text-sm text-indigoDeep focus:outline-none focus:border-bioBlue" />
+                </div>
+                <div>
+                  <label class="block font-mono text-[10px] font-bold uppercase text-slate-500 mb-1">Email Address</label>
+                  <input type="email" id="senderEmail" required placeholder="alex@school.edu" class="w-full rounded-2xl border border-sky-200 bg-white px-4 py-2.5 text-sm text-indigoDeep focus:outline-none focus:border-bioBlue" />
                 </div>
               </div>
 
-            </div>
-
-            <!-- Right Column: Interactive Message / Booking Form -->
-            <div class="lg:col-span-7">
-              <div class="rounded-3xl bg-white border border-mistBorder p-7 sm:p-9 shadow-soft">
-
-                <div id="contactFormWrapper">
-                  <h2 class="text-2xl font-bold text-indigoDeep mb-1.5">Send a Message / Book a Workshop</h2>
-                  <p class="font-body text-sm text-slate-600 mb-6">
-                    Our student coordinators respond within 48 hours.
-                  </p>
-
-                  <form onsubmit="submitContactForm(event)" class="space-y-4">
-                    <div>
-                      <label for="roleSelect" class="block text-xs font-bold text-indigoDeep mb-1.5">I am reaching out as a...</label>
-                      <select id="roleSelect" class="w-full rounded-xl border border-mistBorder bg-mist/50 px-4 py-3 text-sm font-medium text-indigoDeep focus:outline-none focus:border-bioBlue">
-                        <option value="Teacher / School Admin">Teacher / School Admin</option>
-                        <option value="Student Volunteer">Student Volunteer</option>
-                        <option value="Sponsor / Parent">Sponsor / Parent</option>
-                        <option value="General Question">General Question</option>
-                      </select>
-                    </div>
-
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      <div>
-                        <label for="senderName" class="block text-xs font-bold text-indigoDeep mb-1.5">Your Name</label>
-                        <input id="senderName" type="text" required placeholder="Jordan Lee" class="w-full rounded-xl border border-mistBorder px-4 py-3 text-sm focus:outline-none focus:border-bioBlue" />
-                      </div>
-                      <div>
-                        <label for="senderEmail" class="block text-xs font-bold text-indigoDeep mb-1.5">Email Address</label>
-                        <input id="senderEmail" type="email" required placeholder="jlee@school.edu" class="w-full rounded-xl border border-mistBorder px-4 py-3 text-sm focus:outline-none focus:border-bioBlue" />
-                      </div>
-                    </div>
-
-                    <div>
-                      <label for="senderOrg" class="block text-xs font-bold text-indigoDeep mb-1.5">School or Organization</label>
-                      <input id="senderOrg" type="text" placeholder="e.g., Mountain House Elementary • Grade 4" class="w-full rounded-xl border border-mistBorder px-4 py-3 text-sm focus:outline-none focus:border-bioBlue" />
-                    </div>
-
-                    <div>
-                      <label for="senderMessage" class="block text-xs font-bold text-indigoDeep mb-1.5">Message or Preferred Workshop</label>
-                      <textarea id="senderMessage" rows="4" required placeholder="Tell us about your class, preferred lab module, or how you'd like to get involved..." class="w-full rounded-xl border border-mistBorder px-4 py-3 text-sm focus:outline-none focus:border-bioBlue"></textarea>
-                    </div>
-
-                    <button type="submit" class="w-full rounded-full bg-indigoDeep hover:bg-blue-950 text-white font-semibold text-sm py-3.5 shadow-sm transition-all cursor-pointer">
-                      Send Message
-                    </button>
-                  </form>
+              <div class="grid sm:grid-cols-2 gap-3.5">
+                <div>
+                  <label class="block font-mono text-[10px] font-bold uppercase text-slate-500 mb-1">I am a...</label>
+                  <select id="roleSelect" class="w-full rounded-2xl border border-sky-200 bg-white px-4 py-2.5 text-sm text-indigoDeep focus:outline-none focus:border-bioBlue">
+                    <option value="Teacher / School Admin">Teacher / School Admin</option>
+                    <option value="Start a New Chapter">Student Starting a Chapter</option>
+                    <option value="High School Student Volunteer">High School Student Volunteer</option>
+                    <option value="Parent / PTA">Parent / PTA Organizer</option>
+                    <option value="Donor / Sponsor">Donor / Sponsor</option>
+                  </select>
                 </div>
-
-                <!-- Polished Confirmation State -->
-                <div id="contactSuccessWrapper" class="hidden text-center py-10 space-y-4">
-                  <div class="w-14 h-14 rounded-full bg-emerald-50 border border-emerald-200 text-bioMint flex items-center justify-center mx-auto text-2xl font-bold">
-                    ✓
-                  </div>
-                  <h3 class="text-2xl font-bold text-indigoDeep">Message Sent!</h3>
-                  <p class="font-body text-sm text-slate-600 max-w-md mx-auto leading-relaxed">
-                    Thank you for reaching out to OmniBio Labs. We've logged your inquiry and will reply from <span class="font-mono text-indigoDeep font-semibold">contact@omnibiolabs.org</span> within 48 hours.
-                  </p>
-                  <button type="button" onclick="resetContactForm()" class="rounded-full bg-mist hover:bg-slate-200/70 text-indigoDeep font-semibold text-xs px-6 py-2.5 transition-colors cursor-pointer">
-                    Send Another Note
-                  </button>
+                <div>
+                  <label class="block font-mono text-[10px] font-bold uppercase text-slate-500 mb-1">School / City</label>
+                  <input type="text" id="schoolName" placeholder="e.g., Wicklund Elementary, Mountain House" class="w-full rounded-2xl border border-sky-200 bg-white px-4 py-2.5 text-sm text-indigoDeep focus:outline-none focus:border-bioBlue" />
                 </div>
-
               </div>
-            </div>
 
+              <div>
+                <label class="block font-mono text-[10px] font-bold uppercase text-slate-500 mb-1">Message or Preferred Lab</label>
+                <textarea id="senderMessage" rows="3" required placeholder="Tell us your grade level, preferred lab topic, or chapter location..." class="w-full rounded-2xl border border-sky-200 bg-white px-4 py-2.5 text-sm text-indigoDeep focus:outline-none focus:border-bioBlue"></textarea>
+              </div>
+
+              <button type="submit" class="w-full rounded-full bg-indigoDeep hover:bg-blue-950 text-white font-bold text-sm py-3 shadow-xs transition-all cursor-pointer">
+                Send to contact@omnibiolabs.org →
+              </button>
+
+              <div id="contactFeedback" class="hidden rounded-2xl bg-emerald-50 border border-emerald-200 p-3.5 text-xs text-emerald-900 leading-relaxed"></div>
+            </form>
           </div>
         </div>
       </div>
@@ -1050,290 +793,895 @@
 
   </main>
 
-  <!-- ==================== QUIET MINIMALIST FOOTER ==================== -->
-  <footer class="bg-mist border-t border-mistBorder py-12">
-    <div class="max-w-6xl mx-auto px-5 sm:px-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
-
-      <!-- Custom SVG Logo Lockup + 501(c)(3) Status -->
-      <div class="space-y-2.5">
-        <button type="button" onclick="switchTab('home')" class="inline-flex items-center gap-3 text-left cursor-pointer">
-          <svg class="w-9 h-9" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="50" cy="50" r="45" stroke="#111338" stroke-width="5.5" />
-            <circle cx="50" cy="50" r="35" stroke="#111338" stroke-width="4.5" stroke-dasharray="155 65" stroke-linecap="round" />
-            <path d="M40 22C40 35 60 39 60 50C60 61 40 65 40 78" stroke="#0EA5E9" stroke-width="5.5" stroke-linecap="round" />
-            <path d="M60 22C60 35 40 39 40 50C40 61 60 65 60 78" stroke="#111338" stroke-width="5.5" stroke-linecap="round" />
-            <line x1="44" y1="29" x2="56" y2="29" stroke="#38BDF8" stroke-width="3.2" stroke-linecap="round" />
-            <line x1="43" y1="50" x2="57" y2="50" stroke="#38BDF8" stroke-width="3.2" stroke-linecap="round" />
-            <line x1="44" y1="71" x2="56" y2="71" stroke="#38BDF8" stroke-width="3.2" stroke-linecap="round" />
-          </svg>
-          <div class="flex flex-col leading-none">
-            <span class="text-lg font-extrabold tracking-tight text-indigoDeep">OmniBio</span>
-            <span class="text-xs font-semibold tracking-wide text-bioBlue mt-0.5">Labs</span>
+  <!-- Clean, Sleek Footer -->
+  <footer class="border-t border-sky-200/80 bg-white/85 backdrop-blur-md mt-auto">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-2.5">
+        <svg class="w-8 h-8" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M54 10C28.5 13.2 10 34.4 10 60C10 85.6 28.5 106.8 54 110" stroke="#171947" stroke-width="8" stroke-linecap="round"/>
+          <path d="M66 10C91.5 13.2 110 34.4 110 60C110 85.6 91.5 106.8 66 110" stroke="#171947" stroke-width="8" stroke-linecap="round"/>
+          <path d="M35 28C26.5 36.2 22 47.6 22 60C22 72.4 26.5 83.8 35 92" stroke="#171947" stroke-width="7.5" stroke-linecap="round"/>
+          <path d="M85 28C93.5 36.2 98 47.6 98 60C98 72.4 93.5 83.8 85 92" stroke="#171947" stroke-width="7.5" stroke-linecap="round"/>
+          <line x1="48" y1="30" x2="72" y2="30" stroke="#4A89F3" stroke-width="4.5" stroke-linecap="round"/>
+          <line x1="45" y1="53" x2="75" y2="53" stroke="#4A89F3" stroke-width="4.5" stroke-linecap="round"/>
+          <line x1="45" y1="67" x2="75" y2="67" stroke="#4A89F3" stroke-width="4.5" stroke-linecap="round"/>
+          <line x1="48" y1="90" x2="72" y2="90" stroke="#4A89F3" stroke-width="4.5" stroke-linecap="round"/>
+          <path d="M66 10C42 22 42 44 60 60C78 76 78 98 54 110" stroke="#4A89F3" stroke-width="8" stroke-linecap="round"/>
+          <path d="M54 10C78 22 78 44 60 60C42 76 42 98 66 110" stroke="#171947" stroke-width="8" stroke-linecap="round"/>
+        </svg>
+        <div>
+          <div class="font-display font-extrabold text-sm leading-tight">
+            <span class="text-navyLogo">Omni</span><span class="text-cobaltLogo">Bio Labs</span>
           </div>
-        </button>
-        <p class="font-body text-xs text-slate-500">
-          501(c)(3) Nonprofit Organization • Mountain House, CA
-        </p>
+          <div class="text-[11px] text-slate-500">501(c)(3) Nonprofit • Fiscally Sponsored by HCB</div>
+        </div>
       </div>
 
-      <!-- Clickable Tab Links -->
-      <div class="flex flex-wrap items-center gap-5 text-xs sm:text-sm font-semibold text-slate-600">
-        <button type="button" onclick="switchTab('home')" class="hover:text-bioBlue transition-colors cursor-pointer">Home</button>
-        <button type="button" onclick="switchTab('workshops')" class="hover:text-bioBlue transition-colors cursor-pointer">Workshops</button>
-        <button type="button" onclick="switchTab('mission')" class="hover:text-bioBlue transition-colors cursor-pointer">Our Mission</button>
-        <button type="button" onclick="switchTab('involved')" class="hover:text-bioBlue transition-colors cursor-pointer">Get Involved</button>
-        <button type="button" onclick="switchTab('contact')" class="hover:text-bioBlue transition-colors cursor-pointer">Contact</button>
+      <div class="flex flex-wrap items-center justify-center gap-4 text-xs font-medium text-slate-600">
+        <button type="button" onclick="switchTab('workshops')" class="hover:text-bioBlue cursor-pointer">24 Workshops</button>
+        <button type="button" onclick="switchTab('chapters')" class="hover:text-bioBlue cursor-pointer">Chapters</button>
+        <button type="button" onclick="switchTab('donate')" class="hover:text-emerald-700 font-semibold cursor-pointer">Donate</button>
+        <a href="mailto:contact@omnibiolabs.org" class="hover:text-bioBlue font-mono">contact@omnibiolabs.org</a>
+        <a href="https://instagram.com/omnibio_labs" target="_blank" rel="noopener noreferrer" class="hover:text-bioBlue">@omnibio_labs</a>
       </div>
-
-      <!-- Direct Email & Social Link -->
-      <div class="flex flex-col sm:items-end gap-1.5 text-xs sm:text-sm">
-        <a href="mailto:contact@omnibiolabs.org" class="font-mono font-semibold text-indigoDeep hover:text-bioBlue transition-colors">
-          contact@omnibiolabs.org
-        </a>
-        <a href="https://instagram.com/omnibio_labs" target="_blank" rel="noopener noreferrer" class="font-semibold text-slate-500 hover:text-bioBlue transition-colors">
-          @omnibio_labs
-        </a>
-      </div>
-
     </div>
   </footer>
 
-  <!-- ==================== LAB PROTOCOL MODAL (FOR WORKSHOPS TAB) ==================== -->
-  <div id="protocolModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-indigoDeep/40 backdrop-blur-sm">
-    <div class="bg-white rounded-3xl border border-mistBorder max-w-lg w-full p-6 sm:p-8 shadow-2xl relative">
-      <button
-        type="button"
-        onclick="closeProtocolModal()"
-        aria-label="Close Protocol Modal"
-        class="absolute top-5 right-5 w-9 h-9 rounded-full bg-mist hover:bg-slate-200/70 flex items-center justify-center text-slate-500 transition-colors cursor-pointer"
-      >
-        ✕
-      </button>
-
-      <div id="protoTag" class="font-mono text-xs font-semibold text-bioBlue uppercase mb-1">LAB PROTOCOL</div>
-      <h3 id="protoTitle" class="text-2xl font-extrabold text-indigoDeep mb-3">Workshop Title</h3>
-      <p id="protoSummary" class="font-body text-sm text-slate-600 leading-relaxed mb-5"></p>
-
-      <div class="rounded-2xl bg-mist border border-mistBorder p-5 space-y-2.5 mb-6">
-        <div class="text-xs font-bold text-indigoDeep uppercase tracking-wider">Classroom Procedure</div>
-        <ol id="protoSteps" class="list-decimal list-inside space-y-2 font-body text-xs sm:text-sm text-slate-600"></ol>
-      </div>
-
-      <div class="flex items-center justify-end gap-3">
-        <button type="button" onclick="closeProtocolModal()" class="rounded-full bg-mist hover:bg-slate-200/70 text-indigoDeep font-semibold text-xs px-5 py-2.5 transition-colors cursor-pointer">
-          Close
+  <!-- Lab Protocol Quick-View Modal -->
+  <div id="protocolModal" class="hidden fixed inset-0 z-50 bg-indigoDeep/40 backdrop-blur-sm flex items-center justify-center p-4" onclick="if(event.target === this) closeProtocolModal()">
+    <div class="bg-white rounded-3xl border border-sky-200 max-w-lg w-full p-6 sm:p-7 shadow-soft space-y-4">
+      <div class="flex items-start justify-between gap-4">
+        <div>
+          <div class="flex items-center gap-2 mb-1">
+            <span id="modalGradeBadge" class="font-mono text-[11px] font-semibold px-2.5 py-0.5 rounded-full bg-sky-100 text-bioBlue">Grades 3–5</span>
+            <span id="modalDurationBadge" class="font-mono text-[11px] text-slate-400">45 min</span>
+          </div>
+          <h3 id="modalTitle" class="text-xl font-extrabold text-indigoDeep">Lab Title</h3>
+        </div>
+        <button type="button" onclick="closeProtocolModal()" class="p-2 rounded-full hover:bg-slate-100 text-slate-500 cursor-pointer" aria-label="Close modal">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
         </button>
-        <button type="button" id="protoBookBtn" class="rounded-full bg-bioBlue hover:bg-blue-700 text-white font-semibold text-xs px-5 py-2.5 transition-colors cursor-pointer">
+      </div>
+      <p id="modalSummary" class="font-body text-sm text-slate-600 leading-relaxed"></p>
+      <div class="rounded-2xl bg-sky-50/90 border border-sky-200 p-4 space-y-2">
+        <div class="font-mono text-[11px] font-bold uppercase tracking-wider text-bioBlue">3-Step Classroom Protocol</div>
+        <ol id="modalSteps" class="list-decimal list-inside font-body text-sm text-slate-700 space-y-1"></ol>
+      </div>
+      <div class="flex items-center justify-between pt-1">
+        <span id="modalSafety" class="text-xs text-emerald-700 font-semibold">100% Non-Toxic Reagents</span>
+        <button type="button" id="modalBookBtn" class="rounded-full bg-indigoDeep hover:bg-blue-950 text-white font-semibold text-xs px-5 py-2.5 transition-colors cursor-pointer">
           Book This Workshop →
         </button>
       </div>
     </div>
   </div>
 
-  <!-- ==================== INTERACTIVE JAVASCRIPT ==================== -->
   <script>
-    // 1. Multi-Tab Navigation with URL Hash Sync
-    const validTabs = ['home', 'workshops', 'mission', 'involved', 'contact'];
+    // 1. Multi-Tab Navigation Controller
+    const validTabs = ['home', 'workshops', 'chapters', 'donate', 'mission', 'involved', 'contact'];
 
     function switchTab(tabName, updateHash = true) {
       if (!validTabs.includes(tabName)) tabName = 'home';
 
-      // Toggle Tab Panels
-      document.querySelectorAll('.tab-panel').forEach(panel => {
-        panel.classList.remove('active');
-      });
-      const activePanel = document.getElementById(`tab-${tabName}`);
-      if (activePanel) activePanel.classList.add('active');
-
-      // Update Desktop Tab Pills
-      document.querySelectorAll('.nav-tab').forEach(btn => {
-        if (btn.getAttribute('data-tab') === tabName) {
-          btn.classList.add('bg-white', 'text-indigoDeep', 'shadow-card');
-          btn.classList.remove('text-slate-600', 'hover:text-indigoDeep');
-        } else {
-          btn.classList.remove('bg-white', 'text-indigoDeep', 'shadow-card');
-          btn.classList.add('text-slate-600', 'hover:text-indigoDeep');
-        }
+      validTabs.forEach(name => {
+        const panel = document.getElementById(`tab-${name}`);
+        if (panel) panel.classList.toggle('hidden', name !== tabName);
       });
 
-      // Update Mobile Nav Buttons
-      document.querySelectorAll('.nav-tab-mobile').forEach(btn => {
-        if (btn.getAttribute('data-tab') === tabName) {
-          btn.classList.add('bg-blue-50', 'text-bioBlue');
-          btn.classList.remove('text-slate-600');
-        } else {
-          btn.classList.remove('bg-blue-50', 'text-bioBlue');
-          btn.classList.add('text-slate-600');
-        }
+      document.querySelectorAll('.nav-tab-btn').forEach(btn => {
+        const active = btn.dataset.tab === tabName;
+        btn.classList.toggle('bg-white', active);
+        btn.classList.toggle('text-indigoDeep', active);
+        btn.classList.toggle('font-bold', active);
+        btn.classList.toggle('shadow-2xs', active);
+        btn.classList.toggle('text-slate-600', !active);
+        btn.classList.toggle('font-semibold', !active);
       });
 
-      if (updateHash) {
-        history.replaceState(null, '', `#${tabName}`);
-      }
+      document.querySelectorAll('.mobile-tab-btn').forEach(btn => {
+        const active = btn.dataset.tab === tabName;
+        btn.classList.toggle('bg-sky-50', active);
+        btn.classList.toggle('text-bioBlue', active);
+      });
+
+      if (updateHash) history.replaceState(null, '', `#${tabName}`);
       window.scrollTo({ top: 0, behavior: 'smooth' });
+      if (tabName === 'home') setTimeout(resizeBio3D, 60);
     }
 
     function toggleMobileMenu() {
       document.getElementById('mobileMenu').classList.toggle('hidden');
     }
 
-    // Jump straight to Contact/Booking tab with role & optional workshop prefilled
     function goToBooking(role, workshopName = '') {
       switchTab('contact');
       const roleSelect = document.getElementById('roleSelect');
       const messageBox = document.getElementById('senderMessage');
       if (roleSelect && role) roleSelect.value = role;
       if (workshopName && messageBox) {
-        messageBox.value = `Hi OmniBio Labs! We'd love to book the "${workshopName}" workshop for our class.`;
+        messageBox.value = `Hi OmniBio Labs! We'd love to request "${workshopName}" for our class.`;
       }
     }
 
-    // 2. Home Tab Interactive Mobile Wet-Lab Kit
-    const homeKitData = [
+    // 2. Complete 24-Workshop Catalog Data (Powers Both 3D Lab Walkthrough & Workshops Grid)
+    const workshopsCatalog = [
       {
-        tag: 'PRECISION GEAR',
-        title: 'P20 Micropipettes',
-        desc: 'Real adjustable microliter pipettes so kids can measure tiny colorful droplets just like research biologists.',
-        svg: `<svg class="w-8 h-8" viewBox="0 0 48 48" fill="none">
-          <rect x="20" y="4" width="8" height="6" rx="1.5" fill="#111338"/>
-          <rect x="22" y="10" width="4" height="5" fill="#2563EB"/>
-          <rect x="18" y="15" width="12" height="16" rx="3" fill="#111338"/>
-          <path d="M21 31H27L25 40H23L21 31Z" fill="#DBEAFE" stroke="#2563EB" stroke-width="1.5"/>
-          <circle cx="24" cy="44" r="2.2" fill="#0EA5E9"/>
-        </svg>`
-      },
-      {
-        tag: 'MOLECULAR SEPARATION',
-        title: 'DNA Gel Electrophoresis',
-        desc: 'Safe low-voltage agarose chambers where students load colorful dye bands and watch molecules separate by size.',
-        svg: `<svg class="w-8 h-8" viewBox="0 0 48 48" fill="none">
-          <rect x="8" y="12" width="32" height="24" rx="4" fill="#EFF6FF" stroke="#2563EB" stroke-width="2"/>
-          <rect x="14" y="18" width="4" height="3" rx="1" fill="#111338"/>
-          <rect x="22" y="18" width="4" height="3" rx="1" fill="#111338"/>
-          <rect x="30" y="18" width="4" height="3" rx="1" fill="#111338"/>
-          <rect x="14" y="26" width="4" height="2.5" rx="1" fill="#0EA5E9"/>
-          <rect x="22" y="29" width="4" height="2.5" rx="1" fill="#10B981"/>
-          <rect x="30" y="25" width="4" height="2.5" rx="1" fill="#2563EB"/>
-        </svg>`
-      },
-      {
-        tag: 'HANDS-ON GENOMICS',
+        id: 1,
         title: 'Strawberry DNA Extraction',
-        desc: 'Students mash berries, add safe lysis buffer, and spool real white genomic DNA strands into a take-home micro-vial.',
-        svg: `<svg class="w-8 h-8" viewBox="0 0 48 48" fill="none">
-          <path d="M18 10C18 18 30 20 30 26C30 32 18 34 18 40" stroke="#0EA5E9" stroke-width="3" stroke-linecap="round"/>
-          <path d="M30 10C30 18 18 20 18 26C18 32 30 34 30 40" stroke="#111338" stroke-width="3" stroke-linecap="round"/>
-          <line x1="20" y1="15" x2="28" y2="15" stroke="#10B981" stroke-width="2" stroke-linecap="round"/>
-          <line x1="20" y1="26" x2="28" y2="26" stroke="#10B981" stroke-width="2" stroke-linecap="round"/>
-          <line x1="20" y1="35" x2="28" y2="35" stroke="#10B981" stroke-width="2" stroke-linecap="round"/>
-        </svg>`
+        grade: 'k2',
+        gradeLabel: 'Grades K–5',
+        category: 'Genetics & DNA',
+        duration: '45 min',
+        summary: 'Students mash berries with non-toxic lysis buffer and spool real visible DNA strands into a take-home vial.',
+        tools: ['Resealable Lysis Bag', 'Soap-Salt Lysis Buffer', 'Chilled Isopropanol', 'Glass Spooling Rod'],
+        detailedSteps: [
+          {
+            shortLabel: 'Mash Cells',
+            tool: 'Heavy-Duty Lysis Bag + Strawberries',
+            reagent: 'Mechanical Pressure (2 mins)',
+            visualLook: '3D View: Cell walls breaking open in magenta berry suspension.',
+            actionBtn: '🍓 Mash Berry Cells',
+            color: 0xf43f5e,
+            mode: 'helix',
+            title: 'Step 1: Physically Break Tough Plant Cell Walls',
+            desc: 'Students gently mash fresh strawberries inside a sealed heavy-duty bag for 2 minutes to break apart rigid cellulose cell walls and expose the cells inside.'
+          },
+          {
+            shortLabel: 'Add Buffer',
+            tool: 'Graduated Transfer Pipette',
+            reagent: 'Add 10 mL Soap + Salt Lysis Buffer',
+            visualLook: '3D View: Detergent molecules dissolving lipid nuclear membranes.',
+            actionBtn: '🧪 Add Lysis Buffer',
+            color: 0x38bdf8,
+            mode: 'droplets',
+            title: 'Step 2: Dissolve Nuclear Membranes with Lysis Buffer',
+            desc: 'Using a graduated pipette, students add 10 mL of non-toxic detergent-and-salt buffer. The soap dissolves fatty cell membranes while salt shields negative DNA strands.'
+          },
+          {
+            shortLabel: 'Filter Pulp',
+            tool: 'Funnel + Fine Cheesecloth Mesh',
+            reagent: 'Pour Clear DNA-Rich Filtrate',
+            visualLook: '3D View: Purified DNA strands floating freely in clear aqueous layer.',
+            actionBtn: '🔬 Filter Cell Debris',
+            color: 0x10b981,
+            mode: 'helix',
+            title: 'Step 3: Filter Out Berry Pulp into a Clear Test Tube',
+            desc: 'Students pour the mixture through a cheesecloth-lined funnel into a clear tube, trapping seeds and pulp on top while letting dissolved DNA drip cleanly below.'
+          },
+          {
+            shortLabel: 'Spool DNA',
+            tool: 'Wooden Spooling Stick + Keepsake Vial',
+            reagent: 'Layer 5 mL Ice-Cold Isopropanol',
+            visualLook: '3D View: White double-helix DNA threads precipitating at the alcohol interface!',
+            actionBtn: '🧬 Spool Visible DNA',
+            color: 0x3882f6,
+            mode: 'helix',
+            title: 'Step 4: Precipitate & Spool White Double-Helix DNA',
+            desc: 'Students slowly layer ice-cold alcohol on top. Cloudy white DNA strands immediately clump at the boundary—ready to spool onto a rod and seal in a necklace vial!'
+          }
+        ],
+        safety: '100% food-grade reagents and supervised spooling.'
       },
       {
-        tag: 'NONPROFIT MISSION',
-        title: '$0 School Cost',
-        desc: 'Every pipette tip, reagent tube, glove, and student mentor visit is 100% funded by our 501(c)(3) nonprofit.',
-        svg: `<svg class="w-8 h-8" viewBox="0 0 48 48" fill="none">
-          <circle cx="24" cy="24" r="16" fill="#ECFDF5" stroke="#10B981" stroke-width="2.2"/>
-          <path d="M18 24.5L22 28.5L30.5 20" stroke="#10B981" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>`
-      }
+        id: 2,
+        title: 'P20 Micropipette Rainbow Art',
+        grade: '35',
+        gradeLabel: 'Grades 3–8',
+        category: 'Biochemistry',
+        duration: '45 min',
+        summary: 'Learn first-stop and second-stop microliter pipetting by loading vivid dye gradients into 96-well microplates.',
+        tools: ['P20 Micropipette', 'Sterile Pipette Tips', '96-Well Microplate', 'Dilution Tubes'],
+        detailedSteps: [
+          {
+            shortLabel: 'Dial Volume',
+            tool: 'Calibrated P20 Micropipette (2–20 µL)',
+            reagent: 'Attach Disposable Sterile Tip',
+            visualLook: '3D View: Precision microliter barrel calibrated to 15.0 µL.',
+            actionBtn: '⚙️ Dial 15.0 µL',
+            color: 0x3882f6,
+            mode: 'plate',
+            title: 'Step 1: Set Microliter Dial & Seat a Fresh Tip',
+            desc: 'Students twist the P20 volume dial to 15.0 µL (15 millionths of a liter!) and press firmly into a sterile tip rack without touching the tip with their fingers.'
+          },
+          {
+            shortLabel: 'First Stop',
+            tool: 'P20 Plunger (First Resistance Stop)',
+            reagent: 'Aspirate 15 µL Cyan Stock Dye',
+            visualLook: '3D View: Exact 15 µL cyan droplet drawn cleanly into tip.',
+            actionBtn: '💧 Aspirate Dye',
+            color: 0x0ea5e9,
+            mode: 'droplets',
+            title: 'Step 2: Press to First Stop to Draw Exact Microliters',
+            desc: 'Students press the thumb plunger down to the gentle first stop before dipping the tip 2 mm below the dye surface, then slowly release to draw an air-bubble-free sample.'
+          },
+          {
+            shortLabel: 'Mix Gradient',
+            tool: '96-Well Clear Assay Plate',
+            reagent: 'Combine Cyan + Yellow + Magenta Wells',
+            visualLook: '3D View: 96-well microplate glowing with rainbow dilution wells.',
+            actionBtn: '🎨 Load 96-Well Plate',
+            color: 0x10b981,
+            mode: 'plate',
+            title: 'Step 3: Dispense & Press to Second Stop (Blowout)',
+            desc: 'Resting the tip against the inner wall of well A1, students press past the first stop to the second blowout stop so every last nanoliter transfers into the microplate.'
+          },
+          {
+            shortLabel: 'Eject Tip',
+            tool: 'Tip Ejector Button + Bio-Waste Cup',
+            reagent: 'Zero Cross-Contamination Check',
+            visualLook: '3D View: Completed RGB color spectrum across 96 microplate wells.',
+            actionBtn: '✨ Eject & Inspect Plate',
+            color: 0x8b5cf6,
+            mode: 'plate',
+            title: 'Step 4: Eject Used Tip & Verify Precision Drop Sizes',
+            desc: 'Students press the side tip-ejector button over the waste beaker and hold their 96-well plate up to the light to verify uniform meniscus levels across all wells.'
+          }
+        ],
+        safety: 'Food-safe non-toxic laboratory dyes.'
+      },
+      {
+        id: 3,
+        title: 'Forensic Gel Electrophoresis',
+        grade: '68',
+        gradeLabel: 'Grades 6–8',
+        category: 'Genetics & DNA',
+        duration: '50 min',
+        summary: 'Load simulated DNA samples into pre-poured agarose gels and run safe low-voltage current to solve a mystery.',
+        tools: ['Submarine Gel Box', '1% Agarose Gel Slab', 'P20 Micropipette', 'TAE Running Buffer'],
+        detailedSteps: [
+          {
+            shortLabel: 'Submerge Gel',
+            tool: 'Electrophoresis Chamber + Agarose Slab',
+            reagent: 'Pour 1X TAE Conductive Buffer',
+            visualLook: '3D View: Translucent agarose gel slab submerged under clear TAE buffer.',
+            actionBtn: '🌊 Pour TAE Buffer',
+            color: 0x38bdf8,
+            mode: 'gel',
+            title: 'Step 1: Place Agarose Gel & Cover with Conductive Buffer',
+            desc: 'Students orient the pre-cast 1% agarose gel with sample wells near the negative black electrode and pour TAE buffer until the gel surface is submerged by 2 mm.'
+          },
+          {
+            shortLabel: 'Load Wells',
+            tool: 'P20 Pipette + Ultra-Fine Gel Tips',
+            reagent: 'Load 12 µL DNA Ladder & Suspect Dyes',
+            visualLook: '3D View: Dense purple & blue DNA samples sinking into rectangular gel wells.',
+            actionBtn: '🧬 Load Gel Wells',
+            color: 0x6366f1,
+            mode: 'gel',
+            title: 'Step 2: Steadily Pipette Dense DNA Samples into Gel Wells',
+            desc: 'Using two hands to steady their P20 pipette just above each microscopic agarose pocket, students dispense glycerol-weighted DNA samples that sink neatly to the bottom.'
+          },
+          {
+            shortLabel: 'Run Current',
+            tool: 'Safe USB Low-Voltage Power Supply',
+            reagent: 'Apply 45V Direct Current (15 mins)',
+            visualLook: '3D View: Negatively charged DNA bands migrating toward the red (+) anode!',
+            actionBtn: '⚡ Turn On Voltage',
+            color: 0x3882f6,
+            mode: 'gel',
+            title: 'Step 3: Pull Negatively Charged DNA Toward the Red (+) Pole',
+            desc: 'Because DNA’s sugar-phosphate backbone carries a negative charge, turning on the safe low-voltage lid pulls smaller DNA fragments faster through the porous agarose mesh.'
+          },
+          {
+            shortLabel: 'Match Bands',
+            tool: 'LED Transilluminator Light Pad',
+            reagent: 'Compare Fragment Base-Pair (bp) Rulers',
+            visualLook: '3D View: Crisp separated DNA fingerprint bands glowing on the light pad.',
+            actionBtn: '🔍 Analyze DNA Bands',
+            color: 0x10b981,
+            mode: 'gel',
+            title: 'Step 4: Read the DNA Fingerprint & Solve the Case',
+            desc: 'Students place their gel onto an LED light pad and match the separated band distances against the known molecular weight ladder to identify the mystery sample.'
+          }
+        ],
+        safety: 'Enclosed low-voltage USB electrophoresis units.'
+      },
+      {
+        id: 4,
+        title: 'Alginate Molecular Boba',
+        grade: 'k2',
+        gradeLabel: 'Grades K–8',
+        category: 'Bio-Engineering',
+        duration: '45 min',
+        summary: 'Explore biopolymer hydrogel cross-linking by dripping sodium alginate into calcium baths to form glowing spheres.',
+        tools: ['Dropper Pipettes', 'Sodium Alginate Polymer', 'Calcium Lactate Bath', 'Slotted Strainer'],
+        detailedSteps: [
+          {
+            shortLabel: 'Polymer Prep',
+            tool: 'Mixing Beaker + Stirring Rod',
+            reagent: 'Hydrate 1% Seaweed Sodium Alginate',
+            visualLook: '3D View: Long tangled seaweed alginate polymer chains floating in solution.',
+            actionBtn: '🌿 Prep Alginate Gel',
+            color: 0x10b981,
+            mode: 'droplets',
+            title: 'Step 1: Prepare Natural Seaweed Polymer Solution',
+            desc: 'Students inspect viscous sodium alginate extracted from brown kelp—a safe biopolymer used by biomedical engineers to encapsulate living cells and medicines.'
+          },
+          {
+            shortLabel: 'Drip Spheres',
+            tool: '3 mL Transfer Pipette',
+            reagent: 'Drip into 2% Calcium Lactate Bath',
+            visualLook: '3D View: Calcium ions snapping polymer chains into round hydrogel capsules!',
+            actionBtn: '💧 Drip Bio-Capsules',
+            color: 0x38bdf8,
+            mode: 'droplets',
+            title: 'Step 2: Cross-Link Instant Hydrogel Capsules in Calcium',
+            desc: 'Holding a pipette 4 inches above the clear calcium bath, students release individual drops that immediately cross-link into bouncy, translucent hydrogel spheres.'
+          },
+          {
+            shortLabel: 'Rinse & Test',
+            tool: 'Mesh Strainer + Rinse Water Cup',
+            reagent: 'Transfer Capsules to Pure Water Bath',
+            visualLook: '3D View: Uniform glowing spheres suspended in clear rinse chamber.',
+            actionBtn: '🧪 Rinse Capsules',
+            color: 0x0ea5e9,
+            mode: 'droplets',
+            title: 'Step 3: Halt Cross-Linking in a Pure Water Rinse',
+            desc: 'Students scoop their spheres with a perforated spoon into clean water to stop the calcium reaction and test how membrane thickness changes with bath time.'
+          },
+          {
+            shortLabel: 'Squish Test',
+            tool: 'Petri Dish + Forceps',
+            reagent: 'Compare Drug-Delivery Capsule Strength',
+            visualLook: '3D View: Elastic hydrogel membrane protecting an inner core.',
+            actionBtn: '🔬 Inspect Membrane',
+            color: 0x6366f1,
+            mode: 'helix',
+            title: 'Step 4: Inspect Semi-Permeable Hydrogel Membranes',
+            desc: 'Students gently squeeze their hydrogel capsules in a petri dish to see how real tissue engineers protect therapeutic cells inside the human body.'
+          }
+        ],
+        safety: 'Food-grade seaweed alginate and calcium lactate.'
+      },
+      {
+        id: 5,
+        title: 'CRISPR Paper-Clip Gene Editing',
+        grade: '68',
+        gradeLabel: 'Grades 5–8',
+        category: 'Genetics & DNA',
+        duration: '45 min',
+        summary: 'Act as Cas9 enzymes using guide-RNA sequences to locate, snip, and repair target mutations in DNA strands.',
+        tools: ['20-nt Guide RNA Strip', 'Target DNA Ribbon', 'Cas9 Molecular Scissors', 'Repair Template'],
+        detailedSteps: [
+          {
+            shortLabel: 'Find PAM',
+            tool: 'Target Gene Sequence Strip',
+            reagent: 'Locate 3-Base NGG "PAM" Beacon',
+            visualLook: '3D View: Double-helix DNA scanning for the glowing NGG PAM marker.',
+            actionBtn: '🔎 Scan for PAM Site',
+            color: 0xf59e0b,
+            mode: 'helix',
+            title: 'Step 1: Scan the Genome for the NGG PAM Landing Site',
+            desc: 'Acting as a Cas9 protein complex, students slide along a long DNA sequence ribbon until they spot the 3-letter "GG" Protospacer Adjacent Motif (PAM) signal.'
+          },
+          {
+            shortLabel: 'Bind gRNA',
+            tool: 'Guide-RNA (gRNA) Match Card',
+            reagent: 'Pair Complementary A-U and C-G Bases',
+            visualLook: '3D View: Guide-RNA locking onto the mutated DNA target strand.',
+            actionBtn: '🧩 Lock Guide-RNA',
+            color: 0x3882f6,
+            mode: 'helix',
+            title: 'Step 2: Unwind Helix & Match 20-Base Guide RNA',
+            desc: 'Students unzip the double helix next to the PAM site and verify that all 20 bases of their guide RNA match the mutated gene sequence before cutting.'
+          },
+          {
+            shortLabel: 'Cas9 Snip',
+            tool: 'Cas9 Endonuclease Cleavage Marker',
+            reagent: 'Make Precise Double-Strand Cut',
+            visualLook: '3D View: Clean double-strand break removing the faulty base pair.',
+            actionBtn: '✂️ Execute Cas9 Cut',
+            color: 0xef4444,
+            mode: 'helix',
+            title: 'Step 3: Perform a Precise Double-Strand DNA Cut',
+            desc: 'Three bases upstream of the PAM site, students snip out the defective codon using Cas9 molecular scissors without harming neighboring healthy genes.'
+          },
+          {
+            shortLabel: 'HDR Repair',
+            tool: 'Healthy Donor DNA Template',
+            reagent: 'Splice Corrected Sequence into Helix',
+            visualLook: '3D View: Repaired emerald-and-blue DNA double helix spinning smoothly!',
+            actionBtn: '🧬 Splice Healthy Gene',
+            color: 0x10b981,
+            mode: 'helix',
+            title: 'Step 4: Homology-Directed Repair with Healthy Code',
+            desc: 'Students splice in the healthy donor DNA template to restore normal protein function—modeling real sickle-cell and genetic medicine therapies.'
+          }
+        ],
+        safety: 'Hands-on tactile simulation with zero sharps.'
+      },
+      { id: 6, title: 'Yeast Respiration & Balloon Lab', grade: 'k2', gradeLabel: 'Grades K–5', category: 'Microbiology', duration: '45 min', summary: 'Wake up dormant baker’s yeast with warm sugar solutions and measure cellular CO2 inflation in real time.', tools: ['Active Yeast', 'Erlenmeyer Flasks', 'Latex Balloons'], safety: 'Common household baker’s yeast and sugar.' },
+      { id: 7, title: 'Catalase Enzyme Bubble Test', grade: '35', gradeLabel: 'Grades 3–8', category: 'Biochemistry', duration: '45 min', summary: 'Test how temperature and pH affect living catalase enzymes breaking down hydrogen peroxide into oxygen.', tools: ['Test Tubes', '3% Peroxide', 'Digital Timer'], safety: 'Dilute 3% store-strength peroxide with safety goggles.' },
+      { id: 8, title: 'Secret pH Cabbage Biosensors', grade: 'k2', gradeLabel: 'Grades K–5', category: 'Biochemistry', duration: '45 min', summary: 'Extract anthocyanin pigments from red cabbage to build natural colorimetric pH strips for household liquids.', tools: ['Anthocyanin Extract', '24-Well Spot Plates', 'Transfer Pipettes'], safety: '100% plant-derived indicator and kitchen buffers.' },
+      { id: 9, title: 'Bioluminescent Dinoflagellates', grade: '35', gradeLabel: 'Grades 3–8', category: 'Microbiology', duration: '45 min', summary: 'Discover luciferase enzyme chemistry and observe safe marine microalgae emit blue light when gently swirled.', tools: ['Marine Algae Vials', 'Portable Dark Box', 'Hand Lenses'], safety: 'Harmless marine photosynthetic algae cultures.' },
+      { id: 10, title: 'Bacterial Gram-Stain Detective', grade: '68', gradeLabel: 'Grades 6–8', category: 'Microbiology', duration: '50 min', summary: 'Examine pre-mounted harmless yogurt & probiotic slides under digital microscopes to classify cocci and bacilli.', tools: ['400x Digital Scopes', 'Prepared Slides', 'Morphology Charts'], safety: 'Sealed, non-pathogenic probiotic slides.' },
+      { id: 11, title: 'DNA Origami Base-Pair Bracelets', grade: 'k2', gradeLabel: 'Grades K–4', category: 'Genetics & DNA', duration: '40 min', summary: 'Translate real animal trait codons (A-T and C-G complementary pairs) into wearable double-helix bracelets.', tools: ['Codon Keys', '4-Color Nucleotide Beads', 'Elastic Cord'], safety: 'Large classroom-safe beads and non-toxic cord.' },
+      { id: 12, title: 'Oil-Spill Bioremediation Challenge', grade: '35', gradeLabel: 'Grades 4–8', category: 'Bio-Engineering', duration: '50 min', summary: 'Engineer natural biosurfactant and absorbent booms to clean simulated vegetable-oil spills from ocean trays.', tools: ['Ocean Test Trays', 'Transfer Pipettes', 'Cellulose Bio-Absorbents'], safety: 'Vegetable oil, water, and biodegradable sorbents.' },
+      { id: 13, title: 'Vitamin C Antioxidant Titration', grade: '68', gradeLabel: 'Grades 5–8', category: 'Biochemistry', duration: '45 min', summary: 'Use starch-iodine colorimetric titration with drop pipettes to rank vitamin C levels across fresh fruit juices.', tools: ['Dropper Pipettes', 'Starch-Iodine Indicator', 'Juice Samples'], safety: 'Dilute classroom starch indicator and fruit juices.' },
+      { id: 14, title: 'Osmosis Gummy Bear Lab', grade: 'k2', gradeLabel: 'Grades K–5', category: 'Biochemistry', duration: '45 min', summary: 'Measure how semi-permeable gelatin membranes swell in pure water and shrink in hypertonic salt solutions.', tools: ['Caliper Rulers', 'Hypertonic Saline Cups', 'Mini Balance Scale'], safety: 'Food-grade gelatin and table salt water.' },
+      { id: 15, title: 'UV Sunscreen & Bio-Bead Shield', grade: '35', gradeLabel: 'Grades 3–7', category: 'Bio-Engineering', duration: '45 min', summary: 'Test how different SPF formulations block UV radiation using photo-chromic UV-sensitive detector beads.', tools: ['UV Detector Beads', '365nm UV Torches', 'SPF 15/50 Samples'], safety: 'Low-power UV-A flashlights and standard sunscreens.' },
+      { id: 16, title: 'Lung Spirometer & Bio-Mechanics', grade: '35', gradeLabel: 'Grades 3–6', category: 'Bio-Engineering', duration: '45 min', summary: 'Construct working diaphragm-lung models and measure tidal lung capacity using calibrated displacement bottles.', tools: ['Thoracic Chamber Models', 'Displacement Cylinders', 'Sanitized Tubing'], safety: 'Sanitized single-use mouthpieces.' },
+      { id: 17, title: 'Lactase Enzyme & Milk Sugar Lab', grade: '68', gradeLabel: 'Grades 5–8', category: 'Biochemistry', duration: '45 min', summary: 'Use glucose test strips to observe lactase enzyme drops breaking down dairy lactose into simple sugars.', tools: ['Glucose Assay Strips', 'Lactase Enzyme Drops', '1.5 mL Micro-Tubes'], safety: 'Over-the-counter lactase drops and milk.' },
+      { id: 18, title: 'Glow-Germ Handwashing Microbiology', grade: 'k2', gradeLabel: 'Grades K–4', category: 'Microbiology', duration: '40 min', summary: 'Apply safe fluorescent lotion microbes and inspect handwashing technique under UV inspection lamps.', tools: ['Fluorescent Tracer Lotion', 'UV Inspection Lamps', 'Hygiene Scorecards'], safety: 'Hypoallergenic cosmetic UV tracer lotion.' },
+      { id: 19, title: 'Plant Stomata Leaf Peel Microscopy', grade: '35', gradeLabel: 'Grades 4–8', category: 'Microbiology', duration: '45 min', summary: 'Capture clear leaf epidermis impressions to count microscopic guard cells and breathing stomata pores.', tools: ['Digital Scopes', 'Clear Impression Film', 'Fresh Garden Leaves'], safety: 'Non-toxic clear film and fresh garden leaves.' },
+      { id: 20, title: 'Protein Folding Pipe-Cleaner Models', grade: '68', gradeLabel: 'Grades 5–8', category: 'Genetics & DNA', duration: '45 min', summary: 'Fold hydrophobic and hydrophilic amino acid chains into 3D hemoglobin and insulin tertiary structures.', tools: ['Polarity Amino Beads', 'Flexible Backbone Wires', '3D Folding Guides'], safety: 'Soft chenille stems and smooth beads.' },
+      { id: 21, title: 'Blood Typing & Antibody Agglutination', grade: '68', gradeLabel: 'Grades 6–8', category: 'Biochemistry', duration: '50 min', summary: 'Mix synthetic simulated blood samples with anti-A, anti-B, and anti-Rh serums to match emergency donors.', tools: ['Synthetic Blood Samples', 'ABO/Rh Typing Trays', 'Mixing Stirrers'], safety: '100% synthetic chemical blood simulation (zero real blood).' },
+      { id: 22, title: 'Micro-Centrifuge Density Separation', grade: '68', gradeLabel: 'Grades 5–8', category: 'Bio-Engineering', duration: '45 min', summary: 'Balance micro-centrifuge rotors to separate multi-layer cellular suspensions by molecular density.', tools: ['Mini Centrifuges', '1.5 mL Conical Tubes', 'P20 Pipettes'], safety: 'Low-speed lid-locking classroom mini-centrifuges.' },
+      { id: 23, title: 'Prosthetic Robotic Hand Bio-Design', grade: '35', gradeLabel: 'Grades 3–8', category: 'Bio-Engineering', duration: '50 min', summary: 'Engineer tendon-driven articulated fingers using polymer straws and tension cords to pick up lab tubes.', tools: ['Tendon Cords', 'Articulated Polymer Tubes', 'Foam Palm Base'], safety: 'Pre-cut safe materials and blunt tape.' },
+      { id: 24, title: 'Kombucha Cellulose Biomaterial Leather', grade: '68', gradeLabel: 'Grades 5–8', category: 'Bio-Engineering', duration: '45 min', summary: 'Inspect sustainable bacterial nanocellulose sheets grown by Acetobacter and test tensile strength vs. plastic.', tools: ['Nanocellulose Sheets', 'Spring Force Gauges', 'Hand Lenses'], safety: 'Fully dried, sanitized cellulose biomaterial samples.' }
     ];
 
-    function selectHomeKit(index) {
-      document.querySelectorAll('.home-kit-btn').forEach((btn, i) => {
-        const label = btn.querySelector('div:first-child');
-        if (i === index) {
-          btn.classList.add('border-bioBlue', 'bg-blue-50/50');
-          btn.classList.remove('border-mistBorder', 'bg-white');
-          label.classList.add('text-bioBlue');
-          label.classList.remove('text-slate-400');
-        } else {
-          btn.classList.remove('border-bioBlue', 'bg-blue-50/50');
-          btn.classList.add('border-mistBorder', 'bg-white');
-          label.classList.remove('text-bioBlue');
-          label.classList.add('text-slate-400');
+    // Auto-generate detailed 4-step tool & reagent walkthroughs for labs 6–24
+    function getLabDetailedSteps(lab) {
+      if (lab.detailedSteps) return lab.detailedSteps;
+      const t0 = lab.tools[0] || 'Lab Instrument';
+      const t1 = lab.tools[1] || 'Reaction Vessel';
+      const t2 = lab.tools[2] || 'Measurement Tool';
+      const modeMap = {
+        'Genetics & DNA': 'helix',
+        'Microbiology': 'droplets',
+        'Biochemistry': 'plate',
+        'Bio-Engineering': 'gel'
+      };
+      const defaultMode = modeMap[lab.category] || 'helix';
+      return [
+        {
+          shortLabel: 'Prep Station',
+          tool: `${t0} + Safety Goggles`,
+          reagent: `Calibrate ${lab.category} Workspace`,
+          visualLook: `3D View: ${lab.title} station set up with ${t0} and ${t1}.`,
+          actionBtn: '🧰 Prep Lab Bench',
+          color: 0x3882f6,
+          mode: defaultMode,
+          title: `Step 1: Set Up ${t0} & Inspect Classroom Reagents`,
+          desc: `Student mentors hand every pair of students their own ${t0} and ${t1}, reviewing how real researchers handle sterile biotech equipment safely.`
+        },
+        {
+          shortLabel: 'Mix Reagent',
+          tool: `${t1} + Transfer Pipette`,
+          reagent: `Combine Safe ${lab.category} Sample`,
+          visualLook: `3D View: Active molecular reaction inside ${t1}.`,
+          actionBtn: '🧪 Add Reagent',
+          color: 0x0ea5e9,
+          mode: 'droplets',
+          title: `Step 2: Measure & Combine Samples in ${t1}`,
+          desc: `Students carefully measure and transfer reagents into ${t1}, watching color changes, gas bubbles, or structural shifts happen right on their desk.`
+        },
+        {
+          shortLabel: 'Run Assay',
+          tool: `${t2} + Observation Timer`,
+          reagent: `Track Live Reaction & Controls`,
+          visualLook: `3D View: Comparing experimental vs. control samples with ${t2}.`,
+          actionBtn: '🔬 Measure Results',
+          color: 0x10b981,
+          mode: defaultMode,
+          title: `Step 3: Collect Data Using ${t2}`,
+          desc: `Using ${t2}, students compare their active experiment against a baseline control sample just like a real university wet-lab team.`
+        },
+        {
+          shortLabel: 'Analyze',
+          tool: 'Lab Field Log + Mentor Debrief',
+          reagent: 'Connect Results to Real Biotech Careers',
+          visualLook: `3D View: Completed ${lab.title} molecular readout!`,
+          actionBtn: '✨ Complete Lab',
+          color: 0x6366f1,
+          mode: 'helix',
+          title: `Step 4: Interpret Findings & Real-World Applications`,
+          desc: `Students share their experimental observations with the class and discover how scientists use ${lab.title.toLowerCase()} in medicine and environmental science.`
         }
-      });
-
-      const item = homeKitData[index];
-      document.getElementById('homeKitTag').textContent = item.tag;
-      document.getElementById('homeKitTitle').textContent = item.title;
-      document.getElementById('homeKitDesc').textContent = item.desc;
-      document.getElementById('homeKitIcon').innerHTML = item.svg;
+      ];
     }
 
-    // 3. Workshops Tab Grade Filter
-    function filterWorkshops(grade, clickedBtn) {
-      document.querySelectorAll('.ws-filter-btn').forEach(btn => {
-        btn.classList.remove('bg-indigoDeep', 'text-white');
-        btn.classList.add('text-slate-600');
-      });
-      clickedBtn.classList.add('bg-indigoDeep', 'text-white');
-      clickedBtn.classList.remove('text-slate-600');
+    // 3. Interactive 3D Three.js Biotech Lab Simulator (Connected to All 24 Labs)
+    let currentSimLabId = 1;
+    let currentMissionIdx = 0;
+    let bioScene, bioCamera, bioRenderer, helixGroup, plateGroup, gelGroup, dropletGroup;
+    let isDragging3D = false;
+    let prevMouseX = 0, prevMouseY = 0;
+    let targetRotY = 0.4, targetRotX = 0.22;
+    let burstTimer = 0;
 
-      document.querySelectorAll('.ws-card').forEach(card => {
-        const grades = card.getAttribute('data-grades');
-        if (grade === 'all' || grades.includes(grade)) {
-          card.style.display = 'flex';
-        } else {
-          card.style.display = 'none';
-        }
-      });
+    function populateSimulatorDropdown() {
+      const select = document.getElementById('simLabSelector');
+      if (!select) return;
+      select.innerHTML = workshopsCatalog.map(lab =>
+        `<option value="${lab.id}">Lab #${String(lab.id).padStart(2, '0')}: ${lab.title} (${lab.gradeLabel})</option>`
+      ).join('');
     }
 
-    // Lab Protocol Modal Data
-    const protocols = [
-      {
-        tag: 'GRADES K–5 • 45 MINUTES',
-        title: 'Fruit DNA Extraction',
-        summary: 'Students extract real, visible DNA strands from strawberries using safe household-derived reagents and real laboratory tubes.',
-        steps: [
-          'Gently crush fresh strawberries inside a sealed bag with soap-and-salt extraction buffer to break open cell membranes.',
-          'Filter the strawberry lysate through lab gauze into a clear 50 mL conical tube.',
-          'Slowly layer ice-cold ethanol on top and spool white DNA threads onto a wooden applicator into a keepsake micro-vial.'
-        ]
-      },
-      {
-        tag: 'GRADES 3–8 • 45 MINUTES',
-        title: 'Micropipette Art & Precision Lab',
-        summary: 'Students build real lab dexterity by dialing P20 and P200 micropipettes to transfer exact microliter volumes.',
-        steps: [
-          'Practice thumb-stop mechanics (first stop to aspirate, second stop to dispense) using water droplets.',
-          'Transfer 20 µL primary dye droplets onto hydrophobic dot-matrix cards to check volume consistency.',
-          'Mix custom color gradients inside 96-well microplates to complete a mystery biotech pixel pattern.'
-        ]
-      },
-      {
-        tag: 'GRADES K–8 • 45 MINUTES',
-        title: 'Micro-World & Agar Exploration',
-        summary: 'An introduction to microbiology, sterile technique, and the unseen microscopic world around us.',
-        steps: [
-          'Put on kid-sized nitrile gloves and discuss how scientists keep samples uncontaminated.',
-          'Swab everyday classroom objects (doorknobs, pencils, shoes) and streak nutrient agar Petri dishes.',
-          'Observe prepared harmless plant and yeast slides under handheld pocket microscopes.'
-        ]
-      },
-      {
-        tag: 'GRADES 6–8 • 50 MINUTES',
-        title: 'Mystery Gel Electrophoresis',
-        summary: 'Students run a real electrophoresis chamber using simulated DNA dye samples to solve a classroom forensics puzzle.',
-        steps: [
-          'Load 15 µL of simulated DNA dye samples into submerged agarose gel wells using P20 micropipettes.',
-          'Connect safe low-voltage leads and observe negatively charged molecules migrate toward the positive electrode.',
-          'Compare band migration distances against a reference ladder to identify the mystery sample.'
-        ]
+    function selectSimulatorLab(labId) {
+      currentSimLabId = parseInt(labId, 10) || 1;
+      currentMissionIdx = 0;
+      renderSimulatorUI();
+      burstTimer = 26;
+    }
+
+    function setLabMission(idx) {
+      currentMissionIdx = idx;
+      renderSimulatorUI();
+      burstTimer = 26;
+    }
+
+    function renderSimulatorUI() {
+      const lab = workshopsCatalog.find(w => w.id === currentSimLabId) || workshopsCatalog[0];
+      const steps = getLabDetailedSteps(lab);
+      const step = steps[currentMissionIdx] || steps[0];
+
+      // Render 4 step buttons dynamically for the selected lab
+      const tabsContainer = document.getElementById('simStepTabs');
+      if (tabsContainer) {
+        tabsContainer.innerHTML = steps.map((s, i) => `
+          <button
+            type="button"
+            onclick="setLabMission(${i})"
+            class="px-2 py-2 rounded-xl border text-center transition-all cursor-pointer ${
+              i === currentMissionIdx
+                ? 'border-bioBlue bg-blue-50 shadow-2xs'
+                : 'border-sky-200 bg-white/90 hover:bg-white'
+            }"
+          >
+            <div class="font-mono text-[9px] font-bold ${i === currentMissionIdx ? 'text-bioBlue' : 'text-slate-400'}">
+              STEP 0${i + 1}
+            </div>
+            <div class="text-[11px] font-extrabold text-indigoDeep truncate">${s.shortLabel}</div>
+          </button>
+        `).join('');
       }
-    ];
 
-    function openProtocolModal(index) {
-      const p = protocols[index];
-      document.getElementById('protoTag').textContent = p.tag;
-      document.getElementById('protoTitle').textContent = p.title;
-      document.getElementById('protoSummary').textContent = p.summary;
-      document.getElementById('protoSteps').innerHTML = p.steps.map(s => `<li>${s}</li>`).join('');
-      document.getElementById('protoBookBtn').onclick = () => {
+      document.getElementById('simScoreBadge').textContent = `LAB #${String(lab.id).padStart(2, '0')} • STEP ${currentMissionIdx + 1}/4`;
+      document.getElementById('simHudStage').textContent = `TOOL: ${step.tool.toUpperCase()}`;
+      document.getElementById('simVisualTag').textContent = `3D: ${step.mode.toUpperCase()}`;
+      document.getElementById('simVisualLook').textContent = step.visualLook;
+      document.getElementById('simStepToolPill').textContent = `🧰 Tool: ${step.tool}`;
+      document.getElementById('simStepReagentPill').textContent = `🧪 ${step.reagent}`;
+      document.getElementById('simMissionTitle').textContent = step.title;
+      document.getElementById('simMissionDesc').textContent = step.desc;
+      document.getElementById('simLabGradeInfo').textContent = `${lab.gradeLabel} • ${lab.duration} • ${lab.category}`;
+      document.getElementById('simActionBtn').textContent = `${step.actionBtn} →`;
+
+      update3DVisualMode(step.mode, step.color);
+    }
+
+    function update3DVisualMode(mode, hexColor) {
+      if (!helixGroup || !plateGroup || !gelGroup || !dropletGroup) return;
+      helixGroup.visible = mode === 'helix';
+      plateGroup.visible = mode === 'plate';
+      gelGroup.visible = mode === 'gel';
+      dropletGroup.visible = mode === 'droplets';
+
+      const activeGroup =
+        mode === 'plate' ? plateGroup :
+        mode === 'gel' ? gelGroup :
+        mode === 'droplets' ? dropletGroup : helixGroup;
+
+      activeGroup.traverse(child => {
+        if (child.isMesh && child.userData.tintable) {
+          child.material.color.setHex(hexColor);
+        }
+      });
+    }
+
+    function initBio3D() {
+      const canvas = document.getElementById('bio3dCanvas');
+      if (!canvas || typeof THREE === 'undefined') return;
+
+      bioScene = new THREE.Scene();
+      bioCamera = new THREE.PerspectiveCamera(45, (canvas.clientWidth || 460) / (canvas.clientHeight || 230), 0.1, 100);
+      bioCamera.position.set(0, 0.35, 7.2);
+
+      bioRenderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+      bioRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      resizeBio3D();
+
+      bioScene.add(new THREE.AmbientLight(0xffffff, 0.82));
+      const pLight1 = new THREE.PointLight(0x60a5fa, 1.4, 25);
+      pLight1.position.set(4, 5, 6);
+      bioScene.add(pLight1);
+      const pLight2 = new THREE.PointLight(0x34d399, 1.1, 25);
+      pLight2.position.set(-4, -3, 5);
+      bioScene.add(pLight2);
+
+      // Mode 1: Double-Helix DNA Group
+      helixGroup = new THREE.Group();
+      const pairs = 14;
+      const radius = 1.15;
+      const spacing = 0.34;
+      const sphereGeo = new THREE.SphereGeometry(0.16, 16, 16);
+      const strandMatA = new THREE.MeshStandardMaterial({ color: 0x3882f6, roughness: 0.25 });
+      const strandMatB = new THREE.MeshStandardMaterial({ color: 0x10b981, roughness: 0.25 });
+      const rungMat = new THREE.MeshStandardMaterial({ color: 0xe0f2fe, roughness: 0.4 });
+
+      for (let i = 0; i < pairs; i++) {
+        const angle = i * 0.48;
+        const y = (i - (pairs - 1) / 2) * spacing;
+
+        const nodeA = new THREE.Mesh(sphereGeo, strandMatA);
+        nodeA.userData.tintable = true;
+        nodeA.position.set(Math.cos(angle) * radius, y, Math.sin(angle) * radius);
+        helixGroup.add(nodeA);
+
+        const nodeB = new THREE.Mesh(sphereGeo, strandMatB);
+        nodeB.position.set(Math.cos(angle + Math.PI) * radius, y, Math.sin(angle + Math.PI) * radius);
+        helixGroup.add(nodeB);
+
+        const rungGeo = new THREE.CylinderGeometry(0.045, 0.045, radius * 2, 10);
+        const rung = new THREE.Mesh(rungGeo, rungMat);
+        rung.position.set(0, y, 0);
+        rung.rotation.z = Math.PI / 2;
+        rung.rotation.y = -angle;
+        helixGroup.add(rung);
+      }
+      helixGroup.rotation.z = 0.22;
+      bioScene.add(helixGroup);
+
+      // Mode 2: 96-Well Microplate Rainbow Grid
+      plateGroup = new THREE.Group();
+      const basePlate = new THREE.Mesh(
+        new THREE.BoxGeometry(4.2, 0.28, 2.8),
+        new THREE.MeshStandardMaterial({ color: 0xe2e8f0, roughness: 0.35 })
+      );
+      plateGroup.add(basePlate);
+      const wellColors = [0x38bdf8, 0x10b981, 0x818cf8, 0xf472b6, 0xfbbf24, 0x3882f6];
+      const wellGeo = new THREE.CylinderGeometry(0.18, 0.18, 0.34, 16);
+      for (let r = 0; r < 4; r++) {
+        for (let c = 0; c < 6; c++) {
+          const well = new THREE.Mesh(
+            wellGeo,
+            new THREE.MeshStandardMaterial({ color: wellColors[(r + c) % wellColors.length], roughness: 0.2 })
+          );
+          well.position.set((c - 2.5) * 0.62, 0.14, (r - 1.5) * 0.6);
+          plateGroup.add(well);
+        }
+      }
+      plateGroup.rotation.x = 0.45;
+      plateGroup.visible = false;
+      bioScene.add(plateGroup);
+
+      // Mode 3: Gel Electrophoresis Band Slab
+      gelGroup = new THREE.Group();
+      const gelSlab = new THREE.Mesh(
+        new THREE.BoxGeometry(3.8, 0.35, 2.6),
+        new THREE.MeshStandardMaterial({ color: 0x1e3a8a, transparent: true, opacity: 0.78, roughness: 0.2 })
+      );
+      gelGroup.add(gelSlab);
+      for (let lane = 0; lane < 5; lane++) {
+        const xPos = (lane - 2) * 0.68;
+        const band1 = new THREE.Mesh(
+          new THREE.BoxGeometry(0.42, 0.38, 0.14),
+          new THREE.MeshStandardMaterial({ color: 0x38bdf8, emissive: 0x0284c7, emissiveIntensity: 0.4 })
+        );
+        band1.userData.tintable = true;
+        band1.position.set(xPos, 0.04, -0.45 + (lane % 2) * 0.35);
+        gelGroup.add(band1);
+
+        const band2 = new THREE.Mesh(
+          new THREE.BoxGeometry(0.42, 0.38, 0.14),
+          new THREE.MeshStandardMaterial({ color: 0x34d399, emissive: 0x059669, emissiveIntensity: 0.35 })
+        );
+        band2.position.set(xPos, 0.04, 0.35 + ((lane + 1) % 3) * 0.22);
+        gelGroup.add(band2);
+      }
+      gelGroup.rotation.x = 0.5;
+      gelGroup.visible = false;
+      bioScene.add(gelGroup);
+
+      // Mode 4: Hydrogel Capsules & Reagent Droplets Cluster
+      dropletGroup = new THREE.Group();
+      const dropPositions = [
+        [0, 0, 0, 0.72],
+        [-1.35, 0.45, 0.4, 0.42],
+        [1.35, -0.35, 0.5, 0.48],
+        [-0.85, -0.75, -0.5, 0.36],
+        [0.95, 0.75, -0.4, 0.38]
+      ];
+      dropPositions.forEach(([x, y, z, r], idx) => {
+        const sphere = new THREE.Mesh(
+          new THREE.SphereGeometry(r, 24, 24),
+          new THREE.MeshStandardMaterial({
+            color: idx === 0 ? 0x38bdf8 : 0x10b981,
+            roughness: 0.15,
+            metalness: 0.05
+          })
+        );
+        if (idx === 0) sphere.userData.tintable = true;
+        sphere.position.set(x, y, z);
+        dropletGroup.add(sphere);
+      });
+      dropletGroup.visible = false;
+      bioScene.add(dropletGroup);
+
+      // Mouse & Touch Orbit Controls
+      canvas.addEventListener('mousedown', e => {
+        isDragging3D = true;
+        prevMouseX = e.clientX;
+        prevMouseY = e.clientY;
+      });
+      window.addEventListener('mouseup', () => { isDragging3D = false; });
+      window.addEventListener('mousemove', e => {
+        if (!isDragging3D) return;
+        targetRotY += (e.clientX - prevMouseX) * 0.012;
+        targetRotX += (e.clientY - prevMouseY) * 0.008;
+        prevMouseX = e.clientX;
+        prevMouseY = e.clientY;
+      });
+
+      canvas.addEventListener('touchstart', e => {
+        if (e.touches.length === 1) {
+          isDragging3D = true;
+          prevMouseX = e.touches[0].clientX;
+          prevMouseY = e.touches[0].clientY;
+        }
+      }, { passive: true });
+      window.addEventListener('touchend', () => { isDragging3D = false; });
+      canvas.addEventListener('touchmove', e => {
+        if (!isDragging3D || e.touches.length !== 1) return;
+        targetRotY += (e.touches[0].clientX - prevMouseX) * 0.014;
+        targetRotX += (e.touches[0].clientY - prevMouseY) * 0.01;
+        prevMouseX = e.touches[0].clientX;
+        prevMouseY = e.touches[0].clientY;
+      }, { passive: true });
+
+      window.addEventListener('resize', resizeBio3D);
+      animateBio3D();
+    }
+
+    function resizeBio3D() {
+      const canvas = document.getElementById('bio3dCanvas');
+      if (!canvas || !bioRenderer || !bioCamera) return;
+      const w = canvas.clientWidth || 460;
+      const h = canvas.clientHeight || 230;
+      bioCamera.aspect = w / h;
+      bioCamera.updateProjectionMatrix();
+      bioRenderer.setSize(w, h, false);
+    }
+
+    function animateBio3D() {
+      requestAnimationFrame(animateBio3D);
+      if (!helixGroup || !bioRenderer || !bioScene || !bioCamera) return;
+
+      if (!isDragging3D) targetRotY += burstTimer > 0 ? 0.065 : 0.009;
+
+      const scaleTarget = burstTimer > 0 ? 1 + Math.sin(burstTimer * 0.25) * 0.12 : 1;
+      if (burstTimer > 0) burstTimer--;
+
+      [helixGroup, plateGroup, gelGroup, dropletGroup].forEach(grp => {
+        if (!grp) return;
+        grp.rotation.y += (targetRotY - grp.rotation.y) * 0.12;
+        grp.rotation.x += (targetRotX - grp.rotation.x) * 0.12;
+        grp.scale.lerp(new THREE.Vector3(scaleTarget, scaleTarget, scaleTarget), 0.15);
+      });
+
+      bioRenderer.render(bioScene, bioCamera);
+    }
+
+    function triggerLabAction() {
+      burstTimer = 36;
+      const lab = workshopsCatalog.find(w => w.id === currentSimLabId) || workshopsCatalog[0];
+      const steps = getLabDetailedSteps(lab);
+      const nextIdx = (currentMissionIdx + 1) % steps.length;
+      const btn = document.getElementById('simActionBtn');
+      btn.textContent = nextIdx === 0 ? '🎉 Lab Complete! Restart →' : '✨ Done! Next Step →';
+      setTimeout(() => setLabMission(nextIdx), 620);
+    }
+
+    // 4. Workshops Catalog Filter & Renderer
+    let selectedGradeFilter = 'all';
+    let selectedCategoryFilter = 'all';
+
+    function setGradeFilter(grade, btn) {
+      selectedGradeFilter = grade;
+      document.querySelectorAll('.ws-grade-btn').forEach(b => {
+        b.classList.remove('bg-indigoDeep', 'text-white', 'font-bold');
+        b.classList.add('text-slate-600', 'font-semibold');
+      });
+      btn.classList.add('bg-indigoDeep', 'text-white', 'font-bold');
+      btn.classList.remove('text-slate-600', 'font-semibold');
+      renderWorkshops();
+    }
+
+    function setCategoryFilter(cat, btn) {
+      selectedCategoryFilter = cat;
+      document.querySelectorAll('.ws-cat-btn').forEach(b => {
+        b.classList.remove('bg-bioBlue', 'text-white', 'font-bold');
+        b.classList.add('text-slate-600', 'font-semibold');
+      });
+      btn.classList.add('bg-bioBlue', 'text-white', 'font-bold');
+      btn.classList.remove('text-slate-600', 'font-semibold');
+      renderWorkshops();
+    }
+
+    function resetWorkshopFilters() {
+      selectedGradeFilter = 'all';
+      selectedCategoryFilter = 'all';
+      const searchInput = document.getElementById('labSearchInput');
+      if (searchInput) searchInput.value = '';
+      document.querySelectorAll('.ws-grade-btn').forEach((b, i) => {
+        b.classList.toggle('bg-indigoDeep', i === 0);
+        b.classList.toggle('text-white', i === 0);
+        b.classList.toggle('font-bold', i === 0);
+        b.classList.toggle('text-slate-600', i !== 0);
+      });
+      document.querySelectorAll('.ws-cat-btn').forEach((b, i) => {
+        b.classList.toggle('bg-bioBlue', i === 0);
+        b.classList.toggle('text-white', i === 0);
+        b.classList.toggle('font-bold', i === 0);
+        b.classList.toggle('text-slate-600', i !== 0);
+      });
+      renderWorkshops();
+    }
+
+    function renderWorkshops() {
+      const grid = document.getElementById('workshopsGrid');
+      if (!grid) return;
+      const q = (document.getElementById('labSearchInput')?.value || '').trim().toLowerCase();
+
+      const filtered = workshopsCatalog.filter(lab => {
+        const gradeMatch = selectedGradeFilter === 'all' || lab.grade === selectedGradeFilter;
+        const catMatch = selectedCategoryFilter === 'all' || lab.category === selectedCategoryFilter;
+        const textMatch = !q ||
+          lab.title.toLowerCase().includes(q) ||
+          lab.summary.toLowerCase().includes(q) ||
+          lab.category.toLowerCase().includes(q) ||
+          lab.tools.some(t => t.toLowerCase().includes(q));
+        return gradeMatch && catMatch && textMatch;
+      });
+
+      const countLabel = document.getElementById('workshopCountLabel');
+      if (countLabel) {
+        countLabel.textContent = filtered.length === workshopsCatalog.length
+          ? `Showing all ${workshopsCatalog.length} wet-lab workshops`
+          : `Showing ${filtered.length} of ${workshopsCatalog.length} wet-lab workshops`;
+      }
+
+      if (filtered.length === 0) {
+        grid.innerHTML = `
+          <div class="col-span-full rounded-3xl glass-card border border-sky-200 p-10 text-center space-y-3">
+            <div class="text-lg font-extrabold text-indigoDeep">No matching workshops found</div>
+            <p class="text-sm text-slate-600">Try clearing your search term or resetting the grade/topic filters.</p>
+            <button type="button" onclick="resetWorkshopFilters()" class="rounded-full bg-bioBlue text-white font-semibold text-xs px-5 py-2.5 cursor-pointer">Show All 24 Labs</button>
+          </div>`;
+        return;
+      }
+
+      grid.innerHTML = filtered.map(lab => `
+        <div class="hover-card rounded-3xl glass-card border border-sky-200/90 p-6 shadow-card flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between gap-2 mb-3">
+              <span class="font-mono text-[10px] font-bold px-2.5 py-1 rounded-full bg-sky-100 text-bioBlue">${lab.gradeLabel}</span>
+              <span class="font-mono text-[10px] font-semibold text-slate-400">LAB #${String(lab.id).padStart(2, '0')} • ${lab.duration}</span>
+            </div>
+            <div class="font-mono text-[10px] font-semibold text-emerald-700 uppercase mb-1">${lab.category}</div>
+            <h3 class="text-lg font-extrabold text-indigoDeep mb-2 leading-snug">${lab.title}</h3>
+            <p class="font-body text-xs sm:text-sm text-slate-600 leading-relaxed mb-4">${lab.summary}</p>
+          </div>
+          <div class="pt-4 border-t border-sky-100 flex items-center justify-between gap-2">
+            <button type="button" onclick="openProtocolModal(${lab.id})" class="text-xs font-bold text-bioBlue hover:underline cursor-pointer">
+              View Protocol →
+            </button>
+            <button type="button" onclick="goToBooking('Teacher / School Admin', '${lab.title.replace(/'/g, "\\'")}')" class="rounded-full bg-indigoDeep hover:bg-blue-950 text-white font-semibold text-[11px] px-3.5 py-1.5 transition-colors cursor-pointer">
+              Book Lab
+            </button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function openProtocolModal(labId) {
+      const lab = workshopsCatalog.find(w => w.id === labId);
+      if (!lab) return;
+      const steps = getLabDetailedSteps(lab);
+      document.getElementById('modalGradeBadge').textContent = lab.gradeLabel;
+      document.getElementById('modalDurationBadge').textContent = `${lab.duration} • ${lab.category}`;
+      document.getElementById('modalTitle').textContent = lab.title;
+      document.getElementById('modalSummary').textContent = lab.summary;
+      document.getElementById('modalSafety').textContent = lab.safety;
+
+      const stepsList = document.getElementById('modalSteps');
+      stepsList.innerHTML = steps.map(s => `<li><strong>${s.shortLabel} (${s.tool}):</strong> ${s.desc}</li>`).join('');
+
+      document.getElementById('modalBookBtn').onclick = () => {
         closeProtocolModal();
-        goToBooking('Teacher / School Admin', p.title);
+        goToBooking('Teacher / School Admin', lab.title);
       };
       document.getElementById('protocolModal').classList.remove('hidden');
     }
@@ -1342,107 +1690,105 @@
       document.getElementById('protocolModal').classList.add('hidden');
     }
 
-    document.getElementById('protocolModal').addEventListener('click', function (e) {
-      if (e.target === this) closeProtocolModal();
-    });
+    // 4. Donate Calculator & HCB Submission Handler
+    let donationFrequency = 'once';
+    let donationAmount = 75;
 
-    // 'What We Bring' Checklist Toggle
-    function toggleChecklist(who) {
-      const omniBtn = document.getElementById('checklistOmniBtn');
-      const schoolBtn = document.getElementById('checklistSchoolBtn');
-      const omniPanel = document.getElementById('checklistOmniPanel');
-      const schoolPanel = document.getElementById('checklistSchoolPanel');
-
-      if (who === 'omnibio') {
-        omniBtn.classList.add('bg-bioBlue', 'text-white');
-        omniBtn.classList.remove('text-slate-600');
-        schoolBtn.classList.remove('bg-bioBlue', 'text-white');
-        schoolBtn.classList.add('text-slate-600');
-        omniPanel.classList.remove('hidden');
-        schoolPanel.classList.add('hidden');
+    function setDonationFrequency(freq) {
+      donationFrequency = freq;
+      const onceBtn = document.getElementById('freqOnceBtn');
+      const monthlyBtn = document.getElementById('freqMonthlyBtn');
+      if (freq === 'once') {
+        onceBtn.className = 'py-2 rounded-xl text-xs font-bold bg-white text-indigoDeep shadow-2xs cursor-pointer';
+        monthlyBtn.className = 'py-2 rounded-xl text-xs font-semibold text-slate-600 cursor-pointer';
       } else {
-        schoolBtn.classList.add('bg-bioBlue', 'text-white');
-        schoolBtn.classList.remove('text-slate-600');
-        omniBtn.classList.remove('bg-bioBlue', 'text-white');
-        omniBtn.classList.add('text-slate-600');
-        schoolPanel.classList.remove('hidden');
-        omniPanel.classList.add('hidden');
+        monthlyBtn.className = 'py-2 rounded-xl text-xs font-bold bg-white text-indigoDeep shadow-2xs cursor-pointer';
+        onceBtn.className = 'py-2 rounded-xl text-xs font-semibold text-slate-600 cursor-pointer';
       }
+      updateDonationBreakdown();
     }
 
-    // 4. Get Involved Impact Slider
-    function updateImpactSlider(val) {
-      const amount = Number(val);
-      document.getElementById('sliderAmountDisplay').textContent = `$${amount}`;
-      document.getElementById('impactStudents').textContent = Math.round(amount * 1.2);
-      document.getElementById('impactGels').textContent = Math.max(2, Math.round(amount / 5));
-      document.getElementById('impactGloves').textContent = Math.round(amount * 2.4);
+    function selectDonationAmount(amount, btn) {
+      donationAmount = amount;
+      document.getElementById('customDonationInput').value = amount;
+      document.querySelectorAll('.amt-btn').forEach(b => {
+        b.classList.remove('border-2', 'border-bioBlue', 'bg-blue-50', 'text-bioBlue');
+        b.classList.add('border', 'border-sky-200', 'bg-white', 'text-indigoDeep');
+      });
+      if (btn) {
+        btn.classList.remove('border', 'border-sky-200', 'bg-white', 'text-indigoDeep');
+        btn.classList.add('border-2', 'border-bioBlue', 'bg-blue-50', 'text-bioBlue');
+      }
+      updateDonationBreakdown();
     }
 
-    // 5. Contact Tab Copy-to-Clipboard (using execCommand fallback for iFrame reliability)
-    function copyContactEmail() {
-      const email = 'contact@omnibiolabs.org';
-      const tempInput = document.createElement('textarea');
-      tempInput.value = email;
-      tempInput.style.position = 'fixed';
-      tempInput.style.opacity = '0';
+    function handleCustomAmount(val) {
+      const parsed = Math.max(1, parseInt(val || '0', 10));
+      donationAmount = parsed;
+      document.querySelectorAll('.amt-btn').forEach(b => {
+        b.classList.remove('border-2', 'border-bioBlue', 'bg-blue-50', 'text-bioBlue');
+        b.classList.add('border', 'border-sky-200', 'bg-white', 'text-indigoDeep');
+      });
+      updateDonationBreakdown();
+    }
+
+    function updateDonationBreakdown() {
+      const students = Math.max(1, Math.floor((donationAmount / 15) * 6));
+      const classes = (donationAmount / 75).toFixed(1);
+      document.getElementById('donationStudentsBadge').textContent = `${students} kids`;
+      const freqText = donationFrequency === 'monthly' ? 'every month' : 'directly';
+      document.getElementById('donationImpactText').textContent =
+        donationAmount >= 75
+          ? `Funds ~${classes} full classroom wet-labs ${freqText}`
+          : `Supplies complete wet-lab kits for ${students} students ${freqText}`;
+    }
+
+    function submitDonationRequest() {
+      const feedback = document.getElementById('donationFeedback');
+      const freqLabel = donationFrequency === 'monthly' ? '/month' : ' one-time';
+      feedback.innerHTML = `<strong>Thank you for supporting OmniBio Labs ($${donationAmount}${freqLabel})!</strong> Your tax-deductible contribution goes through our HCB 501(c)(3) fiscal sponsorship ledger. Our team at <a href="mailto:contact@omnibiolabs.org" class="underline font-bold">contact@omnibiolabs.org</a> is ready to send your HCB donation link or employer match EIN (81-2908499).`;
+      feedback.classList.remove('hidden');
+    }
+
+    // 5. Contact Form & Copy-to-Clipboard
+    function copyOfficialEmail() {
+      const tempInput = document.createElement('input');
+      tempInput.value = 'contact@omnibiolabs.org';
       document.body.appendChild(tempInput);
       tempInput.select();
-      try {
-        document.execCommand('copy');
-      } catch (err) {
-        if (navigator.clipboard) navigator.clipboard.writeText(email);
-      }
+      document.execCommand('copy');
       document.body.removeChild(tempInput);
 
-      const label = document.getElementById('copyEmailLabel');
       const btn = document.getElementById('copyEmailBtn');
-      label.textContent = 'Copied!';
-      btn.classList.remove('bg-blue-50', 'text-bioBlue');
-      btn.classList.add('bg-emerald-50', 'text-bioMint');
-
+      const original = btn.textContent;
+      btn.textContent = 'Copied!';
+      btn.classList.add('bg-emerald-100', 'text-emerald-800');
       setTimeout(() => {
-        label.textContent = 'Copy Email';
-        btn.classList.add('bg-blue-50', 'text-bioBlue');
-        btn.classList.remove('bg-emerald-50', 'text-bioMint');
-      }, 2200);
+        btn.textContent = original;
+        btn.classList.remove('bg-emerald-100', 'text-emerald-800');
+      }, 2000);
     }
 
-    // FAQ Accordion
-    function toggleFaq(index) {
-      const answers = document.querySelectorAll('.faq-answer');
-      const icons = document.querySelectorAll('.faq-icon');
-      const isHidden = answers[index].classList.contains('hidden');
-
-      answers.forEach((ans, i) => {
-        ans.classList.add('hidden');
-        icons[i].textContent = '+';
-      });
-
-      if (isHidden) {
-        answers[index].classList.remove('hidden');
-        icons[index].textContent = '−';
-      }
-    }
-
-    // Contact Form Submission
-    function submitContactForm(e) {
+    function handleContactSubmit(e) {
       e.preventDefault();
-      document.getElementById('contactFormWrapper').classList.add('hidden');
-      document.getElementById('contactSuccessWrapper').classList.remove('hidden');
+      const name = document.getElementById('senderName').value.trim();
+      const role = document.getElementById('roleSelect').value;
+      const feedback = document.getElementById('contactFeedback');
+      feedback.innerHTML = `<strong>Thanks, ${name}!</strong> Your <em>${role}</em> inquiry has been prepared for <strong>contact@omnibiolabs.org</strong>. We reply within 24–48 hours!`;
+      feedback.classList.remove('hidden');
+      e.target.reset();
     }
 
-    function resetContactForm() {
-      document.getElementById('contactSuccessWrapper').classList.add('hidden');
-      document.getElementById('contactFormWrapper').classList.remove('hidden');
-      document.getElementById('senderMessage').value = '';
-    }
-
-    // Initialize Active Tab from URL Hash on Load
-    document.addEventListener('DOMContentLoaded', () => {
+    // Initialize Workshops, 3D Simulator & Active Tab on Load
+    window.onload = function () {
+      populateSimulatorDropdown();
+      initBio3D();
+      renderSimulatorUI();
+      renderWorkshops();
+      updateDonationBreakdown();
       const initialHash = window.location.hash.replace('#', '');
       switchTab(validTabs.includes(initialHash) ? initialHash : 'home', false);
-    });
+    };
   </script>
 </body>
 </html>
