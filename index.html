@@ -1691,6 +1691,7 @@
     }
 
     // 4. Donate Calculator & HCB Submission Handler
+    const HCB_DONATE_URL = "https://hcb.hackclub.com/donations/start/omnibio-labs";
     let donationFrequency = 'once';
     let donationAmount = 75;
 
@@ -1744,9 +1745,13 @@
     }
 
     function submitDonationRequest() {
+      const amountCents = Math.max(100, Math.round(donationAmount * 100));
+      const checkoutUrl = `${HCB_DONATE_URL}?amount=${amountCents}`;
+      window.open(checkoutUrl, '_blank', 'noopener,noreferrer');
+
       const feedback = document.getElementById('donationFeedback');
       const freqLabel = donationFrequency === 'monthly' ? '/month' : ' one-time';
-      feedback.innerHTML = `<strong>Thank you for supporting OmniBio Labs ($${donationAmount}${freqLabel})!</strong> Your tax-deductible contribution goes through our HCB 501(c)(3) fiscal sponsorship ledger. Our team at <a href="mailto:contact@omnibiolabs.org" class="underline font-bold">contact@omnibiolabs.org</a> is ready to send your HCB donation link or employer match EIN (81-2908499).`;
+      feedback.innerHTML = `<strong>Opening HCB 501(c)(3) Checkout ($${donationAmount}${freqLabel})...</strong> If a new tab didn’t open automatically, <a href="${checkoutUrl}" target="_blank" rel="noopener noreferrer" class="underline font-bold text-emerald-950">click here to complete your tax-deductible gift on HCB ↗</a> (The Hack Foundation, EIN 81-2908499).`;
       feedback.classList.remove('hidden');
     }
 
