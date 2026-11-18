@@ -6,8 +6,8 @@
   <title>OmniBio Labs — Free Hands-On Biotech Workshops for K–8 Schools</title>
   <meta name="description" content="Student-led 501(c)(3) nonprofit fiscally sponsored by HCB, bringing free hands-on wet-lab biotechnology workshops to K–8 classrooms." />
 
-  <!-- Crisp High-Contrast Circular DNA Monogram Favicon -->
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='31' fill='%23ffffff'/%3E%3Ccircle cx='32' cy='32' r='26' fill='none' stroke='%23171947' stroke-width='5'/%3E%3Cpath d='M24 13C24 24 40 27 40 32C40 37 24 40 24 51' fill='none' stroke='%233882F6' stroke-width='5.5' stroke-linecap='round'/%3E%3Cpath d='M40 13C40 24 24 27 24 32C24 37 40 40 40 51' fill='none' stroke='%23171947' stroke-width='5.5' stroke-linecap='round'/%3E%3C/svg%3E" />
+  <!-- Official OmniBio Labs Circular DNA Monogram Favicon -->
+  <link rel="icon" type="image/png" href="OmniBio%20Labs%20(1000%20x%201000%20px)%20(4).png" />
 
   <!-- Tailwind CSS & Three.js for Interactive 3D Lab Simulator -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -101,25 +101,14 @@
   <header class="sticky top-0 z-40 bg-white/85 backdrop-blur-lg border-b border-sky-200/80">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-18 flex items-center justify-between gap-2">
 
-      <!-- Clean Segmented Concentric Double-Ring DNA Monogram + Two-Tone Wordmark -->
+      <!-- Official OmniBio Labs Emblem Image + Stacked Two-Tone Wordmark -->
       <a href="#home" onclick="switchTab('home'); return false;" class="flex items-center gap-2.5 group shrink-0">
-        <svg class="w-10 h-10 sm:w-11 sm:h-11 transition-transform duration-300 group-hover:scale-105" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="OmniBio Labs Logo">
-          <!-- Outer Segmented Rings -->
-          <path d="M54 10C28.5 13.2 10 34.4 10 60C10 85.6 28.5 106.8 54 110" stroke="#171947" stroke-width="8" stroke-linecap="round"/>
-          <path d="M66 10C91.5 13.2 110 34.4 110 60C110 85.6 91.5 106.8 66 110" stroke="#171947" stroke-width="8" stroke-linecap="round"/>
-          <!-- Inner Concentric Arcs -->
-          <path d="M35 28C26.5 36.2 22 47.6 22 60C22 72.4 26.5 83.8 35 92" stroke="#171947" stroke-width="7.5" stroke-linecap="round"/>
-          <path d="M85 28C93.5 36.2 98 47.6 98 60C98 72.4 93.5 83.8 85 92" stroke="#171947" stroke-width="7.5" stroke-linecap="round"/>
-          <!-- Base Pair Rungs -->
-          <line x1="48" y1="30" x2="72" y2="30" stroke="#4A89F3" stroke-width="4.5" stroke-linecap="round"/>
-          <line x1="45" y1="53" x2="75" y2="53" stroke="#4A89F3" stroke-width="4.5" stroke-linecap="round"/>
-          <line x1="45" y1="67" x2="75" y2="67" stroke="#4A89F3" stroke-width="4.5" stroke-linecap="round"/>
-          <line x1="48" y1="90" x2="72" y2="90" stroke="#4A89F3" stroke-width="4.5" stroke-linecap="round"/>
-          <!-- Sky-Blue Helix Ribbon -->
-          <path d="M66 10C42 22 42 44 60 60C78 76 78 98 54 110" stroke="#4A89F3" stroke-width="8" stroke-linecap="round"/>
-          <!-- Midnight-Indigo Over-Strand Ribbon -->
-          <path d="M54 10C78 22 78 44 60 60C42 76 42 98 66 110" stroke="#171947" stroke-width="8" stroke-linecap="round"/>
-        </svg>
+        <img
+          src="OmniBio%20Labs%20(1000%20x%201000%20px)%20(4).png"
+          onerror="this.onerror=null; this.src='https://raw.githubusercontent.com/Shritha-ux/omnibiolabs.github.io/main/OmniBio%20Labs%20(1000%20x%201000%20px)%20(4).png';"
+          alt="OmniBio Labs DNA Emblem"
+          class="w-10 h-10 sm:w-11 sm:h-11 object-contain mix-blend-multiply transition-transform duration-300 group-hover:scale-105"
+        />
         <div class="leading-[0.94] tracking-tight">
           <div class="font-display font-extrabold text-[19px] sm:text-[21px]">
             <span class="text-navyLogo">Omni</span><span class="text-cobaltLogo">Bio</span>
@@ -425,14 +414,47 @@
             </p>
           </div>
 
-          <div class="w-full lg:w-72">
+          <div class="flex flex-wrap items-center gap-2.5 w-full lg:w-auto">
+            <button
+              type="button"
+              onclick="toggleKitDrawer()"
+              class="rounded-full bg-white hover:bg-sky-50 border border-sky-200 text-indigoDeep font-bold text-xs px-4 py-2.5 shadow-2xs transition-all cursor-pointer shrink-0"
+            >
+              🧰 What We Bring
+            </button>
             <input
               type="text"
               id="labSearchInput"
               oninput="renderWorkshops()"
               placeholder="Search DNA, CRISPR, pipettes..."
-              class="w-full rounded-full border border-sky-200 bg-white/95 px-4 py-2.5 text-sm text-indigoDeep placeholder:text-slate-400 focus:outline-none focus:border-bioBlue"
+              class="w-full sm:w-64 rounded-full border border-sky-200 bg-white/95 px-4 py-2.5 text-sm text-indigoDeep placeholder:text-slate-400 focus:outline-none focus:border-bioBlue"
             />
+          </div>
+        </div>
+
+        <!-- Collapsible "What We Bring to Every Classroom" Drawer -->
+        <div id="kitDrawer" class="hidden rounded-3xl glass-card border border-sky-200 p-5 shadow-card">
+          <div class="flex items-center justify-between mb-3">
+            <div class="font-mono text-xs font-bold uppercase text-bioBlue">Included Free in Every Traveling Lab Kit</div>
+            <button type="button" onclick="toggleKitDrawer()" class="text-xs font-semibold text-slate-400 hover:text-indigoDeep cursor-pointer">Hide ✕</button>
+          </div>
+          <div class="grid sm:grid-cols-4 gap-3 text-xs">
+            <div class="rounded-2xl bg-sky-50/90 border border-sky-100 p-3">
+              <div class="font-bold text-indigoDeep mb-0.5">Precision Hardware</div>
+              <p class="text-slate-600">Calibrated P20 micropipettes, USB gel boxes, mini-centrifuges & digital scopes.</p>
+            </div>
+            <div class="rounded-2xl bg-emerald-50/80 border border-emerald-100 p-3">
+              <div class="font-bold text-indigoDeep mb-0.5">100% Non-Toxic Reagents</div>
+              <p class="text-slate-600">Pre-aliquoted food-grade buffers, agarose slabs, enzymes, and sterile tips.</p>
+            </div>
+            <div class="rounded-2xl bg-indigo-50/80 border border-indigo-100 p-3">
+              <div class="font-bold text-indigoDeep mb-0.5">Safety & Cleanup</div>
+              <p class="text-slate-600">Kid-sized nitrile gloves, splash goggles, bench liners, and full post-lab cleanup.</p>
+            </div>
+            <div class="rounded-2xl bg-amber-50/80 border border-amber-100 p-3">
+              <div class="font-bold text-indigoDeep mb-0.5">Student Mentors</div>
+              <p class="text-slate-600">Trained high school leads guide every table step-by-step (1 mentor per 6 kids).</p>
+            </div>
           </div>
         </div>
 
@@ -526,6 +548,25 @@
             </button>
           </div>
         </div>
+
+        <!-- 3-Step Chapter Launch Playbook -->
+        <div class="glass-card rounded-3xl border border-sky-200/90 p-6 sm:p-7 shadow-card">
+          <div class="font-mono text-xs font-bold uppercase text-bioBlue mb-3">3-Step Chapter Launch Playbook</div>
+          <div class="grid md:grid-cols-3 gap-4">
+            <div class="rounded-2xl bg-sky-50/80 border border-sky-100 p-4">
+              <div class="font-mono text-xs font-bold text-indigoDeep mb-1">01. Assemble 3+ Student Leads</div>
+              <p class="font-body text-xs text-slate-600 leading-relaxed">Form a small founding team at your high school or college and submit a 2-minute chapter application.</p>
+            </div>
+            <div class="rounded-2xl bg-sky-50/80 border border-sky-100 p-4">
+              <div class="font-mono text-xs font-bold text-indigoDeep mb-1">02. Receive Kit & Training</div>
+              <p class="font-body text-xs text-slate-600 leading-relaxed">We onboard your team on all 24 lab protocols, safety rules, and HCB grant funding for supplies.</p>
+            </div>
+            <div class="rounded-2xl bg-sky-50/80 border border-sky-100 p-4">
+              <div class="font-mono text-xs font-bold text-indigoDeep mb-1">03. Teach Local K–8 Classes</div>
+              <p class="font-body text-xs text-slate-600 leading-relaxed">Partner with nearby elementary and middle schools using our email templates and lead free wet-labs.</p>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -560,9 +601,13 @@
                 <p class="font-body text-xs text-slate-600">Adds calibrated precision micropipettes to our traveling mobile wet-lab fleet.</p>
               </div>
               <div class="hover-card rounded-2xl glass-card border border-sky-200/80 p-4">
-                <div class="font-mono text-xs font-bold text-sky-700 mb-0.5">$300 • New Chapter Grant</div>
-                <p class="font-body text-xs text-slate-600">Seeds a brand-new student chapter with a complete starter kit for 4 classrooms.</p>
+                <div class="font-mono text-xs font-bold text-sky-700 mb-0.5">$250 • New Chapter Grant</div>
+                <p class="font-body text-xs text-slate-600">Seeds a brand-new student chapter with a complete starter kit for multiple classrooms.</p>
               </div>
+            </div>
+
+            <div class="rounded-2xl bg-white/80 border border-sky-200 p-4 text-xs text-slate-600 leading-relaxed">
+              <strong class="text-indigoDeep">Corporate Employer Matching:</strong> Donations processed through HCB qualify for corporate matching on Benevity, YourCause, and Bright Funds under <em>The Hack Foundation (EIN 81-2908499)</em>.
             </div>
           </div>
 
@@ -570,7 +615,7 @@
             <div class="flex items-center justify-between border-b border-sky-100 pb-3.5">
               <div>
                 <h2 class="text-lg font-extrabold text-indigoDeep">Make a Tax-Deductible Gift</h2>
-                <p class="font-mono text-[11px] text-slate-500">Transparent ledger powered by HCB</p>
+                <p class="font-mono text-[11px] text-slate-500">Official checkout powered by HCB</p>
               </div>
               <span class="font-mono text-xs font-bold px-2.5 py-1 rounded-full bg-sky-100 text-bioBlue">100% Direct</span>
             </div>
@@ -582,11 +627,12 @@
 
             <div>
               <label class="block font-mono text-[11px] font-bold uppercase text-slate-500 mb-2">Select Amount (USD)</label>
-              <div class="grid grid-cols-4 gap-2 mb-2.5">
-                <button type="button" onclick="selectDonationAmount(15, this)" class="amt-btn py-2.5 rounded-2xl border border-sky-200 bg-white font-extrabold text-sm text-indigoDeep hover:border-bioBlue cursor-pointer">$15</button>
-                <button type="button" onclick="selectDonationAmount(35, this)" class="amt-btn py-2.5 rounded-2xl border border-sky-200 bg-white font-extrabold text-sm text-indigoDeep hover:border-bioBlue cursor-pointer">$35</button>
-                <button type="button" onclick="selectDonationAmount(75, this)" class="amt-btn py-2.5 rounded-2xl border-2 border-bioBlue bg-blue-50 font-extrabold text-sm text-bioBlue cursor-pointer">$75</button>
-                <button type="button" onclick="selectDonationAmount(150, this)" class="amt-btn py-2.5 rounded-2xl border border-sky-200 bg-white font-extrabold text-sm text-indigoDeep hover:border-bioBlue cursor-pointer">$150</button>
+              <div class="grid grid-cols-5 gap-1.5 mb-2.5">
+                <button type="button" onclick="selectDonationAmount(15, this)" class="amt-btn py-2.5 rounded-2xl border border-sky-200 bg-white font-extrabold text-xs sm:text-sm text-indigoDeep hover:border-bioBlue cursor-pointer">$15</button>
+                <button type="button" onclick="selectDonationAmount(35, this)" class="amt-btn py-2.5 rounded-2xl border border-sky-200 bg-white font-extrabold text-xs sm:text-sm text-indigoDeep hover:border-bioBlue cursor-pointer">$35</button>
+                <button type="button" onclick="selectDonationAmount(75, this)" class="amt-btn py-2.5 rounded-2xl border-2 border-bioBlue bg-blue-50 font-extrabold text-xs sm:text-sm text-bioBlue cursor-pointer">$75</button>
+                <button type="button" onclick="selectDonationAmount(150, this)" class="amt-btn py-2.5 rounded-2xl border border-sky-200 bg-white font-extrabold text-xs sm:text-sm text-indigoDeep hover:border-bioBlue cursor-pointer">$150</button>
+                <button type="button" onclick="selectDonationAmount(250, this)" class="amt-btn py-2.5 rounded-2xl border border-sky-200 bg-white font-extrabold text-xs sm:text-sm text-indigoDeep hover:border-bioBlue cursor-pointer">$250</button>
               </div>
               <div class="relative">
                 <span class="absolute left-4 top-1/2 -translate-y-1/2 font-bold text-slate-400">$</span>
@@ -662,6 +708,35 @@
         <div class="max-w-2xl space-y-1.5">
           <span class="font-mono text-xs font-bold uppercase tracking-wider text-bioBlue">Join the Movement</span>
           <h1 class="text-2xl sm:text-4xl font-extrabold text-indigoDeep tracking-tight">Three ways to get involved.</h1>
+        </div>
+
+        <!-- Interactive $15-$250 Sponsor Impact Calculator Slider -->
+        <div class="glass-card rounded-3xl border border-sky-200/90 p-6 shadow-card">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
+            <div>
+              <span class="font-mono text-[10px] font-bold uppercase text-emerald-700">Interactive Sponsor Impact Calculator</span>
+              <h3 class="text-base sm:text-lg font-extrabold text-indigoDeep">Slide to see how your support equips K–8 classrooms</h3>
+            </div>
+            <div id="sliderImpactReadout" class="font-mono text-sm font-extrabold text-bioBlue bg-sky-50 border border-sky-200 px-3.5 py-1.5 rounded-full">
+              $75 → 30 Students (1 Full Class)
+            </div>
+          </div>
+          <input
+            type="range"
+            id="impactSlider"
+            min="15"
+            max="250"
+            step="5"
+            value="75"
+            oninput="updateImpactSlider(this.value)"
+            class="w-full accent-bioBlue cursor-pointer"
+          />
+          <div class="flex justify-between font-mono text-[10px] text-slate-400 mt-1">
+            <span>$15 (1 Kit)</span>
+            <span>$75 (1 Classroom)</span>
+            <span>$150 (Pipette Set)</span>
+            <span>$250 (Chapter Seed)</span>
+          </div>
         </div>
 
         <div class="grid md:grid-cols-3 gap-5">
@@ -742,6 +817,25 @@
                 </a>
               </div>
             </div>
+
+            <!-- Interactive FAQ Accordion -->
+            <div class="glass-card rounded-3xl border border-sky-200/90 p-5 space-y-2.5 shadow-card">
+              <div class="font-mono text-[10px] font-bold uppercase text-bioBlue">Quick FAQs</div>
+              <details class="group rounded-2xl bg-sky-50/80 border border-sky-100 p-3 text-xs">
+                <summary class="font-bold text-indigoDeep cursor-pointer list-none flex justify-between items-center">
+                  <span>Is it really 100% free for schools?</span>
+                  <span class="text-bioBlue">+</span>
+                </summary>
+                <p class="text-slate-600 mt-1.5 leading-relaxed">Yes! Every instrument, reagent, glove, and mentor visit is funded through HCB 501(c)(3) grants and community donors.</p>
+              </details>
+              <details class="group rounded-2xl bg-sky-50/80 border border-sky-100 p-3 text-xs">
+                <summary class="font-bold text-indigoDeep cursor-pointer list-none flex justify-between items-center">
+                  <span>Are all reagents safe for K–8 students?</span>
+                  <span class="text-bioBlue">+</span>
+                </summary>
+                <p class="text-slate-600 mt-1.5 leading-relaxed">Absolutely. Every lab uses classroom-safe, non-toxic materials and includes splash goggles and nitrile gloves for all students.</p>
+              </details>
+            </div>
           </div>
 
           <div class="lg:col-span-7 glass-card rounded-3xl border border-sky-200/90 p-6 sm:p-7 shadow-soft">
@@ -797,18 +891,12 @@
   <footer class="border-t border-sky-200/80 bg-white/85 backdrop-blur-md mt-auto">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
       <div class="flex items-center gap-2.5">
-        <svg class="w-8 h-8" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <path d="M54 10C28.5 13.2 10 34.4 10 60C10 85.6 28.5 106.8 54 110" stroke="#171947" stroke-width="8" stroke-linecap="round"/>
-          <path d="M66 10C91.5 13.2 110 34.4 110 60C110 85.6 91.5 106.8 66 110" stroke="#171947" stroke-width="8" stroke-linecap="round"/>
-          <path d="M35 28C26.5 36.2 22 47.6 22 60C22 72.4 26.5 83.8 35 92" stroke="#171947" stroke-width="7.5" stroke-linecap="round"/>
-          <path d="M85 28C93.5 36.2 98 47.6 98 60C98 72.4 93.5 83.8 85 92" stroke="#171947" stroke-width="7.5" stroke-linecap="round"/>
-          <line x1="48" y1="30" x2="72" y2="30" stroke="#4A89F3" stroke-width="4.5" stroke-linecap="round"/>
-          <line x1="45" y1="53" x2="75" y2="53" stroke="#4A89F3" stroke-width="4.5" stroke-linecap="round"/>
-          <line x1="45" y1="67" x2="75" y2="67" stroke="#4A89F3" stroke-width="4.5" stroke-linecap="round"/>
-          <line x1="48" y1="90" x2="72" y2="90" stroke="#4A89F3" stroke-width="4.5" stroke-linecap="round"/>
-          <path d="M66 10C42 22 42 44 60 60C78 76 78 98 54 110" stroke="#4A89F3" stroke-width="8" stroke-linecap="round"/>
-          <path d="M54 10C78 22 78 44 60 60C42 76 42 98 66 110" stroke="#171947" stroke-width="8" stroke-linecap="round"/>
-        </svg>
+        <img
+          src="OmniBio%20Labs%20(1000%20x%201000%20px)%20(4).png"
+          onerror="this.onerror=null; this.src='https://raw.githubusercontent.com/Shritha-ux/omnibiolabs.github.io/main/OmniBio%20Labs%20(1000%20x%201000%20px)%20(4).png';"
+          alt="OmniBio Labs DNA Emblem"
+          class="w-8 h-8 object-contain mix-blend-multiply"
+        />
         <div>
           <div class="font-display font-extrabold text-sm leading-tight">
             <span class="text-navyLogo">Omni</span><span class="text-cobaltLogo">Bio Labs</span>
@@ -844,7 +932,7 @@
       </div>
       <p id="modalSummary" class="font-body text-sm text-slate-600 leading-relaxed"></p>
       <div class="rounded-2xl bg-sky-50/90 border border-sky-200 p-4 space-y-2">
-        <div class="font-mono text-[11px] font-bold uppercase tracking-wider text-bioBlue">3-Step Classroom Protocol</div>
+        <div class="font-mono text-[11px] font-bold uppercase tracking-wider text-bioBlue">Classroom Procedure & Tools</div>
         <ol id="modalSteps" class="list-decimal list-inside font-body text-sm text-slate-700 space-y-1"></ol>
       </div>
       <div class="flex items-center justify-between pt-1">
@@ -893,6 +981,10 @@
       document.getElementById('mobileMenu').classList.toggle('hidden');
     }
 
+    function toggleKitDrawer() {
+      document.getElementById('kitDrawer').classList.toggle('hidden');
+    }
+
     function goToBooking(role, workshopName = '') {
       switchTab('contact');
       const roleSelect = document.getElementById('roleSelect');
@@ -916,36 +1008,25 @@
         tools: ['Resealable Lysis Bag', 'Soap-Salt Lysis Buffer', 'Chilled Isopropanol', 'Glass Spooling Rod'],
         detailedSteps: [
           {
-            shortLabel: 'Mash Cells',
-            tool: 'Heavy-Duty Lysis Bag + Strawberries',
-            reagent: 'Mechanical Pressure (2 mins)',
-            visualLook: '3D View: Cell walls breaking open in magenta berry suspension.',
-            actionBtn: '🍓 Mash Berry Cells',
-            color: 0xf43f5e,
-            mode: 'helix',
-            title: 'Step 1: Physically Break Tough Plant Cell Walls',
-            desc: 'Students gently mash fresh strawberries inside a sealed heavy-duty bag for 2 minutes to break apart rigid cellulose cell walls and expose the cells inside.'
-          },
-          {
-            shortLabel: 'Add Buffer',
-            tool: 'Graduated Transfer Pipette',
+            shortLabel: 'Pipette',
+            tool: 'Graduated P20 & Transfer Pipette',
             reagent: 'Add 10 mL Soap + Salt Lysis Buffer',
-            visualLook: '3D View: Detergent molecules dissolving lipid nuclear membranes.',
+            visualLook: '3D View: Cell walls breaking open in magenta berry suspension.',
             actionBtn: '🧪 Add Lysis Buffer',
-            color: 0x38bdf8,
+            color: 0xf43f5e,
             mode: 'droplets',
-            title: 'Step 2: Dissolve Nuclear Membranes with Lysis Buffer',
-            desc: 'Using a graduated pipette, students add 10 mL of non-toxic detergent-and-salt buffer. The soap dissolves fatty cell membranes while salt shields negative DNA strands.'
+            title: 'Step 1: Pipette Lysis Buffer & Break Plant Cell Walls',
+            desc: 'Students mash fresh strawberries inside a sealed bag and use graduated pipettes to add soap-and-salt lysis buffer, dissolving fatty cell and nuclear membranes.'
           },
           {
-            shortLabel: 'Filter Pulp',
+            shortLabel: 'Lyse Cells',
             tool: 'Funnel + Fine Cheesecloth Mesh',
-            reagent: 'Pour Clear DNA-Rich Filtrate',
+            reagent: 'Filter Clear DNA-Rich Filtrate',
             visualLook: '3D View: Purified DNA strands floating freely in clear aqueous layer.',
             actionBtn: '🔬 Filter Cell Debris',
             color: 0x10b981,
             mode: 'helix',
-            title: 'Step 3: Filter Out Berry Pulp into a Clear Test Tube',
+            title: 'Step 2: Filter Berry Pulp into a Clear Test Tube',
             desc: 'Students pour the mixture through a cheesecloth-lined funnel into a clear tube, trapping seeds and pulp on top while letting dissolved DNA drip cleanly below.'
           },
           {
@@ -956,8 +1037,19 @@
             actionBtn: '🧬 Spool Visible DNA',
             color: 0x3882f6,
             mode: 'helix',
-            title: 'Step 4: Precipitate & Spool White Double-Helix DNA',
-            desc: 'Students slowly layer ice-cold alcohol on top. Cloudy white DNA strands immediately clump at the boundary—ready to spool onto a rod and seal in a necklace vial!'
+            title: 'Step 3: Precipitate & Spool White Double-Helix DNA',
+            desc: 'Students slowly layer ice-cold alcohol on top. Cloudy white DNA strands immediately clump at the boundary—ready to spool onto a rod and seal in a keepsake vial!'
+          },
+          {
+            shortLabel: 'Run Gel',
+            tool: 'USB Gel Box + LED Light Pad',
+            reagent: 'Verify DNA Band Size',
+            visualLook: '3D View: Separated DNA bands glowing on the transilluminator pad.',
+            actionBtn: '⚡ Inspect DNA Bands',
+            color: 0x6366f1,
+            mode: 'gel',
+            title: 'Step 4: Compare Extracted DNA Against Reference Ladder',
+            desc: 'Students inspect their spooled DNA alongside our classroom gel reference chart to see how scientists verify DNA purity after extraction.'
           }
         ],
         safety: '100% food-grade reagents and supervised spooling.'
@@ -973,7 +1065,7 @@
         tools: ['P20 Micropipette', 'Sterile Pipette Tips', '96-Well Microplate', 'Dilution Tubes'],
         detailedSteps: [
           {
-            shortLabel: 'Dial Volume',
+            shortLabel: 'Pipette',
             tool: 'Calibrated P20 Micropipette (2–20 µL)',
             reagent: 'Attach Disposable Sterile Tip',
             visualLook: '3D View: Precision microliter barrel calibrated to 15.0 µL.',
@@ -981,10 +1073,10 @@
             color: 0x3882f6,
             mode: 'plate',
             title: 'Step 1: Set Microliter Dial & Seat a Fresh Tip',
-            desc: 'Students twist the P20 volume dial to 15.0 µL (15 millionths of a liter!) and press firmly into a sterile tip rack without touching the tip with their fingers.'
+            desc: 'Students twist the P20 volume dial to 15.0 µL (15 millionths of a liter!) and press firmly into a sterile tip rack without touching the tip.'
           },
           {
-            shortLabel: 'First Stop',
+            shortLabel: 'Lyse Cells',
             tool: 'P20 Plunger (First Resistance Stop)',
             reagent: 'Aspirate 15 µL Cyan Stock Dye',
             visualLook: '3D View: Exact 15 µL cyan droplet drawn cleanly into tip.',
@@ -992,10 +1084,10 @@
             color: 0x0ea5e9,
             mode: 'droplets',
             title: 'Step 2: Press to First Stop to Draw Exact Microliters',
-            desc: 'Students press the thumb plunger down to the gentle first stop before dipping the tip 2 mm below the dye surface, then slowly release to draw an air-bubble-free sample.'
+            desc: 'Students press the thumb plunger down to the gentle first stop before dipping the tip 2 mm below the dye surface, drawing an air-bubble-free sample.'
           },
           {
-            shortLabel: 'Mix Gradient',
+            shortLabel: 'Spool DNA',
             tool: '96-Well Clear Assay Plate',
             reagent: 'Combine Cyan + Yellow + Magenta Wells',
             visualLook: '3D View: 96-well microplate glowing with rainbow dilution wells.',
@@ -1003,10 +1095,10 @@
             color: 0x10b981,
             mode: 'plate',
             title: 'Step 3: Dispense & Press to Second Stop (Blowout)',
-            desc: 'Resting the tip against the inner wall of well A1, students press past the first stop to the second blowout stop so every last nanoliter transfers into the microplate.'
+            desc: 'Resting the tip against the inner wall of well A1, students press past the first stop to the second blowout stop so every last nanoliter transfers.'
           },
           {
-            shortLabel: 'Eject Tip',
+            shortLabel: 'Run Gel',
             tool: 'Tip Ejector Button + Bio-Waste Cup',
             reagent: 'Zero Cross-Contamination Check',
             visualLook: '3D View: Completed RGB color spectrum across 96 microplate wells.',
@@ -1014,7 +1106,7 @@
             color: 0x8b5cf6,
             mode: 'plate',
             title: 'Step 4: Eject Used Tip & Verify Precision Drop Sizes',
-            desc: 'Students press the side tip-ejector button over the waste beaker and hold their 96-well plate up to the light to verify uniform meniscus levels across all wells.'
+            desc: 'Students press the side tip-ejector button over the waste beaker and hold their 96-well plate up to the light to verify uniform meniscus levels.'
           }
         ],
         safety: 'Food-safe non-toxic laboratory dyes.'
@@ -1030,7 +1122,7 @@
         tools: ['Submarine Gel Box', '1% Agarose Gel Slab', 'P20 Micropipette', 'TAE Running Buffer'],
         detailedSteps: [
           {
-            shortLabel: 'Submerge Gel',
+            shortLabel: 'Pipette',
             tool: 'Electrophoresis Chamber + Agarose Slab',
             reagent: 'Pour 1X TAE Conductive Buffer',
             visualLook: '3D View: Translucent agarose gel slab submerged under clear TAE buffer.',
@@ -1038,10 +1130,10 @@
             color: 0x38bdf8,
             mode: 'gel',
             title: 'Step 1: Place Agarose Gel & Cover with Conductive Buffer',
-            desc: 'Students orient the pre-cast 1% agarose gel with sample wells near the negative black electrode and pour TAE buffer until the gel surface is submerged by 2 mm.'
+            desc: 'Students orient the pre-cast 1% agarose gel with sample wells near the negative black electrode and pour TAE buffer until submerged by 2 mm.'
           },
           {
-            shortLabel: 'Load Wells',
+            shortLabel: 'Lyse Cells',
             tool: 'P20 Pipette + Ultra-Fine Gel Tips',
             reagent: 'Load 12 µL DNA Ladder & Suspect Dyes',
             visualLook: '3D View: Dense purple & blue DNA samples sinking into rectangular gel wells.',
@@ -1049,10 +1141,10 @@
             color: 0x6366f1,
             mode: 'gel',
             title: 'Step 2: Steadily Pipette Dense DNA Samples into Gel Wells',
-            desc: 'Using two hands to steady their P20 pipette just above each microscopic agarose pocket, students dispense glycerol-weighted DNA samples that sink neatly to the bottom.'
+            desc: 'Using two hands to steady their P20 pipette just above each microscopic agarose pocket, students dispense glycerol-weighted DNA samples into wells.'
           },
           {
-            shortLabel: 'Run Current',
+            shortLabel: 'Spool DNA',
             tool: 'Safe USB Low-Voltage Power Supply',
             reagent: 'Apply 45V Direct Current (15 mins)',
             visualLook: '3D View: Negatively charged DNA bands migrating toward the red (+) anode!',
@@ -1060,10 +1152,10 @@
             color: 0x3882f6,
             mode: 'gel',
             title: 'Step 3: Pull Negatively Charged DNA Toward the Red (+) Pole',
-            desc: 'Because DNA’s sugar-phosphate backbone carries a negative charge, turning on the safe low-voltage lid pulls smaller DNA fragments faster through the porous agarose mesh.'
+            desc: 'Turning on the safe low-voltage lid pulls smaller negatively charged DNA fragments faster through the porous agarose mesh.'
           },
           {
-            shortLabel: 'Match Bands',
+            shortLabel: 'Run Gel',
             tool: 'LED Transilluminator Light Pad',
             reagent: 'Compare Fragment Base-Pair (bp) Rulers',
             visualLook: '3D View: Crisp separated DNA fingerprint bands glowing on the light pad.',
@@ -1071,125 +1163,13 @@
             color: 0x10b981,
             mode: 'gel',
             title: 'Step 4: Read the DNA Fingerprint & Solve the Case',
-            desc: 'Students place their gel onto an LED light pad and match the separated band distances against the known molecular weight ladder to identify the mystery sample.'
+            desc: 'Students place their gel onto an LED light pad and match the separated band distances against the molecular weight ladder.'
           }
         ],
         safety: 'Enclosed low-voltage USB electrophoresis units.'
       },
-      {
-        id: 4,
-        title: 'Alginate Molecular Boba',
-        grade: 'k2',
-        gradeLabel: 'Grades K–8',
-        category: 'Bio-Engineering',
-        duration: '45 min',
-        summary: 'Explore biopolymer hydrogel cross-linking by dripping sodium alginate into calcium baths to form glowing spheres.',
-        tools: ['Dropper Pipettes', 'Sodium Alginate Polymer', 'Calcium Lactate Bath', 'Slotted Strainer'],
-        detailedSteps: [
-          {
-            shortLabel: 'Polymer Prep',
-            tool: 'Mixing Beaker + Stirring Rod',
-            reagent: 'Hydrate 1% Seaweed Sodium Alginate',
-            visualLook: '3D View: Long tangled seaweed alginate polymer chains floating in solution.',
-            actionBtn: '🌿 Prep Alginate Gel',
-            color: 0x10b981,
-            mode: 'droplets',
-            title: 'Step 1: Prepare Natural Seaweed Polymer Solution',
-            desc: 'Students inspect viscous sodium alginate extracted from brown kelp—a safe biopolymer used by biomedical engineers to encapsulate living cells and medicines.'
-          },
-          {
-            shortLabel: 'Drip Spheres',
-            tool: '3 mL Transfer Pipette',
-            reagent: 'Drip into 2% Calcium Lactate Bath',
-            visualLook: '3D View: Calcium ions snapping polymer chains into round hydrogel capsules!',
-            actionBtn: '💧 Drip Bio-Capsules',
-            color: 0x38bdf8,
-            mode: 'droplets',
-            title: 'Step 2: Cross-Link Instant Hydrogel Capsules in Calcium',
-            desc: 'Holding a pipette 4 inches above the clear calcium bath, students release individual drops that immediately cross-link into bouncy, translucent hydrogel spheres.'
-          },
-          {
-            shortLabel: 'Rinse & Test',
-            tool: 'Mesh Strainer + Rinse Water Cup',
-            reagent: 'Transfer Capsules to Pure Water Bath',
-            visualLook: '3D View: Uniform glowing spheres suspended in clear rinse chamber.',
-            actionBtn: '🧪 Rinse Capsules',
-            color: 0x0ea5e9,
-            mode: 'droplets',
-            title: 'Step 3: Halt Cross-Linking in a Pure Water Rinse',
-            desc: 'Students scoop their spheres with a perforated spoon into clean water to stop the calcium reaction and test how membrane thickness changes with bath time.'
-          },
-          {
-            shortLabel: 'Squish Test',
-            tool: 'Petri Dish + Forceps',
-            reagent: 'Compare Drug-Delivery Capsule Strength',
-            visualLook: '3D View: Elastic hydrogel membrane protecting an inner core.',
-            actionBtn: '🔬 Inspect Membrane',
-            color: 0x6366f1,
-            mode: 'helix',
-            title: 'Step 4: Inspect Semi-Permeable Hydrogel Membranes',
-            desc: 'Students gently squeeze their hydrogel capsules in a petri dish to see how real tissue engineers protect therapeutic cells inside the human body.'
-          }
-        ],
-        safety: 'Food-grade seaweed alginate and calcium lactate.'
-      },
-      {
-        id: 5,
-        title: 'CRISPR Paper-Clip Gene Editing',
-        grade: '68',
-        gradeLabel: 'Grades 5–8',
-        category: 'Genetics & DNA',
-        duration: '45 min',
-        summary: 'Act as Cas9 enzymes using guide-RNA sequences to locate, snip, and repair target mutations in DNA strands.',
-        tools: ['20-nt Guide RNA Strip', 'Target DNA Ribbon', 'Cas9 Molecular Scissors', 'Repair Template'],
-        detailedSteps: [
-          {
-            shortLabel: 'Find PAM',
-            tool: 'Target Gene Sequence Strip',
-            reagent: 'Locate 3-Base NGG "PAM" Beacon',
-            visualLook: '3D View: Double-helix DNA scanning for the glowing NGG PAM marker.',
-            actionBtn: '🔎 Scan for PAM Site',
-            color: 0xf59e0b,
-            mode: 'helix',
-            title: 'Step 1: Scan the Genome for the NGG PAM Landing Site',
-            desc: 'Acting as a Cas9 protein complex, students slide along a long DNA sequence ribbon until they spot the 3-letter "GG" Protospacer Adjacent Motif (PAM) signal.'
-          },
-          {
-            shortLabel: 'Bind gRNA',
-            tool: 'Guide-RNA (gRNA) Match Card',
-            reagent: 'Pair Complementary A-U and C-G Bases',
-            visualLook: '3D View: Guide-RNA locking onto the mutated DNA target strand.',
-            actionBtn: '🧩 Lock Guide-RNA',
-            color: 0x3882f6,
-            mode: 'helix',
-            title: 'Step 2: Unwind Helix & Match 20-Base Guide RNA',
-            desc: 'Students unzip the double helix next to the PAM site and verify that all 20 bases of their guide RNA match the mutated gene sequence before cutting.'
-          },
-          {
-            shortLabel: 'Cas9 Snip',
-            tool: 'Cas9 Endonuclease Cleavage Marker',
-            reagent: 'Make Precise Double-Strand Cut',
-            visualLook: '3D View: Clean double-strand break removing the faulty base pair.',
-            actionBtn: '✂️ Execute Cas9 Cut',
-            color: 0xef4444,
-            mode: 'helix',
-            title: 'Step 3: Perform a Precise Double-Strand DNA Cut',
-            desc: 'Three bases upstream of the PAM site, students snip out the defective codon using Cas9 molecular scissors without harming neighboring healthy genes.'
-          },
-          {
-            shortLabel: 'HDR Repair',
-            tool: 'Healthy Donor DNA Template',
-            reagent: 'Splice Corrected Sequence into Helix',
-            visualLook: '3D View: Repaired emerald-and-blue DNA double helix spinning smoothly!',
-            actionBtn: '🧬 Splice Healthy Gene',
-            color: 0x10b981,
-            mode: 'helix',
-            title: 'Step 4: Homology-Directed Repair with Healthy Code',
-            desc: 'Students splice in the healthy donor DNA template to restore normal protein function—modeling real sickle-cell and genetic medicine therapies.'
-          }
-        ],
-        safety: 'Hands-on tactile simulation with zero sharps.'
-      },
+      { id: 4, title: 'Alginate Molecular Boba', grade: 'k2', gradeLabel: 'Grades K–8', category: 'Bio-Engineering', duration: '45 min', summary: 'Explore biopolymer hydrogel cross-linking by dripping sodium alginate into calcium baths to form glowing spheres.', tools: ['Dropper Pipettes', 'Sodium Alginate Polymer', 'Calcium Lactate Bath'], safety: 'Food-grade seaweed alginate and calcium lactate.' },
+      { id: 5, title: 'CRISPR Paper-Clip Gene Editing', grade: '68', gradeLabel: 'Grades 5–8', category: 'Genetics & DNA', duration: '45 min', summary: 'Act as Cas9 enzymes using guide-RNA sequences to locate, snip, and repair target mutations in DNA strands.', tools: ['20-nt Guide RNA Strip', 'Target DNA Ribbon', 'Cas9 Molecular Scissors'], safety: 'Hands-on tactile simulation with zero sharps.' },
       { id: 6, title: 'Yeast Respiration & Balloon Lab', grade: 'k2', gradeLabel: 'Grades K–5', category: 'Microbiology', duration: '45 min', summary: 'Wake up dormant baker’s yeast with warm sugar solutions and measure cellular CO2 inflation in real time.', tools: ['Active Yeast', 'Erlenmeyer Flasks', 'Latex Balloons'], safety: 'Common household baker’s yeast and sugar.' },
       { id: 7, title: 'Catalase Enzyme Bubble Test', grade: '35', gradeLabel: 'Grades 3–8', category: 'Biochemistry', duration: '45 min', summary: 'Test how temperature and pH affect living catalase enzymes breaking down hydrogen peroxide into oxygen.', tools: ['Test Tubes', '3% Peroxide', 'Digital Timer'], safety: 'Dilute 3% store-strength peroxide with safety goggles.' },
       { id: 8, title: 'Secret pH Cabbage Biosensors', grade: 'k2', gradeLabel: 'Grades K–5', category: 'Biochemistry', duration: '45 min', summary: 'Extract anthocyanin pigments from red cabbage to build natural colorimetric pH strips for household liquids.', tools: ['Anthocyanin Extract', '24-Well Spot Plates', 'Transfer Pipettes'], safety: '100% plant-derived indicator and kitchen buffers.' },
@@ -1211,7 +1191,6 @@
       { id: 24, title: 'Kombucha Cellulose Biomaterial Leather', grade: '68', gradeLabel: 'Grades 5–8', category: 'Bio-Engineering', duration: '45 min', summary: 'Inspect sustainable bacterial nanocellulose sheets grown by Acetobacter and test tensile strength vs. plastic.', tools: ['Nanocellulose Sheets', 'Spring Force Gauges', 'Hand Lenses'], safety: 'Fully dried, sanitized cellulose biomaterial samples.' }
     ];
 
-    // Auto-generate detailed 4-step tool & reagent walkthroughs for labs 6–24
     function getLabDetailedSteps(lab) {
       if (lab.detailedSteps) return lab.detailedSteps;
       const t0 = lab.tools[0] || 'Lab Instrument';
@@ -1226,7 +1205,7 @@
       const defaultMode = modeMap[lab.category] || 'helix';
       return [
         {
-          shortLabel: 'Prep Station',
+          shortLabel: 'Pipette',
           tool: `${t0} + Safety Goggles`,
           reagent: `Calibrate ${lab.category} Workspace`,
           visualLook: `3D View: ${lab.title} station set up with ${t0} and ${t1}.`,
@@ -1237,7 +1216,7 @@
           desc: `Student mentors hand every pair of students their own ${t0} and ${t1}, reviewing how real researchers handle sterile biotech equipment safely.`
         },
         {
-          shortLabel: 'Mix Reagent',
+          shortLabel: 'Lyse Cells',
           tool: `${t1} + Transfer Pipette`,
           reagent: `Combine Safe ${lab.category} Sample`,
           visualLook: `3D View: Active molecular reaction inside ${t1}.`,
@@ -1248,7 +1227,7 @@
           desc: `Students carefully measure and transfer reagents into ${t1}, watching color changes, gas bubbles, or structural shifts happen right on their desk.`
         },
         {
-          shortLabel: 'Run Assay',
+          shortLabel: 'Spool DNA',
           tool: `${t2} + Observation Timer`,
           reagent: `Track Live Reaction & Controls`,
           visualLook: `3D View: Comparing experimental vs. control samples with ${t2}.`,
@@ -1259,7 +1238,7 @@
           desc: `Using ${t2}, students compare their active experiment against a baseline control sample just like a real university wet-lab team.`
         },
         {
-          shortLabel: 'Analyze',
+          shortLabel: 'Run Gel',
           tool: 'Lab Field Log + Mentor Debrief',
           reagent: 'Connect Results to Real Biotech Careers',
           visualLook: `3D View: Completed ${lab.title} molecular readout!`,
@@ -1272,7 +1251,7 @@
       ];
     }
 
-    // 3. Interactive 3D Three.js Biotech Lab Simulator (Connected to All 24 Labs)
+    // 3. Interactive 3D Three.js Biotech Lab Simulator
     let currentSimLabId = 1;
     let currentMissionIdx = 0;
     let bioScene, bioCamera, bioRenderer, helixGroup, plateGroup, gelGroup, dropletGroup;
@@ -1307,7 +1286,6 @@
       const steps = getLabDetailedSteps(lab);
       const step = steps[currentMissionIdx] || steps[0];
 
-      // Render 4 step buttons dynamically for the selected lab
       const tabsContainer = document.getElementById('simStepTabs');
       if (tabsContainer) {
         tabsContainer.innerHTML = steps.map((s, i) => `
@@ -1321,7 +1299,7 @@
             }"
           >
             <div class="font-mono text-[9px] font-bold ${i === currentMissionIdx ? 'text-bioBlue' : 'text-slate-400'}">
-              STEP 0${i + 1}
+              0${i + 1}
             </div>
             <div class="text-[11px] font-extrabold text-indigoDeep truncate">${s.shortLabel}</div>
           </button>
@@ -1690,7 +1668,7 @@
       document.getElementById('protocolModal').classList.add('hidden');
     }
 
-    // 4. Donate Calculator & HCB Submission Handler
+    // 5. Donate Calculator & HCB Submission Handler
     const HCB_DONATE_URL = "https://hcb.hackclub.com/donations/start/omnibio-labs";
     let donationFrequency = 'once';
     let donationAmount = 75;
@@ -1744,6 +1722,15 @@
           : `Supplies complete wet-lab kits for ${students} students ${freqText}`;
     }
 
+    function updateImpactSlider(val) {
+      const amount = parseInt(val, 10) || 75;
+      const students = Math.max(1, Math.floor((amount / 15) * 6));
+      const readout = document.getElementById('sliderImpactReadout');
+      if (readout) {
+        readout.textContent = `$${amount} → ${students} Students`;
+      }
+    }
+
     function submitDonationRequest() {
       const amountCents = Math.max(100, Math.round(donationAmount * 100));
       const checkoutUrl = `${HCB_DONATE_URL}?amount=${amountCents}`;
@@ -1755,7 +1742,7 @@
       feedback.classList.remove('hidden');
     }
 
-    // 5. Contact Form & Copy-to-Clipboard
+    // 6. Contact Form & Copy-to-Clipboard
     function copyOfficialEmail() {
       const tempInput = document.createElement('input');
       tempInput.value = 'contact@omnibiolabs.org';
